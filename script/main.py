@@ -29,7 +29,7 @@
 # -b: 指定下载的最大重试次数
 
 import argparse
-
+import nfo_download.youtube as youtube
 
 parser = argparse.ArgumentParser(description='姓名')
 parser.add_argument('--url', type=str,help='视频链接')
@@ -40,4 +40,7 @@ args = parser.parse_args()
 
 
 if __name__ == "__main__":
-    print("开始下载",args.url,"到",args.storage,"是",args.type)
+    if(args.type == "youtube"):
+        with open("test.nfo","w") as f:
+            f.write(youtube.downloadNfo(args.url))
+        print("下载完成")
