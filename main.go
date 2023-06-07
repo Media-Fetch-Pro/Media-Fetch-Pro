@@ -1,16 +1,17 @@
 package main
 
 import (
-	s "github.com/CorrectRoadH/video-tools-for-nas/server"
+	"github.com/CorrectRoadH/video-tools-for-nas/server"
 	"github.com/gin-gonic/gin"
 )
 
 var db = make(map[string]string)
 
 func setupRouter() *gin.Engine {
+
 	r := gin.Default()
 
-	r.POST("/video", s.DownloadVideo)
+	r.POST("/video", server.DownloadVideo)
 	return r
 }
 
