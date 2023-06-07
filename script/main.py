@@ -41,6 +41,5 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
     if(args.type == "youtube"):
-        with open("test.nfo","w") as f:
-            f.write(youtube.downloadNfo(args.url))
-        print("下载完成")
+        with open("temp.nfo","w") as f:
+            f.write(youtube.readNfo(args.url))
