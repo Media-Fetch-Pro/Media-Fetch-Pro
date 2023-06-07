@@ -29,8 +29,9 @@
 # -b: 指定下载的最大重试次数
 
 import argparse
-import nfo_download.youtube as youtube
-
+import nfo_download.youtube as youtube_nfo
+import video_download.youtube as youtube_video
+import os
 parser = argparse.ArgumentParser(description='姓名')
 parser.add_argument('--url', type=str,help='视频链接')
 parser.add_argument('--storage', type=str,help='地址')
@@ -38,8 +39,10 @@ parser.add_argument('--type', type=str,help='判断')
 
 args = parser.parse_args()
 
-
 if __name__ == "__main__":
-    if(args.type == "youtube"):
-        with open("temp.nfo","w") as f:
-            f.write(youtube.readNfo(args.url))
+    # 判断下载路径是否是一个目录
+    if os.path.isdir(args.storage):
+        if(args.type == "youtube"):
+            with open(f"{args.storage}/temp.nfo","w") as f:
+                f.write(youtube_nfo.readNfo(args.url))
+            youtube_video.downloadVideo(args.url,args.storage)
