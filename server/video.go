@@ -6,12 +6,18 @@ import (
 	"os/exec"
 	"regexp"
 
+	main "github.com/CorrectRoadH/video-tools-for-nas/main"
 	"github.com/gin-gonic/gin"
 )
 
 type DownloadVideoInput struct {
 	Url     string `json:"url" binding:"required"`
 	Storage string `json:"storage" binding:"required"`
+}
+
+type UpdateVideoStatusInput struct {
+	Url    string `json:"url" binding:"required"`
+	Status string `json:"status" binding:"required"`
 }
 
 func composeResponse(data any) gin.H {
@@ -49,6 +55,11 @@ func DownloadVideo(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, composeResponse(out))
+}
+
+func updateVideoStatus(c *gin.Context) {
+	main.Store.addVideo()
+	c.JSON(http.StatusOK, composeResponse("update video status"))
 }
 
 func HandlerDownloader(url string) (string, error) {
