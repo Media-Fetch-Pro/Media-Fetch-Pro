@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"regexp"
 
-	main "github.com/CorrectRoadH/video-tools-for-nas/main"
+	store "github.com/CorrectRoadH/video-tools-for-nas/store"
 	"github.com/gin-gonic/gin"
 )
 
@@ -57,9 +57,19 @@ func DownloadVideo(c *gin.Context) {
 	c.JSON(http.StatusOK, composeResponse(out))
 }
 
-func updateVideoStatus(c *gin.Context) {
-	main.Store.addVideo()
+func UpdateVideoStatus(c *gin.Context) {
+	println("update video status")
+	println(fmt.Print(store.VideoStatusMap))
+	store.AddVideo(store.VideoStatus{
+		VideoId: "123",
+		Status:  "123",
+	})
+	println(fmt.Print(store.VideoStatusMap))
 	c.JSON(http.StatusOK, composeResponse("update video status"))
+}
+
+func GetAllVideoStatus(c *gin.Context) {
+	c.JSON(http.StatusOK, composeResponse(store.VideoStatusMap))
 }
 
 func HandlerDownloader(url string) (string, error) {
