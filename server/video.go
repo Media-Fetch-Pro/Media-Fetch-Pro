@@ -3,7 +3,6 @@ package server
 import (
 	"fmt"
 	"net/http"
-	"os/exec"
 
 	store "github.com/CorrectRoadH/video-tools-for-nas/store"
 	"github.com/CorrectRoadH/video-tools-for-nas/utils"
@@ -51,14 +50,23 @@ func DownloadVideo(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "unknown website"})
 	}
 
-	args := []string{"script/main.py", "--url", input.Url, "--storage", input.Storage, "--type", videoType}
-	out, err := exec.Command("python", args...).Output()
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	// 这里要不要用 goroutine 来做呢?
+	store.AddVideo(store.VideoStatus{
+		Id:     utils.GenerateVideoIdFromURL(input.Url),
+		Url:    input.Url,
+		Status: "pending",
+		Type:   videoType,
+	})
 
-	c.JSON(http.StatusOK, composeResponse(out))
+	// 这里就不要直接下载，后面通过 scheduler 来调度下载
+	// args := []string{"script/main.py", "--url", input.Url, "--storage", input.Storage, "--type", videoType}
+	// out, err := exec.Command("python", args...).Output()
+	// if err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
+
+	c.JSON(http.StatusOK, composeResponse("start downloading"))
 }
 
 // 这个是等 python 来调，来更新状态
