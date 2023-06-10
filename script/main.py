@@ -32,6 +32,10 @@ import argparse
 import nfo_download.youtube as youtube_nfo
 import video_download.youtube as youtube_video
 import os
+
+temp_path = "/home/ctrdh/video/temp"
+
+
 parser = argparse.ArgumentParser(description='姓名')
 parser.add_argument('--url', type=str,help='视频链接')
 parser.add_argument('--storage', type=str,help='地址')
