@@ -1,7 +1,9 @@
 import yt_dlp
 import api.request as request
+import tool_utils.ytdlp as ytdlp
+
 def progress_hook(d):
-    request.updateVideoStatus(d['filename'],d['status'],d['_percent_str'])
+    request.updateVideoStatus(d['filename'],d['status'],ytdlp.extract_progress(d['_percent_str']))
 
 def downloadVideo(url,dir):
     ydl_opts = {
