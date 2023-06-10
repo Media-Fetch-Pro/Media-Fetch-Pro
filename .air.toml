@@ -1,0 +1,15 @@
+root = "."
+tmp_dir = ".air"
+
+[build]
+bin = "./.air/tools"
+cmd = "go build -o ./.air/tools ./main.go"
+delay = 1000
+exclude_dir = [".air","script", "web", "build"]
+exclude_file = []
+exclude_regex = []
+exclude_unchanged = false
+follow_symlink = false
+full_bin = ""
+send_interrupt = true
+kill_delay = 2000
