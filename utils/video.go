@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"crypto/md5"
 	"fmt"
 	"regexp"
 )
@@ -22,4 +23,10 @@ func HandlerDownloader(url string) (string, error) {
 	} else {
 		return "unknown", fmt.Errorf("unknown website")
 	}
+}
+
+func GenerateVideoIdFromURL(url string) string {
+	// return md5 of url
+	data := []byte(url)
+	return fmt.Sprintf("%x", md5.Sum(data))
 }

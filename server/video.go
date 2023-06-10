@@ -16,9 +16,12 @@ type DownloadVideoInput struct {
 }
 
 type UpdateVideoStatusInput struct {
+	Id      string `json:"id" binding:"required"`
+	Title   string `json:"title" binding:"required"`
 	Url     string `json:"url" binding:"required"`
 	Status  string `json:"status" binding:"required"`
 	Percent int    `json:"percent" binding:"required"`
+	Size    int    `json:"size" binding:"required"` // 单位是字节
 }
 
 func composeResponse(data any) gin.H {
@@ -68,7 +71,7 @@ func UpdateVideoStatus(c *gin.Context) {
 	}
 
 	store.AddVideo(store.VideoStatus{
-		VideoId: input.Url, // 这个id通过url来取个hash值比较好
+		Id:      input.Url, // 这个id通过url来取个hash值比较好
 		Status:  input.Status,
 		Percent: input.Percent,
 	})
