@@ -1,10 +1,10 @@
 package server
 
 import (
-	"fmt"
 	"net/http"
 
 	store "github.com/CorrectRoadH/video-tools-for-nas/store"
+	"github.com/CorrectRoadH/video-tools-for-nas/types"
 	"github.com/CorrectRoadH/video-tools-for-nas/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -51,42 +51,36 @@ func DownloadVideo(c *gin.Context) {
 	}
 
 	// 这里要不要用 goroutine 来做呢?
-	store.AddVideo(store.VideoStatus{
+	store.GlobalVideoStatusMap.AddVideo(types.VideoStatus{
 		Id:     utils.GenerateVideoIdFromURL(input.Url),
 		Url:    input.Url,
 		Status: "pending",
 		Type:   videoType,
 	})
 
-	// 这里就不要直接下载，后面通过 scheduler 来调度下载
-	// args := []string{"script/main.py", "--url", input.Url, "--storage", input.Storage, "--type", videoType}
-	// out, err := exec.Command("python", args...).Output()
-	// if err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
-
 	c.JSON(http.StatusOK, composeResponse("start downloading"))
 }
 
 // 这个是等 python 来调，来更新状态
 func UpdateVideoStatus(c *gin.Context) {
-
 	var input UpdateVideoStatusInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	store.AddVideo(store.VideoStatus{
+	store.GlobalVideoStatusMap.AddVideo(types.VideoStatus{
 		Id:      input.Url, // 这个id通过url来取个hash值比较好
 		Status:  input.Status,
 		Percent: input.Percent,
 	})
-	println(fmt.Print(store.VideoStatusMap))
+	if input.Percent == 100 {
+		store.GlobalVideoStatusMap.DownloadComplete()
+		store.GlobalVideoStatusMap.SchedulerDownload()
+	}
 	c.JSON(http.StatusOK, composeResponse("update video status"))
 }
 
 func GetAllVideoStatus(c *gin.Context) {
-	c.JSON(http.StatusOK, composeResponse(store.VideoStatusMap))
+	c.JSON(http.StatusOK, composeResponse(store.GlobalVideoStatusMap.VideoStatusMap))
 }

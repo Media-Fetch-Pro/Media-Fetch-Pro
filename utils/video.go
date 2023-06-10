@@ -3,7 +3,10 @@ package utils
 import (
 	"crypto/md5"
 	"fmt"
+	"os/exec"
 	"regexp"
+
+	"github.com/CorrectRoadH/video-tools-for-nas/types"
 )
 
 func HandlerDownloader(url string) (string, error) {
@@ -29,4 +32,10 @@ func GenerateVideoIdFromURL(url string) string {
 	// return md5 of url
 	data := []byte(url)
 	return fmt.Sprintf("%x", md5.Sum(data))
+}
+
+func DownloadVideo(videoStatus *types.VideoStatus, storagePath string) error {
+	args := []string{"script/main.py", "--url", videoStatus.Url, "--storage", storagePath, "--type", videoStatus.Type}
+	_, err := exec.Command("python", args...).Output()
+	return err
 }
