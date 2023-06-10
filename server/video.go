@@ -58,6 +58,7 @@ func DownloadVideo(c *gin.Context) {
 		Type:   videoType,
 	})
 
+	store.GlobalVideoStatusMap.SchedulerDownload()
 	c.JSON(http.StatusOK, composeResponse("start downloading"))
 }
 
@@ -68,11 +69,14 @@ func UpdateVideoStatus(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
+	// TODO: I think I will delete some field. because it didn't change when downloading
 	store.GlobalVideoStatusMap.AddVideo(types.VideoStatus{
-		Id:      input.Url, // 这个id通过url来取个hash值比较好
+		Id:      input.Id, // 这个id通过url来取个hash值比较好
+		Title:   input.Title,
+		Url:     input.Url,
 		Status:  input.Status,
 		Percent: input.Percent,
+		Size:    input.Size,
 	})
 	if input.Percent == 100 {
 		store.GlobalVideoStatusMap.DownloadComplete()
