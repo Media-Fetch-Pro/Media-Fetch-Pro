@@ -32,6 +32,7 @@ import argparse
 import os
 from plugins.bilibili.main import BilibiliDownloader
 from plugins.youtube.main import YoutubeDownloader
+from script.tool_utils.video import generate_uuid_from_url
 
 temp_path = "/home/ctrdh/video/temp"
 
@@ -53,12 +54,14 @@ if __name__ == "__main__":
         #     youtube_video.downloadVideo(args.url,args.storage)
         
     downloader = None
+    args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
     if(args.type == "youtube"):
         downloader = YoutubeDownloader(args.url,args.storage)
     elif(args.type == "bilibili"):
         downloader = BilibiliDownloader(args.url,args.storage)
     
     if downloader != None:
-        with open(f"{args.storage}/movie.nfo","w") as f:
+        with open(f"{args.storage}/{generate_uuid_from_url(args.url)}/movie.nfo","w") as f:
             f.write(downloader.getNfo())
         downloader.downloadVideo()
+        # TODO: other work. move folder from id to title
