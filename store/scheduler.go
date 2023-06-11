@@ -1,6 +1,10 @@
 package store
 
-import "github.com/CorrectRoadH/video-tools-for-nas/utils"
+import (
+	"fmt"
+
+	"github.com/CorrectRoadH/video-tools-for-nas/utils"
+)
 
 // func schedulerDownload() {
 // 	currentDownloadNum := 0
@@ -19,12 +23,16 @@ func (g GlobalVideoStatus) SchedulerDownload() {
 	if g.DownloadingVideoNum < SystemSettingCache.maxDownloadNum {
 		for _, value := range g.VideoStatusMap {
 			if value.Status == "pending" {
-				value.Status = "downloading"
+				value.Status = "fetching"
 				g.DownloadingVideoNum++
 				// 开始下载
 				go utils.DownloadVideo(value, SystemSettingCache.StoragePath)
+			} else {
+				fmt.Printf(value.Url)
+				fmt.Printf("video status is not pending\n")
 			}
-			break
 		}
+	} else {
+		fmt.Printf("downloading num is max\n")
 	}
 }

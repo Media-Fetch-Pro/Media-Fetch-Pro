@@ -12,7 +12,8 @@ class YoutubeDownloader():
     def progress_hook(self,d):
         # print(d["original_url"])
         url = d['info_dict']['original_url']
-        request.updateVideoStatus(generate_uuid_from_url(url),url,d['status'],"title",ytdlp.extract_progress(d['_percent_str']),1)
+        title = d['info_dict']['title']
+        request.updateVideoStatus(generate_uuid_from_url(url),url,title,d['status'],ytdlp.extract_progress(d['_percent_str']),1)
 
     def getNfo(self):
         temp_path = "/home/ctrdh/video/temp/"

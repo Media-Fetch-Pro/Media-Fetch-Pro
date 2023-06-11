@@ -20,3 +20,7 @@ var GlobalVideoStatusMap *GlobalVideoStatus = &GlobalVideoStatus{
 func (g *GlobalVideoStatus) AddVideo(videoStatus types.VideoStatus) {
 	g.VideoStatusMap[videoStatus.Id] = &videoStatus
 }
+
+func (g *GlobalVideoStatus) UpdateVideoStatus(videoStatus types.VideoStatus) {
+	g.VideoStatusMap[videoStatus.Id] = &videoStatus
+}

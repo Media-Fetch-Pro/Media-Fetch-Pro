@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 
 	store "github.com/CorrectRoadH/video-tools-for-nas/store"
@@ -70,7 +71,8 @@ func UpdateVideoStatus(c *gin.Context) {
 		return
 	}
 	// TODO: I think I will delete some field. because it didn't change when downloading
-	store.GlobalVideoStatusMap.AddVideo(types.VideoStatus{
+	fmt.Printf("update video status: %v\n", input)
+	store.GlobalVideoStatusMap.UpdateVideoStatus(types.VideoStatus{
 		Id:      input.Id, // 这个id通过url来取个hash值比较好
 		Title:   input.Title,
 		Url:     input.Url,
@@ -80,6 +82,7 @@ func UpdateVideoStatus(c *gin.Context) {
 	})
 	if input.Percent == 100 {
 		store.GlobalVideoStatusMap.DownloadComplete()
+		fmt.Printf("download complete\n")
 		store.GlobalVideoStatusMap.SchedulerDownload()
 	}
 	c.JSON(http.StatusOK, composeResponse("update video status"))
