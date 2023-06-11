@@ -3,3 +3,4 @@ __pycache__
 .air
 temp.info.json
 temp.nfo
+.DS_Store
