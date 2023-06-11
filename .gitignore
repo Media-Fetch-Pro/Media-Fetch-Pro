@@ -1,2 +1,5 @@
 node_modules
 __pycache__
+.air
+temp.info.json
+temp.nfo
