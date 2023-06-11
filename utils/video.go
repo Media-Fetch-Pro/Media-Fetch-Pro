@@ -35,8 +35,13 @@ func GenerateVideoIdFromURL(url string) string {
 }
 
 func DownloadVideo(videoStatus *types.VideoStatus, storagePath string) error {
+	fmt.Printf("videoStatus: %v\n", videoStatus)
+	fmt.Print(storagePath)
 	args := []string{"script/main.py", "--url", videoStatus.Url, "--storage", storagePath, "--type", videoStatus.Type}
-	out, err := exec.Command("python", args...).Output()
-	fmt.Printf("out: %s\n", out)
+	out, err := exec.Command("python3", args...).Output()
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+		fmt.Printf("out: %s\n", out)
+	}
 	return err
 }

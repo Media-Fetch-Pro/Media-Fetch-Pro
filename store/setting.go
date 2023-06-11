@@ -7,7 +7,7 @@ type SystemSetting struct {
 }
 
 var SystemSettingCache = &SystemSetting{
-	StoragePath:    "/Users/roadh/Desktop/video-tools-for-nas/video",
+	StoragePath:    "/home/ctrdh/video",
 	maxDownloadNum: 5,
 	maxSpeed:       100,
 }
