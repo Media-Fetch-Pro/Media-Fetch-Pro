@@ -12,6 +12,7 @@ class BilibiliDownloader():
     def progress_hook(self,d):
         url = d['info_dict']['original_url']
         title = d['info_dict']['title']
+        self.title = title # it will tiger multi times. So we need to optimize it.
         with open("/home/ctrdh/video/temp/bilibili.log","w") as f:
             f.write(str(d))
         request.updateVideoStatus(generate_uuid_from_url(url),url,title,d['status'],ytdlp.extract_progress(d['_percent_str']),1)
