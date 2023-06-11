@@ -21,9 +21,12 @@ func setupRouter() *gin.Engine {
 	// embed front-end static files
 	r.NoRoute(gin.WrapH(http.FileServer(gin.Dir("static", false))))
 
-	r.POST("/api/video", server.DownloadVideo)
-	r.POST("/api/update", server.UpdateVideoStatus)
-	r.GET("/api/video", server.GetAllVideoStatus)
+	apiv1 := r.Group("api")
+	{
+		apiv1.POST("/video", server.DownloadVideo)
+		apiv1.POST("/update", server.UpdateVideoStatus)
+		apiv1.GET("/video", server.GetAllVideoStatus)
+	}
 	return r
 }
 
