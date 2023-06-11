@@ -59,6 +59,6 @@ if __name__ == "__main__":
         downloader = BilibiliDownloader(args.url,args.storage)
     
     if downloader != None:
-        with open(f"{args.storage}/temp.nfo","w") as f:
-            f.write(downloader.getNfo()(args.url))
+        with open(f"{args.storage}/movie.nfo","w") as f:
+            f.write(downloader.getNfo())
         downloader.downloadVideo()
