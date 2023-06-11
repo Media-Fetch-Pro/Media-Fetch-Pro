@@ -30,7 +30,7 @@ export const useHistoryStore = defineStore("history", {
     },    
     actions:{
         async getVideoStatus() {
-            const res = (await axios.get("http://localhost:8080/video")).data;
+            const res = (await axios.get("api/video")).data;
             const historyData = convert(res.data);
             this.historyData = historyData;
         },
