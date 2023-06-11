@@ -71,7 +71,7 @@
     </TransitionRoot>
   </template>
   
-  <script setup>
+  <script setup lang="ts">
   import { ref } from 'vue'
   import {
     TransitionRoot,
@@ -87,7 +87,7 @@
 
   function closeModal() {
     isOpen.value = false
-    if(downloadStore.url.value === "") {
+    if(downloadStore.url === "") {
       alert("url is empty")
       return
     }else{

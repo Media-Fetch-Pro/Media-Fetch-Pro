@@ -26,7 +26,7 @@ WORKDIR /usr/local/tools
 
 RUN apk add --no-cache tzdata
 ENV TZ="UTC"
-
+ENV PROFILE="PRODUCTION"
 COPY --from=backend /backend-build/tools /usr/local/tools/
 
 EXPOSE 8080
