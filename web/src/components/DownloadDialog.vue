@@ -92,7 +92,6 @@
       return
     }else{
       downloadStore.download()
-      alert("staring download")
     }
   }
   function openModal() {

@@ -1,0 +1,6 @@
+{
+	"dependencies": {
+		"buefy": "^0.9.23",
+		"element-plus": "^2.3.6"
+	}
+}

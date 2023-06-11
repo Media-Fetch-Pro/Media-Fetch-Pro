@@ -10,8 +10,9 @@
             <div class="font-bold">Progress:</div>
             <div>{{ item.percent }}</div></div>
         <div class="flex">
-            <button>cancel download</button>
-            <button>re download</button>
+            <el-button type="info">Info</el-button>
+            <button v-if="item.percent!==100">cancel download</button>
+            <button v-if="item.percent==100">re download</button>
         </div>
     </div>
 </template>
