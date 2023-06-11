@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
-	store "github.com/CorrectRoadH/video-tools-for-nas/store"
-	"github.com/CorrectRoadH/video-tools-for-nas/types"
-	"github.com/CorrectRoadH/video-tools-for-nas/utils"
+	store "github.com/CorrectRoadH/video-tools-for-nas/backend/store"
+	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
+	"github.com/CorrectRoadH/video-tools-for-nas/backend/utils"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,6 +1,6 @@
 package store
 
-import "github.com/CorrectRoadH/video-tools-for-nas/types"
+import "github.com/CorrectRoadH/video-tools-for-nas/backend/types"
 
 type GlobalVideoStatus struct {
 	VideoStatusMap      map[string]*types.VideoStatus

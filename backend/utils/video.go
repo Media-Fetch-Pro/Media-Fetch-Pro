@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"regexp"
 
-	"github.com/CorrectRoadH/video-tools-for-nas/types"
+	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
 )
 
 func HandlerDownloader(url string) (string, error) {

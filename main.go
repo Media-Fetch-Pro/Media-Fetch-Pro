@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/CorrectRoadH/video-tools-for-nas/server"
+	"github.com/CorrectRoadH/video-tools-for-nas/backend/server"
 	"github.com/gin-gonic/gin"
 )
 
