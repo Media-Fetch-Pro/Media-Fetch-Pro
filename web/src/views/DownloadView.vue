@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import DownloadDialog from '@/components/DownloadDialog.vue';
+import { useDownloadStore } from '@/stores';
 
-const url = ref('')
+const downloadStore = useDownloadStore()
 const download = () => {
-    console.log(url.value)
+    downloadStore.download()
+    alert('开始下载')
 }
 
 defineExpose({
-    url
+    downloadStore
 })
 </script>
 <template>
     <main class="flex flex-col w-full h-screen bg-orange-300">
-        <div class="m-auto">
-            输入你的url:<input v-model="url"/>
+        <div class="flex m-auto">
+            输入你的url:<input v-model="downloadStore.url"/>
             <button @click="download">下载</button>
+            <DownloadDialog />
         </div>
         <div>  
             自动识别

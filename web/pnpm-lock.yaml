@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@headlessui/vue': ^1.7.14
   '@rushstack/eslint-patch': ^1.2.0
   '@tsconfig/node18': ^2.0.1
   '@types/jsdom': ^21.1.1
@@ -28,6 +29,7 @@ specifiers:
   vue-tsc: ^1.6.4
 
 dependencies:
+  '@headlessui/vue': registry.npmmirror.com/@headlessui/vue/1.7.14_vue@3.3.4
   axios: registry.npmmirror.com/axios/1.4.0
   pinia: registry.npmmirror.com/pinia/2.1.3_typescript@5.0.4+vue@3.3.4
   vue: registry.npmmirror.com/vue/3.3.4
@@ -383,6 +385,18 @@ packages:
     version: 8.42.0
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  registry.npmmirror.com/@headlessui/vue/1.7.14_vue@3.3.4:
+    resolution: {integrity: sha512-aL9U9Sa7wdOzlrfjx6EjMIYNRCma5mngWcWzQBcHFwznpRZ8g/QZ/AYFtRDrZZUw22Ttttja4D7ZRXFwhONewA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@headlessui/vue/-/vue-1.7.14.tgz}
+    id: registry.npmmirror.com/@headlessui/vue/1.7.14
+    name: '@headlessui/vue'
+    version: 1.7.14
+    engines: {node: '>=10'}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      vue: registry.npmmirror.com/vue/3.3.4
+    dev: false
 
   registry.npmmirror.com/@humanwhocodes/config-array/0.11.10:
     resolution: {integrity: sha512-KVVjQmNUepDVGXNuoRRdmmEjruj0KfiGSbS8LVc12LMsWDQzRXJ0qdhN8L8uUigKpfEHRhlaQFY0ib1tnUbNeQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@humanwhocodes/config-array/-/config-array-0.11.10.tgz}
