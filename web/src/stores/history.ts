@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-import type { History } from "src/types";
+import type { DownloadHistory } from "src/types";
 
 function convert(
     data: object
-):History[]{
+):DownloadHistory[]{
     return Object.values(data).map((item:any) => {
         console.log(item)
         return {
@@ -17,14 +17,14 @@ function convert(
             type: item.Type,
             alreadyDownloadSize: item.AlreadyDownloadSize,
             collectionId: item.CollectionId,
-        } as History
+        } as DownloadHistory
     })
 }
 
 
 export const useHistoryStore = defineStore("history", {
     state: () => ({
-        historyData: [] as History[],
+        historyData: [] as DownloadHistory[],
     }),
     getters: {
         getVideoHistory: (state) => state.historyData,

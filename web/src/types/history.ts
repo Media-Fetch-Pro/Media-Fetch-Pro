@@ -1,6 +1,4 @@
-import type { type } from "os";
-
-export interface History {
+export interface DownloadHistory {
     id: string;
     title: string;
     url: string;
