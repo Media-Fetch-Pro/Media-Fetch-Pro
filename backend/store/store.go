@@ -28,7 +28,10 @@ func (g *GlobalVideoStatus) AddVideo(videoStatus types.VideoStatus) {
 }
 
 func (g *GlobalVideoStatus) UpdateVideoStatus(videoStatus types.VideoStatus) {
-	g.VideoStatusMap[videoStatus.Id] = &videoStatus
+	// only update status, percent and alreadyDownloadedSize
+	g.VideoStatusMap[videoStatus.Id].Percent = videoStatus.Percent
+	g.VideoStatusMap[videoStatus.Id].Status = videoStatus.Status
+	g.VideoStatusMap[videoStatus.Id].AlreadyDownloadedSize = videoStatus.AlreadyDownloadedSize
 }
 
 func SaveGlobalVideoStatusMap() {
