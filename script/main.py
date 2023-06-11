@@ -29,9 +29,9 @@
 # -b: 指定下载的最大重试次数
 
 import argparse
-import nfo_download.youtube as youtube_nfo
-import video_download.youtube as youtube_video
 import os
+from plugins.bilibili.main import BilibiliDownloader
+from plugins.youtube.main import YoutubeDownloader
 
 temp_path = "/home/ctrdh/video/temp"
 
@@ -45,8 +45,20 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
     # 判断下载路径是否是一个目录
-    if os.path.isdir(args.storage):
-        if(args.type == "youtube"):
-            with open(f"{args.storage}/temp.nfo","w") as f:
-                f.write(youtube_nfo.readNfo(args.url))
-            youtube_video.downloadVideo(args.url,args.storage)
+    if not(os.path.isdir(args.storage)):
+        exit(1)
+        # if(args.type == "youtube"):
+        #     with open(f"{args.storage}/temp.nfo","w") as f:
+        #         f.write(youtube_nfo.readNfo(args.url))
+        #     youtube_video.downloadVideo(args.url,args.storage)
+        
+    downloader = None
+    if(args.type == "youtube"):
+        downloader = YoutubeDownloader(args.url,args.storage)
+    elif(args.type == "bilibili"):
+        downloader = BilibiliDownloader(args.url,args.storage)
+    
+    if downloader != None:
+        with open(f"{args.storage}/temp.nfo","w") as f:
+            f.write(downloader.getNfo()(args.url))
+        downloader.downloadVideo()

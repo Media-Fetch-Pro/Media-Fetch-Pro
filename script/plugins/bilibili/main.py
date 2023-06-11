@@ -4,15 +4,15 @@ import api.request as request
 from tool_utils.video import generate_uuid_from_url
 import tool_utils.ytdlp as ytdlp
 
-class YoutubeDownloader():
+class BilibiliDownloader():
     def __init__(self, url, output_dir):
         self.url = url
         self.output_dir = output_dir
-        
+    
     def progress_hook(d):
-        # print(d["original_url"])
         url = d['info_dict']['original_url']
         request.updateVideoStatus(generate_uuid_from_url(url),url,d['status'],"title",ytdlp.extract_progress(d['_percent_str']),1)
+
 
     def readNfo(self):
         temp_path = "/home/ctrdh/video/temp/"
@@ -28,4 +28,5 @@ class YoutubeDownloader():
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([self.url])
+
 
