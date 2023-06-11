@@ -1,12 +1,11 @@
 <template>
     <div class="flex items-center justify-center">
-      <button
-        type="button"
+      <el-button
+        type="primary"
         @click="openModal"
-        class="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
       >
-        下载
-      </button>
+        Download
+      </el-button>
     </div>
     <TransitionRoot appear :show="isOpen" as="template">
       <Dialog as="div" @close="closeModal" class="relative z-10">
@@ -45,23 +44,29 @@
                 Please choose a video directory
               </DialogTitle>
                 <div class="mt-2">
-                  <p class="text-sm text-gray-500">
-                    Default
-                    
-                    Uploader
-
-                    Custom
-                  </p>
+                  Save Video to:
+                  <el-radio-group v-model="radio1" size="large">
+                    <el-radio-button label="Auto" />
+                    <el-radio-button label="Video Uploader" />
+                    <el-radio-button label="Collect" />
+                    <el-radio-button label="Custom" />
+                  </el-radio-group>
+              
                 </div>
   
-                <div class="mt-4">
+                <div class="flex mt-4 gap-2">
                   <button
                     type="button"
                     class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                     @click="closeModal"
                   >
-                    开始下载
+                    Download
                   </button>
+                  <el-button
+                    @click="cancelModal"
+                  >
+                    Cancel Download
+                  </el-button>
                 </div>
               </DialogPanel>
             </TransitionChild>
@@ -83,7 +88,9 @@
   import { useDownloadStore } from '@/stores';
 
   const isOpen = ref(false)
+  const radio1 = ref('Auto')
   const downloadStore = useDownloadStore()
+
 
   function closeModal() {
     isOpen.value = false
@@ -95,7 +102,15 @@
     }
   }
   function openModal() {
-    isOpen.value = true
+    if(downloadStore.url === "") {
+      alert("url is empty")
+      return
+    }else{
+      isOpen.value = true
+    }
+  }
+  function cancelModal() {
+    isOpen.value = false
   }
   </script>
   

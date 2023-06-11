@@ -11,7 +11,7 @@ defineExpose({
 })
 </script>
 <template>
-    <main class="flex flex-col w-full h-screen bg-orange-300">
+    <main class="flex flex-col w-full bg-orange-300">
         Download History
         <button>update history</button>
         <div class="w-full">

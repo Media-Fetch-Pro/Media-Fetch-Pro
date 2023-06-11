@@ -10,8 +10,8 @@ defineExpose({
 </script>
 <template>
     <main class="flex flex-col w-full h-screen bg-orange-300">
-        <div class="flex m-auto">
-            输入你的url:<input v-model="downloadStore.url"/>
+        <div class="flex flex-col w-full m-auto gap-2 p-20">
+            <el-input class="w-full" v-model="downloadStore.url" placeholder="Please input Video URL" />
             <DownloadDialog />
         </div>
         <div>  

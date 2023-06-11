@@ -10,9 +10,8 @@
             <div class="font-bold">Progress:</div>
             <div>{{ item.percent }}</div></div>
         <div class="flex">
-            <el-button type="info">Info</el-button>
-            <button v-if="item.percent!==100">cancel download</button>
-            <button v-if="item.percent==100">re download</button>
+            <el-button type="primary" v-if="item.percent!==100">cancel download</el-button>
+            <el-button type="primary" v-if="item.percent==100">re download</el-button>
         </div>
     </div>
 </template>
@@ -25,7 +24,6 @@ const props = defineProps({
         required: true
     }
 })
-console.log(props.item)
 defineExpose({
     props
 })

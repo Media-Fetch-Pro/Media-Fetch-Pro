@@ -4,10 +4,10 @@ import { RouterView } from 'vue-router'
 
 <template>
   <div class="flex">
-    <div class="flex flex-col border w-3/12">
-      <router-link to="/">下载</router-link>
-      <router-link to="/history">下载历史</router-link>
-      <router-link to="/setting">设置</router-link>
+    <div class="flex flex-col border w-1/12">
+      <router-link to="/">Download</router-link>
+      <router-link to="/history">History</router-link>
+      <router-link to="/setting">Setting</router-link>
     </div>
     <RouterView />
   </div>
