@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/server"
+	store "github.com/CorrectRoadH/video-tools-for-nas/backend/store"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,6 +19,7 @@ func setupRouter() *gin.Engine {
 }
 
 func main() {
+	store.LoadGlobalVideoStatusMap()
 	r := setupRouter()
 	// Listen and Server in 0.0.0.0:8080
 	r.Run(":8080")

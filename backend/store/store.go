@@ -1,6 +1,12 @@
 package store
 
-import "github.com/CorrectRoadH/video-tools-for-nas/backend/types"
+import (
+	"os"
+	"path"
+
+	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
+	"gopkg.in/yaml.v3"
+)
 
 type GlobalVideoStatus struct {
 	VideoStatusMap      map[string]*types.VideoStatus
@@ -23,4 +29,43 @@ func (g *GlobalVideoStatus) AddVideo(videoStatus types.VideoStatus) {
 
 func (g *GlobalVideoStatus) UpdateVideoStatus(videoStatus types.VideoStatus) {
 	g.VideoStatusMap[videoStatus.Id] = &videoStatus
+}
+
+func SaveGlobalVideoStatusMap() {
+	cwd, err := os.Getwd()
+	// handle err
+	if err != nil {
+		panic(err)
+	}
+
+	raw, err := yaml.Marshal(GlobalVideoStatusMap)
+	// handle err
+
+	err = os.WriteFile(
+		path.Join(cwd, "video.yaml"),
+		raw,
+		0644,
+	)
+	if err != nil {
+		panic(err)
+	}
+	// handle err
+
+}
+
+func LoadGlobalVideoStatusMap() {
+	cwd, err := os.Getwd()
+	// handle err
+	if err != nil {
+		panic(err)
+	}
+
+	raw, err := os.ReadFile(
+		path.Join(cwd, "video.yaml"),
+	)
+	// handle err
+
+	var status GlobalVideoStatus
+	yaml.Unmarshal(raw, &status)
+	GlobalVideoStatusMap = &status
 }

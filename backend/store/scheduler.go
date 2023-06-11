@@ -20,6 +20,7 @@ func (g GlobalVideoStatus) DownloadComplete() {
 
 // will be tiger when a video be append to queue and a task is complete
 func (g GlobalVideoStatus) SchedulerDownload() {
+	SaveGlobalVideoStatusMap() // TODO the save timing is not suit
 	if g.DownloadingVideoNum < SystemSettingCache.maxDownloadNum {
 		for _, value := range g.VideoStatusMap {
 			if value.Status == "pending" {

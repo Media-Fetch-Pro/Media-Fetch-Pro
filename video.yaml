@@ -1,0 +1,12 @@
+videostatusmap:
+    3cd187e4869226b0a13d317ee0296caa:
+        id: 3cd187e4869226b0a13d317ee0296caa
+        title: ""
+        url: https://www.bilibili.com/video/BV1ZX4y1b7iJ
+        status: pending
+        percent: 0
+        size: 0
+        type: bilibili
+        alreadydownloadedsize: 0
+        collectionid: ""
+downloadingvideonum: 0
