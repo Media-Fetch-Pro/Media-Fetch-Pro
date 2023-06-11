@@ -88,3 +88,8 @@ func UpdateVideoStatus(c *gin.Context) {
 func GetAllVideoStatus(c *gin.Context) {
 	c.JSON(http.StatusOK, composeResponse(store.GlobalVideoStatusMap.VideoStatusMap))
 }
+
+func GetWebsiteStatus(c *gin.Context) {
+	// to check the connection of website: youtube or bilibili. because some people in China can't connect to youtube
+	c.JSON(http.StatusOK, composeResponse(""))
+}
