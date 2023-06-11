@@ -16,3 +16,9 @@ cd web
 pnpm i
 pnpm dev
 ```
+
+# How to use
+**Note**: It is not working now
+```
+docker run -p 7789:7789 -v /xxx:/xxx correctroadh/video-tools
+```
