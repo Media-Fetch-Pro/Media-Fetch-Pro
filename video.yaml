@@ -19,16 +19,6 @@ videostatusmap:
         type: ""
         alreadydownloadedsize: 0
         collectionid: ""
-    455b8e600247247c73c6bc419d7882dd:
-        id: 455b8e600247247c73c6bc419d7882dd
-        title: ""
-        url: https://www.bilibili.com/video/BV1MP41197iF
-        status: pending
-        percent: 0
-        size: 0
-        type: bilibili
-        alreadydownloadedsize: 0
-        collectionid: ""
     559fe3c5b1c414cfbe4986bfc41e6883:
         id: 559fe3c5b1c414cfbe4986bfc41e6883
         title: “门罗效应”是什么？给炸药加个金属罩，直接影响了战争进程
@@ -79,22 +69,22 @@ videostatusmap:
         type: ""
         alreadydownloadedsize: 0
         collectionid: ""
-    db20447c9c1409dcfacfa8d1d68bd54a:
-        id: db20447c9c1409dcfacfa8d1d68bd54a
-        title: ""
-        url: https://www.bilibili.com/video/BV1Uh411F7sH
-        status: fetching
-        percent: 0
+    d8cea6053c98fd3209db7ab05f6eaeed:
+        id: d8cea6053c98fd3209db7ab05f6eaeed
+        title: 探秘迪拜最土豪自助餐！迪拜皇室自助餐！都吃什么？
+        url: https://www.bilibili.com/video/BV1uh4y1X7Gn
+        status: finished
+        percent: 100
         size: 0
         type: bilibili
         alreadydownloadedsize: 0
         collectionid: ""
-    e77faaab351714f1bef6f8634ce716b5:
-        id: e77faaab351714f1bef6f8634ce716b5
-        title: ""
-        url: https://www.bilibili.com/video/BV1eX4y1t7fG
-        status: fetching
-        percent: 0
+    ea2a2d4bb85b515998c14c5e75b40188:
+        id: ea2a2d4bb85b515998c14c5e75b40188
+        title: 滴胶封存起来的鸡蛋快三年了，会坏吗？
+        url: https://www.bilibili.com/video/BV1Eo4y1J7U5/
+        status: finished
+        percent: 100
         size: 0
         type: bilibili
         alreadydownloadedsize: 0
