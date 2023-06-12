@@ -19,6 +19,16 @@ videostatusmap:
         type: ""
         alreadydownloadedsize: 0
         collectionid: ""
+    455b8e600247247c73c6bc419d7882dd:
+        id: 455b8e600247247c73c6bc419d7882dd
+        title: ""
+        url: https://www.bilibili.com/video/BV1MP41197iF
+        status: pending
+        percent: 0
+        size: 0
+        type: bilibili
+        alreadydownloadedsize: 0
+        collectionid: ""
     559fe3c5b1c414cfbe4986bfc41e6883:
         id: 559fe3c5b1c414cfbe4986bfc41e6883
         title: “门罗效应”是什么？给炸药加个金属罩，直接影响了战争进程

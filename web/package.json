@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
     "@headlessui/vue": "^1.7.14",
     "axios": "^1.4.0",
     "element-plus": "^2.3.6",

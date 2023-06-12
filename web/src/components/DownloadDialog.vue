@@ -2,6 +2,7 @@
     <div class="flex items-center justify-center">
       <el-button
         type="primary"
+        :icon="Download"
         @click="openModal"
       >
         Download
@@ -58,7 +59,7 @@
                   <button
                     type="button"
                     class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    @click="closeModal"
+                    @click="handleDownloadBtnClick"
                   >
                     Download
                   </button>
@@ -77,6 +78,7 @@
   </template>
   
   <script setup lang="ts">
+  import {Download} from "@element-plus/icons-vue";
   import { ref } from 'vue'
   import {
     TransitionRoot,
@@ -86,19 +88,25 @@
     DialogTitle,
   } from '@headlessui/vue'
   import { useDownloadStore } from '@/stores';
+  import { ElMessage } from 'element-plus'
+
 
   const isOpen = ref(false)
   const radio1 = ref('Auto')
   const downloadStore = useDownloadStore()
 
 
-  function closeModal() {
+  function handleDownloadBtnClick() {
     isOpen.value = false
     if(downloadStore.url === "") {
       alert("url is empty")
       return
     }else{
       downloadStore.download()
+      ElMessage({
+        message: 'Start Downloading',
+        type: 'success',
+      })
     }
   }
   function openModal() {

@@ -10,4 +10,4 @@ def updateVideoStatus(id,url,title,status,percent,size):
         "percent": percent,
         "size": size
     }
-    res = requests.post('http://127.0.0.1:8080/update', json=data)   
+    res = requests.post('http://127.0.0.1:8080/api/update', json=data)   

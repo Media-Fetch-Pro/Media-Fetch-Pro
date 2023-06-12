@@ -6,7 +6,6 @@ function convert(
     data: object
 ):DownloadHistory[]{
     return Object.values(data).map((item:any) => {
-        console.log(item)
         return {
             id: item.Id,
             title: item.Title,
@@ -25,16 +24,19 @@ function convert(
 export const useHistoryStore = defineStore("history", {
     state: () => ({
         historyData: [] as DownloadHistory[],
+        loading: true,
     }),
     getters: {
         getVideoHistory: (state) => state.historyData,
     },    
     actions:{
         async getVideoStatus() {
+            this.loading = true;
             const res = (await axios.get("api/video")).data;
             const historyData = convert(res.data);
             // console.log(historyData)
             this.historyData = historyData;
+            this.loading = false;
             return historyData;
         },
     },

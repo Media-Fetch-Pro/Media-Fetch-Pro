@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@element-plus/icons-vue': ^2.1.0
   '@headlessui/vue': ^1.7.14
   '@rushstack/eslint-patch': ^1.2.0
   '@tsconfig/node18': ^2.0.1
@@ -30,6 +31,7 @@ specifiers:
   vue-tsc: ^1.6.4
 
 dependencies:
+  '@element-plus/icons-vue': registry.npmmirror.com/@element-plus/icons-vue/2.1.0_vue@3.3.4
   '@headlessui/vue': registry.npmmirror.com/@headlessui/vue/1.7.14_vue@3.3.4
   axios: registry.npmmirror.com/axios/1.4.0
   element-plus: registry.npmmirror.com/element-plus/2.3.6_vue@3.3.4
