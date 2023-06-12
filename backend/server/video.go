@@ -95,3 +95,17 @@ func GetWebsiteStatus(c *gin.Context) {
 	// to check the connection of website: youtube or bilibili. because some people in China can't connect to youtube
 	c.JSON(http.StatusOK, composeResponse(""))
 }
+
+type ConnectionStatus struct {
+	BilibiliStatus bool `json:"bilibili_status"`
+	YoutubeStatus  bool `json:"youtube_status"`
+}
+
+func GetConnectionStatus(c *gin.Context) {
+	// to check the connection of nas
+	ConnectionStatus := &ConnectionStatus{
+		BilibiliStatus: true,
+		YoutubeStatus:  true,
+	}
+	c.JSON(http.StatusOK, composeResponse(ConnectionStatus))
+}

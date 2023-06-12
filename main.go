@@ -26,6 +26,7 @@ func setupRouter() *gin.Engine {
 		apiv1.POST("/video", server.DownloadVideo)
 		apiv1.POST("/update", server.UpdateVideoStatus)
 		apiv1.GET("/video", server.GetAllVideoStatus)
+		apiv1.GET("/status", server.GetConnectionStatus)
 	}
 	return r
 }
