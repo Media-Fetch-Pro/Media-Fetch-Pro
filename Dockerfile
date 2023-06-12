@@ -5,7 +5,7 @@ WORKDIR /frontend-build
 
 COPY ./web/package.json ./web/pnpm-lock.yaml ./
 
-RUN corepack enable && pnpm i --frozen-lockfile
+RUN corepack enable && pnpm i
 
 COPY ./web/ .
 

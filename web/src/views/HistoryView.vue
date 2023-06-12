@@ -4,6 +4,7 @@ import { useHistoryStore } from '@/stores';
 import { onMounted } from 'vue';
 const historyStore = useHistoryStore()
 import { Refresh } from '@element-plus/icons-vue'
+// import { ElMessage } from 'element-plus'
 import { ElMessage } from 'element-plus'
 
 onMounted(() => {
@@ -12,7 +13,7 @@ onMounted(() => {
 
 const handleRefreshBtnClick = async () => {
     await historyStore.getVideoStatus()
-    ElMessage({msg:'update Success!',type: 'success'})
+    ElMessage.success('update Success!')
 }
 defineExpose({
     historyStore

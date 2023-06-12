@@ -9,7 +9,7 @@
       </el-button>
     </div>
     <TransitionRoot appear :show="isOpen" as="template">
-      <Dialog as="div" @close="closeModal" class="relative z-10">
+      <Dialog as="div" @close="cancelModal" class="relative z-10">
         <TransitionChild
           as="template"
           enter="duration-300 ease-out"
@@ -88,8 +88,7 @@
     DialogTitle,
   } from '@headlessui/vue'
   import { useDownloadStore } from '@/stores';
-  import { ElMessage } from 'element-plus'
-
+  import { ElMessage }  from 'element-plus'
 
   const isOpen = ref(false)
   const radio1 = ref('Auto')
@@ -103,10 +102,7 @@
       return
     }else{
       downloadStore.download()
-      ElMessage({
-        message: 'Start Downloading',
-        type: 'success',
-      })
+      ElMessage.success("Start Downloading")
     }
   }
   function openModal() {

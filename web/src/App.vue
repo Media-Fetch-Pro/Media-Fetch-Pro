@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import NavTab from './components/NavTab.vue';
+import NavTab from './components/NavTab.vue'
 </script>
 
 <template>
