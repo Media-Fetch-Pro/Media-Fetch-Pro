@@ -14,11 +14,6 @@ func setupRouter() *gin.Engine {
 
 	r := gin.Default()
 
-	// embed static files
-	// read env variable. only when env is production
-	// if os.Getenv("PROFILE") == "PRODUCTION" {
-	// }
-	// embed front-end static files
 	r.NoRoute(gin.WrapH(http.FileServer(gin.Dir("static", false))))
 
 	apiv1 := r.Group("api")
