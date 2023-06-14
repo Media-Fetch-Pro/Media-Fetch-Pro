@@ -1,9 +1,7 @@
 name: build-and-push
 on:
   push:
-    branches:
-      # Run on pushing branches like `release/1.0.0`
-      - "release/*.*.*"
+    branches: [main]
 
 jobs:
   build-and-push-release-image:
