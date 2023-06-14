@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"net/http"
 
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/server"
@@ -10,17 +11,14 @@ import (
 
 var db = make(map[string]string)
 
+//go:embed script
+var embeddedPython embed.FS
+
 func setupRouter() *gin.Engine {
 
 	r := gin.Default()
 
-	// r.NoRoute("/", server.GetFileSystem("dist"))
-	// r.NoRoute(gin.WrapH(http.FileServer(gin.Dir("static", false))))
-	r.StaticFS("/ui", server.GetFileSystem("dist"))
-	r.GET("/", func(c *gin.Context) {
-		c.Redirect(http.StatusMovedPermanently, "/ui")
-		c.Abort()
-	})
+	r.NoRoute(gin.WrapH(http.FileServer(server.GetFileSystem("dist"))))
 
 	apiv1 := r.Group("api")
 	{

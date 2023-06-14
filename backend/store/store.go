@@ -72,4 +72,13 @@ func LoadGlobalVideoStatusMap() {
 	var status GlobalVideoStatus
 	yaml.Unmarshal(raw, &status)
 	GlobalVideoStatusMap = &status
+	if GlobalVideoStatusMap == nil {
+		GlobalVideoStatusMap = &GlobalVideoStatus{
+			VideoStatusMap:      make(map[string]*types.VideoStatus),
+			DownloadingVideoNum: 0,
+		}
+	}
+	if GlobalVideoStatusMap.VideoStatusMap == nil {
+		GlobalVideoStatusMap.VideoStatusMap = make(map[string]*types.VideoStatus)
+	}
 }
