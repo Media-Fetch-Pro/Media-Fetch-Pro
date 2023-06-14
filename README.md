@@ -17,8 +17,12 @@ pnpm i
 pnpm dev
 ```
 
-# How to use
-**Note**: It is not working now
+python
 ```
-docker run -p 7789:7789 -v /usr/local/tools:/usr/local/tools correctroadh/video-tools
+python3 script/main.py --url https://www.youtube.com/watch?v=lyNVPxHiVyE --storage ./video --type youtube
+```
+
+# How to use
+```
+docker run  -itd --name video-tool-for-nas -p 8080:8080 -v ./video:/var/opt/video correctroad/video-tools:latest
 ```
