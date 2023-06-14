@@ -4,7 +4,7 @@ FROM node:18.12.1-alpine3.16 AS frontend
 WORKDIR /frontend-build
 
 COPY ./web/package.json ./web/pnpm-lock.yaml ./
-
+ENV NODE_ENV=production
 RUN corepack enable && pnpm i
 
 COPY ./web/ .
@@ -16,7 +16,7 @@ FROM golang:1.19.3-alpine3.16 AS backend
 WORKDIR /backend-build
 
 COPY . .
-COPY --from=frontend /frontend-build/dist ./static
+COPY --from=frontend /frontend-build/dist ./backend/server/dist
 
 RUN CGO_ENABLED=0 go build -o tools ./main.go
 

@@ -14,8 +14,13 @@ func setupRouter() *gin.Engine {
 
 	r := gin.Default()
 
-	// go:embed static/*
-	r.NoRoute(gin.WrapH(http.FileServer(gin.Dir("static", false))))
+	// r.NoRoute("/", server.GetFileSystem("dist"))
+	// r.NoRoute(gin.WrapH(http.FileServer(gin.Dir("static", false))))
+	r.StaticFS("/ui", server.GetFileSystem("dist"))
+	r.GET("/", func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently, "/ui")
+		c.Abort()
+	})
 
 	apiv1 := r.Group("api")
 	{
