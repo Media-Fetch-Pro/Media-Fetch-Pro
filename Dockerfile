@@ -31,3 +31,8 @@ ENV PROFILE="PRODUCTION"
 COPY --from=backend /backend-build/tools /usr/local/tools/
 
 EXPOSE 8080
+
+RUN mkdir -p /var/opt/tools
+VOLUME /var/opt/tools
+
+ENTRYPOINT ["./tools"]
