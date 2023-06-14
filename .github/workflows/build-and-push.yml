@@ -1,8 +1,6 @@
 name: build-and-push
 on:
-  repository_dispatch:
-    types: [opened, deleted]
-
+  workflow_dispatch
 jobs:
   build-and-push-release-image:
     runs-on: ubuntu-latest
