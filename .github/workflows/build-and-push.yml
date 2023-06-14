@@ -46,8 +46,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            CorrectRoadH/video-tools
-            ghcr.io/CorrectRoadH/video-tools
+            correctroad/video-tools
           tags: |
             type=raw,value=latest
             type=semver,pattern={{version}},value=${{ env.VERSION }}
