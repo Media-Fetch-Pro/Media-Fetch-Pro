@@ -1,7 +1,7 @@
 name: build-and-push
 on:
-  push:
-    branches: [main]
+  repository_dispatch:
+    types: [opened, deleted]
 
 jobs:
   build-and-push-release-image:
