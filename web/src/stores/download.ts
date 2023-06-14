@@ -4,7 +4,7 @@ import axios from "axios";
 export const useDownloadStore = defineStore("download", {
     state: () => ({
         url: "",
-        selectStoragePath: "/home/ctrdh/video",
+        selectStoragePath: "/var/opt/video",
         StoragePathOptions: [],
     }),
     getters: {

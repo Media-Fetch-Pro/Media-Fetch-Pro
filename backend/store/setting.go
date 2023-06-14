@@ -14,7 +14,7 @@ type SystemSetting struct {
 }
 
 var SystemSettingCache = &SystemSetting{
-	StoragePath:    "/home/ctrdh/video",
+	StoragePath:    "/var/opt/video",
 	maxDownloadNum: 5,
 	maxSpeed:       100,
 }

@@ -13,14 +13,12 @@ class BilibiliDownloader():
         url = d['info_dict']['original_url']
         title = d['info_dict']['title']
         self.title = title # it will tiger multi times. So we need to optimize it.
-        with open("/home/ctrdh/video/temp/bilibili.log","w") as f:
-            f.write(str(d))
         request.updateVideoStatus(generate_uuid_from_url(url),url,title,d['status'],ytdlp.extract_progress(d['_percent_str']),1)
 
 
     def getNfo(self):
         request.updateVideoStatus(generate_uuid_from_url(self.url),self.url,"title","fetching meta",0,1)
-        temp_path = "/home/ctrdh/video/temp/"
+        temp_path = "/var/opt/video/temp/"
         os.system(f"yt-dlp --skip-download --write-info-json -o {temp_path}temp {self.url}")
         os.system(f"ytdl-nfo {temp_path}temp.info.json")
         with open(f"{temp_path}temp.nfo", "r") as f:

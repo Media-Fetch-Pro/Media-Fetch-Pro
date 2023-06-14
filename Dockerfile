@@ -3,12 +3,8 @@
 FROM node:18.12.1-alpine3.16 AS frontend
 WORKDIR /frontend-build
 
-COPY ./web/package.json ./web/pnpm-lock.yaml ./
-ENV NODE_ENV=production
-RUN corepack enable && pnpm i
-
 COPY ./web/ .
-
+RUN corepack enable && pnpm install
 RUN pnpm build
 
 # Build backend exec file.
@@ -31,8 +27,12 @@ ENV PROFILE="PRODUCTION"
 COPY --from=backend /backend-build/tools /usr/local/tools/
 COPY --from=backend /backend-build/script /usr/local/tools/script
 EXPOSE 8080
-
+RUN apk add python3  py3-pip
+RUN pip install requests yt_dlp ytdl-nfo
 RUN mkdir -p /var/opt/tools
+RUN mkdir -p /var/opt/video
+RUN mkdir -p /var/opt/video/temp
+
 VOLUME /var/opt/tools
 
 ENTRYPOINT ["./tools"]

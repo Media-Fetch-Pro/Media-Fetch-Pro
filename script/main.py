@@ -35,7 +35,7 @@ from plugins.youtube.main import YoutubeDownloader
 from tool_utils.video import generate_uuid_from_url
 from tool_utils.video import renameDir
 
-temp_path = "/home/ctrdh/video/temp"
+temp_path = "/var/opt/video/temp"
 
 
 parser = argparse.ArgumentParser(description='姓名')
