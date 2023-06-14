@@ -1,7 +1,6 @@
 package main
 
 import (
-	"embed"
 	"net/http"
 
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/server"
@@ -10,9 +9,6 @@ import (
 )
 
 var db = make(map[string]string)
-
-//go:embed script
-var embeddedPython embed.FS
 
 func setupRouter() *gin.Engine {
 
