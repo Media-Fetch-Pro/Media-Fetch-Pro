@@ -13,8 +13,8 @@ defineExpose({
 <template>
   <div class="flex">
     <div class="flex flex-col border h-screen w-1/12 bg-slate-300 gap-5 px-1">
-      <div class="h-5">
-
+      <div class="rounded-full overflow-hidden">
+          <img src="/logo.jpg" alt="logo" class="h-full w-full" />
       </div>
       <NavTab to="/" >
           <el-icon>
