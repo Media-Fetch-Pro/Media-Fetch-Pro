@@ -61,6 +61,8 @@ if __name__ == "__main__":
     if downloader != None:
         with open(f"{args.storage}/movie.nfo","w") as f:
             f.write(downloader.getNfo())
+        downloader.downloadPoster()
         downloader.downloadVideo()
+        
         # TODO: other work. move folder from id to title
         renameDir(f"{args.storage}",f"{downloader.title}")

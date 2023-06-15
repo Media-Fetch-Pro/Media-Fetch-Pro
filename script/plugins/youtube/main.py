@@ -22,6 +22,11 @@ class YoutubeDownloader():
         os.system(f"ytdl-nfo {temp_path}temp.info.json")
         with open(f"{temp_path}temp.nfo", "r") as f:
             return f.read()
+    
+    def downloadPoster(self):
+        temp_path = self.output_dir
+        os.system(f"yt-dlp --skip-download --write-thumbnail -o {temp_path}/poster {self.url}")
+
 
     def downloadVideo(self):
         ydl_opts =  {

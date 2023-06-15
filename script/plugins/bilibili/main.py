@@ -15,6 +15,10 @@ class BilibiliDownloader():
         self.title = title # it will tiger multi times. So we need to optimize it.
         request.updateVideoStatus(generate_uuid_from_url(url),url,title,d['status'],ytdlp.extract_progress(d['_percent_str']),1)
 
+    def downloadPoster(self):
+        temp_path = self.output_dir
+        os.system(f"yt-dlp --skip-download --write-thumbnail -o {temp_path}/poster {self.url}")
+~~
 
     def getNfo(self):
         request.updateVideoStatus(generate_uuid_from_url(self.url),self.url,"title","fetching meta",0,1)
