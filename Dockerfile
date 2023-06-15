@@ -27,7 +27,7 @@ ENV PROFILE="PRODUCTION"
 COPY --from=backend /backend-build/tools /usr/local/tools/
 COPY --from=backend /backend-build/script /usr/local/tools/script
 EXPOSE 8080
-RUN apk add python3  py3-pip
+RUN apk add python3 py3-pip ffmpeg
 RUN pip install requests yt_dlp ytdl-nfo
 RUN mkdir -p /var/opt/tools
 RUN mkdir -p /var/opt/video
