@@ -43,10 +43,10 @@ docker run  -itd --name video-tool-for-nas -p 8080:8080 -v ./video:/var/opt/vide
 ```
 
 # Roadmap
--[] Support download Video Collection
--[] Support login by cookie to download hight resolution video
--[] Better Download manager
--[] i18n
--[] Write Documents
+ - [ ] Support download Video Collection
+ - [ ] Support login by cookie to download hight resolution video
+ - [ ] Better Download manager
+ - [ ] i18n
+ - [ ] Write Documents
 # Architecture
 ![](./images/arch.png)
