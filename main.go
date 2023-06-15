@@ -22,7 +22,7 @@ func setupRouter() *gin.Engine {
 		apiv1.POST("/update", server.UpdateVideoStatus)
 		apiv1.GET("/video", server.GetAllVideoStatus) // I think may sync all video is not a good idea
 		// only update downloading video status
-		// apiv1.GET("/video/:id", server.GetVideoStatus)
+		apiv1.GET("/video/:id", server.GetVideoStatus)
 		apiv1.GET("/status", server.GetConnectionStatus)
 		// TODO: delete video
 		//

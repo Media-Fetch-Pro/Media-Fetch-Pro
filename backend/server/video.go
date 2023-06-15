@@ -94,7 +94,13 @@ func GetAllVideoStatus(c *gin.Context) {
 // only get single video status
 func GetVideoStatus(c *gin.Context) {
 	// TODO: get video status by id
-	c.JSON(http.StatusOK, composeResponse(""))
+	id := c.Param("id")
+	videoStatus := store.GlobalVideoStatusMap.VideoStatusMap[id]
+	if videoStatus == nil {
+		c.JSON(http.StatusBadRequest, composeResponse("video not found"))
+		return
+	}
+	c.JSON(http.StatusOK, composeResponse(videoStatus))
 }
 
 func checkWebsiteConnection(address string) bool {
