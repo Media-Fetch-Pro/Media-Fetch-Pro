@@ -19,10 +19,6 @@ var GlobalVideoStatusMap *GlobalVideoStatus = &GlobalVideoStatus{
 	DownloadingVideoNum: 0,
 }
 
-// func AddVideo(videoStatus types.VideoStatus) {
-// 	VideoStatusMap[videoStatus.Id] = &videoStatus
-// }
-
 func (g *GlobalVideoStatus) AddVideo(videoStatus types.VideoStatus) {
 	g.VideoStatusMap[videoStatus.Id] = &videoStatus
 }

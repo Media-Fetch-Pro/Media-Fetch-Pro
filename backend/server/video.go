@@ -91,21 +91,30 @@ func GetAllVideoStatus(c *gin.Context) {
 	c.JSON(http.StatusOK, composeResponse(store.GlobalVideoStatusMap.VideoStatusMap))
 }
 
-func GetWebsiteStatus(c *gin.Context) {
-	// to check the connection of website: youtube or bilibili. because some people in China can't connect to youtube
+// only get single video status
+func GetVideoStatus(c *gin.Context) {
+	// TODO: get video status by id
 	c.JSON(http.StatusOK, composeResponse(""))
 }
 
-type ConnectionStatus struct {
-	BilibiliStatus bool `json:"bilibili_status"`
-	YoutubeStatus  bool `json:"youtube_status"`
+func checkWebsiteConnection(address string) bool {
+	// to request address param
+	// if response code is 200, then return true
+	// else return false
+	_, err := http.Get(address)
+	if err == nil {
+		return false
+	} else {
+		return true
+	}
 }
 
 func GetConnectionStatus(c *gin.Context) {
 	// to check the connection of nas
-	ConnectionStatus := &ConnectionStatus{
-		BilibiliStatus: true,
-		YoutubeStatus:  true,
+	ConnectionStatus := &types.ConnectionStatus{
+		BilibiliStatus: checkWebsiteConnection("https://www.bilibili.com/"),
+		YoutubeStatus:  checkWebsiteConnection("https://www.youtube.com/"),
 	}
+	// to check the connection of website: youtube or bilibili. because some people in China can't connect to youtube
 	c.JSON(http.StatusOK, composeResponse(ConnectionStatus))
 }
