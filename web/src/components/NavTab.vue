@@ -1,9 +1,10 @@
 <template>
-    <div :class="bgColor" >
-        <router-link class="m-auto" :to="props.to">
+    <router-link class="m-auto" :to="props.to">
+        <div :class="bgColor" >
             <slot></slot>
-        </router-link>
-    </div>
+        </div>
+    </router-link>
+
 </template>
 <script setup lang="ts">
 import { ref, watch } from 'vue';
