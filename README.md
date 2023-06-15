@@ -1,5 +1,6 @@
 # Media Fetch PRO
 ![](./images/logo.jpg)
+<img src="https://github.com/CorrectRoadH/Media-Fetch-Pro/blob/main/images/logo.jpg?raw=true" height="173"/></a>
 
 Documentation • Live Demo • Discuss in Discord / Telegram
 
