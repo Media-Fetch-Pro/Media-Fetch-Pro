@@ -1,9 +1,17 @@
-# What is it
+# Media Fetch PRO
+![](./images/logo.jpg)
+
+Documentation • Live Demo • Discuss in Discord / Telegram
+
+![](https://img.shields.io/github/stars/CorrectRoadH/Media-Fetch-Pro?style=for-the-badge)
+![](https://img.shields.io/bitbucket/issues/CorrectRoadH/Media-Fetch-Pro?style=for-the-badge)
+
+# What is Media Fetch PRO
 `Media Fetch PRO` is an application to download video of youtube, bilibili and more websites in future  with metadata to jellyfin, emby, plex and more softwares in future.
 
 ![](./images/screen.png)
 
-# Document
+# Documentation
 
 Jellyfin
 
