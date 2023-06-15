@@ -1,7 +1,7 @@
 {
-  "name": "web",
-  "version": "0.0.0",
-  "private": true,
+  "name": "media-fetch-pro",
+  "version": "0.0.1",
+  "private": false,
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
