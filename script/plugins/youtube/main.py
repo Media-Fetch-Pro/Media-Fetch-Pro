@@ -17,15 +17,19 @@ class YoutubeDownloader():
         request.updateVideoStatus(generate_uuid_from_url(url),url,title,d['status'],ytdlp.extract_progress(d['_percent_str']),1)
 
     def getNfo(self):
-        temp_path = "/var/opt/video/temp/"
-        os.system(f"yt-dlp --skip-download --write-info-json -o {temp_path}temp {self.url}")
-        os.system(f"ytdl-nfo {temp_path}temp.info.json")
-        with open(f"{temp_path}temp.nfo", "r") as f:
+        temp_path = self.output_dir + "/temp"
+        os.system(f"yt-dlp --skip-download --write-info-json -o {temp_path}/temp {self.url}")
+        os.system(f"ytdl-nfo {temp_path}/temp.info.json")
+        with open(f"{temp_path}/temp.nfo", "r") as f:
             return f.read()
     
     def downloadPoster(self):
         temp_path = self.output_dir
         os.system(f"yt-dlp --skip-download --write-thumbnail -o {temp_path}/poster {self.url}")
+    
+    def removeTemp(self):
+        temp_path = self.output_dir + "/temp"
+        os.system(f"rm -rf {temp_path}")
 
 
     def downloadVideo(self):

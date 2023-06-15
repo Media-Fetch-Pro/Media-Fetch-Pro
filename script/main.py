@@ -35,7 +35,6 @@ from plugins.youtube.main import YoutubeDownloader
 from tool_utils.video import generate_uuid_from_url
 from tool_utils.video import renameDir
 
-temp_path = "/var/opt/video/temp"
 
 
 parser = argparse.ArgumentParser(description='姓名')
@@ -63,6 +62,6 @@ if __name__ == "__main__":
             f.write(downloader.getNfo())
         downloader.downloadPoster()
         downloader.downloadVideo()
-        
+        downloader.removeTemp()
         # TODO: other work. move folder from id to title
         renameDir(f"{args.storage}",f"{downloader.title}")
