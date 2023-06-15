@@ -41,6 +41,10 @@ parser = argparse.ArgumentParser(description='姓名')
 parser.add_argument('--url', type=str,help='视频链接')
 parser.add_argument('--storage', type=str,help='地址')
 parser.add_argument('--type', type=str,help='判断')
+temp_path = os.getcwd()+"/temp"
+if not(os.path.isdir(temp_path)):
+    print(temp_path)
+    os.mkdir(temp_path)
 
 args = parser.parse_args()
 
@@ -48,14 +52,13 @@ if __name__ == "__main__":
     # 判断下载路径是否是一个目录
     args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
     if not(os.path.isdir(args.storage)):
-        print(args.storage)
         os.mkdir(args.storage)
         
     downloader = None
     if(args.type == "youtube"):
-        downloader = YoutubeDownloader(args.url,args.storage)
+        downloader = YoutubeDownloader(args.url,args.storage,temp_path)
     elif(args.type == "bilibili"):
-        downloader = BilibiliDownloader(args.url,args.storage)
+        downloader = BilibiliDownloader(args.url,args.storage,temp_path)
     
     if downloader != None:
         with open(f"{args.storage}/movie.nfo","w") as f:

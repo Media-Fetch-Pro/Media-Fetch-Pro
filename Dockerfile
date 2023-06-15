@@ -31,7 +31,6 @@ RUN apk add python3 py3-pip ffmpeg
 RUN pip install requests yt_dlp ytdl-nfo
 RUN mkdir -p /var/opt/tools
 RUN mkdir -p /var/opt/video
-RUN mkdir -p /var/opt/video/temp
 COPY --from=backend /backend-build/bilibili.yaml /usr/lib/python3.10/site-packages/ytdl_nfo/configs/bilibili.yaml
 VOLUME /var/opt/tools
 
