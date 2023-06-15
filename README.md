@@ -1,5 +1,4 @@
 # Media Fetch PRO
-![](./images/logo.jpg)
 <img src="https://github.com/CorrectRoadH/Media-Fetch-Pro/blob/main/images/logo.jpg?raw=true" height="173"/></a>
 
 Documentation • Live Demo • Discuss in Discord / Telegram
@@ -44,10 +43,10 @@ docker run  -itd --name video-tool-for-nas -p 8080:8080 -v ./video:/var/opt/vide
 ```
 
 # Roadmap
-- [] Support download Video Collection
-- [] Support login by cookie to download hight resolution video
-- [] Better Download manager
-- [] i18n
-- [] Write Documents
+-[] Support download Video Collection
+-[] Support login by cookie to download hight resolution video
+-[] Better Download manager
+-[] i18n
+-[] Write Documents
 # Architecture
 ![](./images/arch.png)
