@@ -40,7 +40,7 @@ python3 script/main.py --url https://www.youtube.com/watch?v=lyNVPxHiVyE --stora
 # How to use
 `./video` should be replace by your video folder(import in Jellyfin). for example `/home/user/Videos`.
 ```
-docker run  -itd --name media-fetch-pro -p 8080:8080 -v ./video:/var/opt/video correctroad/video-tools:latest
+docker run  -itd --name media-fetch-pro -p 7789:7789 -v ./video:/var/opt/video correctroad/video-tools:latest
 ```
 
 # Roadmap

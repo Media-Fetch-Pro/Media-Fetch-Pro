@@ -26,7 +26,7 @@ ENV TZ="UTC"
 ENV PROFILE="PRODUCTION"
 COPY --from=backend /backend-build/tools /usr/local/tools/
 COPY --from=backend /backend-build/script /usr/local/tools/script
-EXPOSE 8080
+EXPOSE 7789
 RUN apk add python3 py3-pip ffmpeg
 RUN pip install requests yt_dlp ytdl-nfo
 RUN mkdir -p /var/opt/tools
