@@ -1,7 +1,7 @@
 # Media Fetch PRO
 <img src="https://github.com/CorrectRoadH/Media-Fetch-Pro/blob/main/images/logo.jpg?raw=true" height="173"/></a>
 
-Documentation • Live Demo • Discuss in Discord / Telegram
+Documentation • Live Demo • Discuss in [Discord](https://discord.gg/2WDm9uXZ)
 
 ![](https://img.shields.io/github/stars/CorrectRoadH/Media-Fetch-Pro?style=for-the-badge)
 ![](https://img.shields.io/bitbucket/issues/CorrectRoadH/Media-Fetch-Pro?style=for-the-badge)
