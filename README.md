@@ -52,5 +52,5 @@ docker run  -itd --name video-tool-for-nas -p 8080:8080 -v ./video:/var/opt/vide
 ![](./images/arch.png)
 
 
-<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://star-history.com/embed?secret=#Media-Fetch-Pro/Media-Fetch-Pro&Date" frameBorder="0"></iframe>
-
+# Star history
+[![Star History Chart](https://api.star-history.com/svg?repos=Media-Fetch-Pro/Media-Fetch-Pro&type=Date)](https://star-history.com/#Media-Fetch-Pro/Media-Fetch-Pro&Date)
