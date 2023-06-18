@@ -1,3 +1,5 @@
+The project will continue to develop after I pass my final exam.👀
+
 # Media Fetch PRO
 <img src="https://github.com/CorrectRoadH/Media-Fetch-Pro/blob/main/images/logo.jpg?raw=true" height="173"/></a>
 
