@@ -1,12 +1,29 @@
 package store
 
 import (
+	"database/sql"
 	"os"
 	"path"
 
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
 	"gopkg.in/yaml.v3"
 )
+
+type Store struct {
+	db                  *sql.DB
+	VideosInfo          map[string]*types.VideoInfo
+	DownloadingVideoNum int // the video num that is downloading
+}
+
+func NewStore(db *sql.DB) *Store {
+	return &Store{
+		db: db,
+	}
+}
+
+func (s *Store) GetDB() *sql.DB {
+	return s.db
+}
 
 type GlobalVideoStatus struct {
 	VideoStatusMap      map[string]*types.VideoStatus

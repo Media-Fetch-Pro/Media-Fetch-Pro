@@ -28,99 +28,78 @@ func composeResponse(data any) gin.H {
 	return gin.H{"data": data}
 }
 
-func DownloadVideo(c *gin.Context) {
-	var input DownloadVideoInput
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	result, err := utils.HandlerDownloader(input.Url)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	videoType := ""
-	switch result {
-	case "bilibili":
-		videoType = "bilibili"
-	case "youtube":
-		videoType = "youtube"
-	default:
-		c.JSON(http.StatusBadRequest, gin.H{"error": "unknown website"})
-	}
-
-	// 这里要不要用 goroutine 来做呢?
-	store.GlobalVideoStatusMap.AddVideo(types.VideoStatus{
-		Id:     utils.GenerateVideoIdFromURL(input.Url),
-		Url:    input.Url,
-		Status: "pending",
-		Type:   videoType,
+func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
+	g.GET("/video", func(c *gin.Context) {
+		// TODO: get video status by id
+		id := c.Param("id")
+		videoStatus := store.GlobalVideoStatusMap.VideoStatusMap[id]
+		if videoStatus == nil {
+			c.JSON(http.StatusBadRequest, composeResponse("video not found"))
+			return
+		}
+		c.JSON(http.StatusOK, composeResponse(videoStatus))
 	})
 
-	store.GlobalVideoStatusMap.SchedulerDownload()
-	c.JSON(http.StatusOK, composeResponse("start downloading"))
-}
+	g.POST("/video", func(c *gin.Context) {
+		var input DownloadVideoInput
+		if err := c.ShouldBindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 
-// 这个是等 python 来调，来更新状态
-func UpdateVideoStatus(c *gin.Context) {
-	var input UpdateVideoStatusInput
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	// TODO: I think I will delete some field. because it didn't change when downloading
-	store.GlobalVideoStatusMap.UpdateVideoStatus(types.VideoStatus{
-		Id:      input.Id, // 这个id通过url来取个hash值比较好
-		Title:   input.Title,
-		Url:     input.Url,
-		Status:  input.Status,
-		Percent: input.Percent,
-		Size:    input.Size,
-	})
-	if input.Percent == 100 {
-		store.GlobalVideoStatusMap.DownloadComplete()
-		fmt.Printf("download complete\n")
+		result, err := utils.HandlerDownloader(input.Url)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		videoType := ""
+		switch result {
+		case "bilibili":
+			videoType = "bilibili"
+		case "youtube":
+			videoType = "youtube"
+		default:
+			c.JSON(http.StatusBadRequest, gin.H{"error": "unknown website"})
+		}
+
+		// 这里要不要用 goroutine 来做呢?
+		store.GlobalVideoStatusMap.AddVideo(types.VideoStatus{
+			Id:     utils.GenerateVideoIdFromURL(input.Url),
+			Url:    input.Url,
+			Status: "pending",
+			Type:   videoType,
+		})
+
 		store.GlobalVideoStatusMap.SchedulerDownload()
-	}
-	c.JSON(http.StatusOK, composeResponse("update video status"))
-}
+		c.JSON(http.StatusOK, composeResponse("start downloading"))
+	})
 
-func GetAllVideoStatus(c *gin.Context) {
-	c.JSON(http.StatusOK, composeResponse(store.GlobalVideoStatusMap.VideoStatusMap))
-}
+	g.GET("/videos", func(c *gin.Context) {
+		c.JSON(http.StatusOK, composeResponse(store.GlobalVideoStatusMap.VideoStatusMap))
+	}) // I think may sync all video is not a good idea
 
-// only get single video status
-func GetVideoStatus(c *gin.Context) {
-	// TODO: get video status by id
-	id := c.Param("id")
-	videoStatus := store.GlobalVideoStatusMap.VideoStatusMap[id]
-	if videoStatus == nil {
-		c.JSON(http.StatusBadRequest, composeResponse("video not found"))
-		return
-	}
-	c.JSON(http.StatusOK, composeResponse(videoStatus))
-}
-
-func checkWebsiteConnection(address string) bool {
-	// to request address param
-	// if response code is 200, then return true
-	// else return false
-	_, err := http.Get(address)
-	if err == nil {
-		return false
-	} else {
-		return true
-	}
-}
-
-func GetConnectionStatus(c *gin.Context) {
-	// to check the connection of nas
-	ConnectionStatus := &types.ConnectionStatus{
-		BilibiliStatus: checkWebsiteConnection("https://www.bilibili.com/"),
-		YoutubeStatus:  checkWebsiteConnection("https://www.youtube.com/"),
-	}
-	// to check the connection of website: youtube or bilibili. because some people in China can't connect to youtube
-	c.JSON(http.StatusOK, composeResponse(ConnectionStatus))
+	// 这个是等 python 来调，来更新状态
+	g.POST("/update", func(c *gin.Context) {
+		var input UpdateVideoStatusInput
+		if err := c.ShouldBindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		// TODO: I think I will delete some field. because it didn't change when downloading
+		store.GlobalVideoStatusMap.UpdateVideoStatus(types.VideoStatus{
+			Id:      input.Id, // 这个id通过url来取个hash值比较好
+			Title:   input.Title,
+			Url:     input.Url,
+			Status:  input.Status,
+			Percent: input.Percent,
+			Size:    input.Size,
+		})
+		if input.Percent == 100 {
+			store.GlobalVideoStatusMap.DownloadComplete()
+			fmt.Printf("download complete\n")
+			store.GlobalVideoStatusMap.SchedulerDownload()
+		}
+		c.JSON(http.StatusOK, composeResponse("update video status"))
+	})
 }
