@@ -38,9 +38,10 @@ from tool_utils.video import renameDir
 
 
 parser = argparse.ArgumentParser(description='姓名')
-parser.add_argument('--url', type=str,help='视频链接')
-parser.add_argument('--storage', type=str,help='地址')
-parser.add_argument('--type', type=str,help='判断')
+parser.add_argument('--url', type=str,help='video url')
+parser.add_argument('--type', type=str,help='do what') # fetching info, download video, download subtitle, download poster
+parser.add_argument('--storage', type=str,help='storage path')
+parser.add_argument('--website', type=str,help='video website')
 temp_path = os.getcwd()+"/temp"
 if not(os.path.isdir(temp_path)):
     print(temp_path)
@@ -49,22 +50,34 @@ if not(os.path.isdir(temp_path)):
 args = parser.parse_args()
 
 if __name__ == "__main__":
-    # 判断下载路径是否是一个目录
-    args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
-    if not(os.path.isdir(args.storage)):
-        os.mkdir(args.storage)
-        
-    downloader = None
-    if(args.type == "youtube"):
-        downloader = YoutubeDownloader(args.url,args.storage,temp_path)
-    elif(args.type == "bilibili"):
-        downloader = BilibiliDownloader(args.url,args.storage,temp_path)
     
-    if downloader != None:
-        with open(f"{args.storage}/movie.nfo","w") as f:
-            f.write(downloader.getNfo())
-        downloader.downloadPoster()
-        downloader.downloadVideo()
-        downloader.removeTemp()
-        # TODO: other work. move folder from id to title
-        renameDir(f"{args.storage}",f"{downloader.title}")
+    if args.url == None:
+        exit("url is None")
+    
+    if args.type == None:
+        exit("type is None")
+    
+    if args.type == "fetchVideoInfo":
+        # 我觉得这里做个责任链模式比较好，一个个传下去，谁能解析就谁来解析
+        pass
+    elif args.type == "downloadVideo":
+        pass
+        # 判断下载路径是否是一个目录
+        # args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
+        # if not(os.path.isdir(args.storage)):
+        #     os.mkdir(args.storage)
+            
+        # downloader = None
+        # if(args.website == "youtube"):
+        #     downloader = YoutubeDownloader(args.url,args.storage,temp_path)
+        # elif(args.website == "bilibili"):
+        #     downloader = BilibiliDownloader(args.url,args.storage,temp_path)
+        
+        # if downloader != None:
+        #     with open(f"{args.storage}/movie.nfo","w") as f:
+        #         f.write(downloader.getNfo())
+        #     downloader.downloadPoster()
+        #     downloader.downloadVideo()
+        #     downloader.removeTemp()
+        #     # TODO: other work. move folder from id to title
+        #     renameDir(f"{args.storage}",f"{downloader.title}")

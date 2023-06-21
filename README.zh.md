@@ -36,7 +36,7 @@ pnpm dev
 
 python
 ```
-python3 script/main.py --type downloadVideo --url https://www.youtube.com/watch?v=lyNVPxHiVyE --storage ./video --website youtube
+python3 script/main.py --url https://www.youtube.com/watch?v=lyNVPxHiVyE --storage ./video --type youtube
 ```
 
 # How to use
