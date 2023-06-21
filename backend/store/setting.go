@@ -7,19 +7,19 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type SystemSetting struct {
+type SystemSettings struct {
 	StoragePath    string
-	maxDownloadNum int
-	maxSpeed       int
+	MaxDownloadNum int
+	MaxSpeed       int
 }
 
-var SystemSettingCache = &SystemSetting{
+var SystemSettingCache = &SystemSettings{
 	StoragePath:    "/var/opt/video",
-	maxDownloadNum: 5,
-	maxSpeed:       100,
+	MaxDownloadNum: 5,
+	MaxSpeed:       100,
 }
 
-func LoadSystemSetting() SystemSetting {
+func LoadSystemSetting() SystemSettings {
 	cwd, err := os.Getwd()
 	// handle err
 	if err != nil {
@@ -31,7 +31,7 @@ func LoadSystemSetting() SystemSetting {
 	)
 	// handle err
 
-	var config SystemSetting
+	var config SystemSettings
 	yaml.Unmarshal(raw, &config)
 
 	return config

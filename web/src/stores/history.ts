@@ -30,6 +30,8 @@ export const useHistoryStore = defineStore("history", {
         getVideoHistory: (state) => state.historyData,
     },    
     actions:{
+        // TODO only update downloading video status
+
         async getVideoStatus() {
             this.loading = true;
             const res = (await axios.get("api/videos")).data;

@@ -34,10 +34,22 @@ func GenerateVideoIdFromURL(url string) string {
 	return fmt.Sprintf("%x", md5.Sum(data))
 }
 
-func DownloadVideo(videoStatus *types.VideoStatus, storagePath string) error {
-	fmt.Printf("videoStatus: %v\n", videoStatus)
-	fmt.Print(storagePath)
-	args := []string{"script/main.py", "--url", videoStatus.Url, "--storage", storagePath, "--type", videoStatus.Type}
+func FetchingVideoInfo(videoInfo *types.VideoInfo) (*types.VideoInfo, error) {
+	fmt.Printf("start fetching videoInfo: %v\n", videoInfo)
+	args := []string{"script/main.py", "--url", videoInfo.Url, "--type", videoInfo.Type}
+	out, err := exec.Command("python3", args...).Output()
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+		fmt.Printf("out: %s\n", out)
+	}
+	// convert json of out to videoInfo
+
+	return videoInfo, err
+}
+
+func DownloadVideo(videoInfo *types.VideoInfo, storagePath string) error {
+	fmt.Printf("videoInfo: %v\n", videoInfo)
+	args := []string{"script/main.py", "--url", videoInfo.Url, "--storage", storagePath, "--type", videoInfo.Type}
 	out, err := exec.Command("python3", args...).Output()
 	if err != nil {
 		fmt.Printf("err: %v\n", err)

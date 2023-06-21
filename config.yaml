@@ -1,1 +1,3 @@
 storagepath: /var/opt/video
+maxdownloadnum: 10
+maxspeed: 1000000000

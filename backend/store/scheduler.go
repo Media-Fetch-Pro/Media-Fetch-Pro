@@ -1,5 +1,7 @@
 package store
 
+import "github.com/CorrectRoadH/video-tools-for-nas/backend/utils"
+
 // func schedulerDownload() {
 // 	currentDownloadNum := 0
 // 	// I think may have a additional variable to count the number of downloading videos
@@ -37,5 +39,27 @@ func (s *Store) DownloadComplete(id string) {
 }
 
 func (s *Store) SchedulerDownload() {
+	if s.DownloadingVideoNum < s.SystemSettings.MaxDownloadNum {
+		for _, value := range s.VideosInfo {
 
+			// to fetching info
+			if value.Status == "unstart" {
+				value.Status = "fetching"
+				s.DownloadingVideoNum++
+				// how to call fetching? sync or async?
+				videoInfo, err := utils.FetchingVideoInfo(value)
+				if err != nil {
+					value.Status = "failed"
+				} else {
+					value = videoInfo
+				}
+			}
+
+			// to download video
+			if value.Status == "pending" {
+				value.Status = "downloading"
+				go utils.DownloadVideo(value, s.SystemSettings.StoragePath)
+			}
+		}
+	}
 }

@@ -7,14 +7,17 @@ import (
 )
 
 type Store struct {
-	db                  *sql.DB
+	db *sql.DB
+
 	VideosInfo          map[string]*types.VideoInfo
 	DownloadingVideoNum int // the video num that is downloading
+	SystemSettings      SystemSettings
 }
 
 func NewStore(db *sql.DB) *Store {
 	return &Store{
-		db: db,
+		db:             db,
+		SystemSettings: LoadSystemSetting(),
 	}
 }
 
