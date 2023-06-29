@@ -21,15 +21,8 @@ from script.utils.video import generate_uuid_from_url
 #         self.id = generate_uuid_from_url(url)
 #         self.output_dir = output_dir
     
-#     def progress_hook(self,d):
-#         url = d['info_dict']['original_url']
-#         title = d['info_dict']['title']
-#         self.title = title # it will tiger multi times. So we need to optimize it.
-#         request.updateVideoStatus(generate_uuid_from_url(url),url,title,d['status'],ytdlp.extract_progress(d['_percent_str']),1)
 
 #     def downloadPoster(self):
-#         temp_path = self.output_dir
-#         os.system(f"yt-dlp --skip-download --write-thumbnail -o {temp_path}/poster {self.url}")
 
 #     def getNfo(self):
 #         request.updateVideoStatus(generate_uuid_from_url(self.url),self.url,"title is fetching","fetching meta",0,1)
@@ -44,19 +37,26 @@ from script.utils.video import generate_uuid_from_url
 #         temp_path = self.output_dir + "/temp"
 #         os.system(f"rm -rf {temp_path}")
 
-#     def downloadVideo(self):
-#         ydl_opts =  {
-#             'outtmpl': self.output_dir +'/%(title)s.%(ext)s',
-#             'progress_hooks': [self.progress_hook]
-#         }
-#         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-#             ydl.download([self.url])
 
 
 class Bilibili(BaseDownloader):
-    def downloadVideo(self):
-        pass
-    
+    def progress_hook(self,d):
+        url = d['info_dict']['original_url']
+        title = d['info_dict']['title']
+        self.title = title # it will tiger multi times. So we need to optimize it.
+        request.updateVideoStatus(generate_uuid_from_url(url),url,title,d['status'],ytdlp.extract_progress(d['_percent_str']),1)
+
+    def downloadVideo(self, video_info: VideoInfo, output_dir: str):
+        ydl_opts =  {
+            'outtmpl': output_dir +'/%(title)s.%(ext)s',
+            'progress_hooks': [self.progress_hook]
+        }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([video_info.get_url()])
+        
+    def downloadPoster(self, video_info: VideoInfo, output_dir: str):
+        common.runShell(f"yt-dlp --skip-download --write-thumbnail -o {output_dir}/poster {video_info.get_url()}")
+
     def downloadNfo(self):
         pass
     

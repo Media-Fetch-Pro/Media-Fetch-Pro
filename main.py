@@ -65,23 +65,21 @@ if __name__ == "__main__":
         print(json.dumps(list(map(lambda x:x.serialize(),websites.getVideoInfo(args.url))),indent=4, separators=(',', ': ')))
             
     elif args.type == "downloadVideo":
-        pass
         # 判断下载路径是否是一个目录
-        # args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
-        # if not(os.path.isdir(args.storage)):
-        #     os.mkdir(args.storage)
+        args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
+        if not(os.path.isdir(args.storage)):
+            os.mkdir(args.storage)
             
-        # downloader = None
-        # if(args.website == "youtube"):
-        #     downloader = YoutubeDownloader(args.url,args.storage,temp_path)
-        # elif(args.website == "bilibili"):
-        #     downloader = BilibiliDownloader(args.url,args.storage,temp_path)
+        websites = Bilibili(Youtube(EndDownloader()))
         
-        # if downloader != None:
-        #     with open(f"{args.storage}/movie.nfo","w") as f:
-        #         f.write(downloader.getNfo())
-        #     downloader.downloadPoster()
-        #     downloader.downloadVideo()
-        #     downloader.removeTemp()
-        #     # TODO: other work. move folder from id to title
-        #     renameDir(f"{args.storage}",f"{downloader.title}")
+        video_info = websites.getVideoInfo(args.url)[0]
+        
+        # the video_info should not is a playlist.
+        websites.downloadVideo(video_info,args.storage)
+        # TODO how to process when  video belong a playlist? 🤔
+        websites.downloadPoster(video_info,args.storage)
+        
+        renameDir(f"{args.storage}",f"{video_info.get_title()}")
+        
+    elif args.type == "generateNfo":
+        pass

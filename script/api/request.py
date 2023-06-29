@@ -10,4 +10,8 @@ def updateVideoStatus(id,url,title,status,percent,size):
         "percent": percent,
         "size": size
     }
-    res = requests.post('http://127.0.0.1:7789/api/update', json=data)   
+    try:
+        res = requests.post('http://127.0.0.1:7789/api/update', json=data) 
+    except:
+        print("updateVideoStatus error")
+        return False  
