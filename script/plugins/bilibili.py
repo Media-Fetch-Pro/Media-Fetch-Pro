@@ -7,10 +7,13 @@ import script.utils.common as common
 import json
 import datetime
 
+from typing import List
 from script.plugins import baseDownloader
-from script.model import videoInfo
+from script.model.videoInfo import VideoInfo
 
 from script.config.config import Config
+from script.utils.video import generate_uuid_from_url
+
 
 # class BilibiliDownloader():
 #     def __init__(self, url, output_dir,temp_path):
@@ -64,8 +67,8 @@ class Bilibili():
         else:
             return False
     
-    def _initVideoInfo(self, url:str)->'videoInfo':
-        video_info = videoInfo.VideoInfo()
+    def _initVideoInfo(self, url:str)->VideoInfo:
+        video_info = VideoInfo()
         video_info.set_url(url)
         video_info.set_title("title is fetching")
         video_info.set_status("fetching")
@@ -78,14 +81,30 @@ class Bilibili():
         video_info.set_start_download_time(unix_timestamp)
         return video_info
     
-    def _parseVideoInfo(self, video_info: videoInfo, json_text: str)->'videoInfo':
+    def _parseVideoInfo(self, video_info: VideoInfo, json_text: str)->List[VideoInfo]:
         video_json = json.loads(json_text)
         video_info.set_title(video_json["title"])
 
+        p_video_array = []
         if video_json['_type'] == 'playlist':
             # if the url is playlist
             video_info.set_length(int(video_json["playlist_count"]))
-            return video_info
+            video_info.set_children(
+                list(
+                    map(
+                        lambda p:generate_uuid_from_url(f"{video_info.url}?p={p}"),
+                        range(1,video_info.get_length())
+                    )
+                )
+            )    
+            # fetch every children video info
+            for p in (1,video_info.get_length()):
+                new_video_info = self.getVideoInfo(f"{video_info.url}?p={p}")
+                p_video_array.append(new_video_info)
+            
+            p_video_array.insert(0,video_info)
+            return p_video_array
+        
         else:
             # if the url is video
             video_info.set_author(video_json["uploader"])
@@ -93,21 +112,21 @@ class Bilibili():
             video_info.set_source("bilibili")
             video_info.set_type("video")
             video_info.set_size(video_json["filesize_approx"])
-            return video_info
+            return [video_info]
 
 
-    def _fetchVideoInfo(self, video_info: videoInfo)->'videoInfo':
-        os.system(f"yt-dlp --skip-download --write-info-json -o {Config.getTempPath()}/{video_info.get_id()} {video_info.get_url()}")
+    def _fetchVideoInfo(self, video_info: VideoInfo)->List[VideoInfo]:
+        common.runShell(f"yt-dlp --skip-download --write-info-json -o {Config.getTempPath()}/{video_info.get_id()} {video_info.get_url()}")
         common.waitFile(f"{Config.getTempPath()}/{video_info.get_id()}.info.json")
 
         with open(f"{Config.getTempPath()}/{video_info.get_id()}.info.json", "r") as f:
             return self._parseVideoInfo(video_info, f.read())
         
-    def getVideoInfo(self,url)->'videoInfo': # 这是一个责任链模式
+    def getVideoInfo(self,url)->List[VideoInfo]: # 这是一个责任链模式
         if self.isSupport(url):
             video_info = self._initVideoInfo(url)
-            video_info = self._fetchVideoInfo(video_info)
-            return video_info
+            video_info_array = self._fetchVideoInfo(video_info)
+            return video_info_array
         else:
             return self.next.getVideoInfo(url)
 
