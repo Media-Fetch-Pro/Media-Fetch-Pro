@@ -35,9 +35,17 @@ pnpm dev
 ```
 
 python
+
+download video
+```python
+python3 main.py --type downloadVideo --url https://www.youtube.com/watch?v=lyNVPxHiVyE --storage ./video --website youtube
 ```
-python3 script/main.py --type downloadVideo --url https://www.youtube.com/watch?v=lyNVPxHiVyE --storage ./video --website youtube
+
+fetch video info
+```python
+python main.py --type fetchVideoInfo --url https://www.youtube.com/watch?v=lyNVPxHiVyE --storage ./video --website youtube
 ```
+
 
 # How to use
 `./video` should be replace by your video folder(import in Jellyfin). for example `/home/user/Videos`.

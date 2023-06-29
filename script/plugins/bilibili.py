@@ -1,4 +1,3 @@
-import os
 import yt_dlp
 import script.api.request as request
 from script.utils.video import generate_uuid_from_url
@@ -8,7 +7,7 @@ import json
 import datetime
 
 from typing import List
-from script.plugins import baseDownloader
+from script.plugins.baseDownloader import BaseDownloader
 from script.model.videoInfo import VideoInfo
 
 from script.config.config import Config
@@ -54,7 +53,7 @@ from script.utils.video import generate_uuid_from_url
 #             ydl.download([self.url])
 
 
-class Bilibili():
+class Bilibili(BaseDownloader):
     def downloadVideo(self):
         pass
     

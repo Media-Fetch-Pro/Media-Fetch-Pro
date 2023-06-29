@@ -31,7 +31,8 @@
 import argparse
 import os
 from script.plugins.bilibili import Bilibili
-from script.plugins.youtube import YoutubeDownloader
+from script.plugins.youtube import Youtube
+from script.plugins.endDownloader import EndDownloader
 from script.utils.video import generate_uuid_from_url
 from script.utils.video import renameDir
 
@@ -59,7 +60,7 @@ if __name__ == "__main__":
     
     if args.type == "fetchVideoInfo":
         # 我觉得这里做个责任链模式比较好，一个个传下去，谁能解析就谁来解析
-        websites = Bilibili()
+        websites = Bilibili(Youtube(EndDownloader()))
         
         print(json.dumps(list(map(lambda x:x.serialize(),websites.getVideoInfo(args.url))),indent=4, separators=(',', ': ')))
             
