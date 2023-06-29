@@ -61,7 +61,7 @@ if __name__ == "__main__":
         # 我觉得这里做个责任链模式比较好，一个个传下去，谁能解析就谁来解析
         websites = Bilibili()
         
-        print(json.dumps(websites.getVideoInfo(args.url),indent=4, separators=(',', ': ')))
+        print(json.dumps(list(map(lambda x:x.serialize(),websites.getVideoInfo(args.url))),indent=4, separators=(',', ': ')))
             
     elif args.type == "downloadVideo":
         pass

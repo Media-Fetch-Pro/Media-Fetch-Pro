@@ -1,11 +1,9 @@
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json
+from dataclasses import dataclass,asdict
 from typing import List
 from typing import Union, Dict, Any, Optional
 from script.utils.video import generate_uuid_from_url
 
 
-@dataclass_json
 @dataclass
 class VideoInfo():
     id: str = None
@@ -131,3 +129,7 @@ class VideoInfo():
     
     def get_start_download_time(self) -> Union[int,None]:
         return self.start_download_time
+    
+    def serialize(self) -> 'Dict':
+        return asdict(self)
+

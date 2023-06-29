@@ -73,7 +73,8 @@ class Bilibili():
         video_info.set_title("title is fetching")
         video_info.set_status("fetching")
         video_info.set_percent(0)
-        
+        video_info.set_source("bilibili")
+
         
         # get now unix timestamp as start download time
         presentDate = datetime.datetime.now()
@@ -84,7 +85,6 @@ class Bilibili():
     def _parseVideoInfo(self, video_info: VideoInfo, json_text: str)->List[VideoInfo]:
         video_json = json.loads(json_text)
         video_info.set_title(video_json["title"])
-
         p_video_array = []
         if video_json['_type'] == 'playlist':
             # if the url is playlist
@@ -93,14 +93,21 @@ class Bilibili():
                 list(
                     map(
                         lambda p:generate_uuid_from_url(f"{video_info.url}?p={p}"),
-                        range(1,video_info.get_length())
+                        range(1,video_info.get_length()+1)
                     )
                 )
             )    
             # fetch every children video info
             for p in (1,video_info.get_length()):
-                new_video_info = self.getVideoInfo(f"{video_info.url}?p={p}")
+                new_video_info = self.getVideoInfo(f"{video_info.url}?p={p}")[0]
+                new_video_info.set_episode(p)
+                new_video_info.set_parent(video_info.get_id())
                 p_video_array.append(new_video_info)
+                
+                # copy info from children to parent
+                # TODO: only execute once
+                video_info.set_author(new_video_info.get_author())
+                video_info.set_content(new_video_info.get_content())
             
             p_video_array.insert(0,video_info)
             return p_video_array
@@ -109,7 +116,6 @@ class Bilibili():
             # if the url is video
             video_info.set_author(video_json["uploader"])
             video_info.set_content(video_json["description"])
-            video_info.set_source("bilibili")
             video_info.set_type("video")
             video_info.set_size(video_json["filesize_approx"])
             return [video_info]
