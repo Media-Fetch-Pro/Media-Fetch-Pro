@@ -1,5 +1,6 @@
 class BaseDownloader():
     def __init__(self, next):
+        print("hello")
         self.next = next
     
     def downloadVideo(self):

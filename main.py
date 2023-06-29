@@ -30,10 +30,10 @@
 
 import argparse
 import os
-from plugins.bilibili.main import BilibiliDownloader
-from plugins.youtube.main import YoutubeDownloader
-from tool_utils.video import generate_uuid_from_url
-from tool_utils.video import renameDir
+from script.plugins.bilibili import Bilibili
+from script.plugins.youtube import YoutubeDownloader
+from script.utils.video import generate_uuid_from_url
+from script.utils.video import renameDir
 
 
 
@@ -59,7 +59,11 @@ if __name__ == "__main__":
     
     if args.type == "fetchVideoInfo":
         # 我觉得这里做个责任链模式比较好，一个个传下去，谁能解析就谁来解析
-        pass
+        websites = Bilibili()
+        
+        
+        print(websites.getVideoInfo(args.url))
+            
     elif args.type == "downloadVideo":
         pass
         # 判断下载路径是否是一个目录

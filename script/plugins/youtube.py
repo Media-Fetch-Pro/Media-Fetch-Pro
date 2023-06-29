@@ -1,9 +1,9 @@
 import os
 import yt_dlp
-import api.request as request
-from tool_utils.video import generate_uuid_from_url
-import tool_utils.ytdlp as ytdlp
-import tool_utils.common as common
+import script.api.request as request
+from script.utils.video import generate_uuid_from_url
+import script.utils.ytdlp as ytdlp
+import script.utils.common as common
 
 class YoutubeDownloader():
     def __init__(self, url, output_dir,temp_path):
