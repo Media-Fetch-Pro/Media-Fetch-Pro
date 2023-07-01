@@ -1,6 +1,5 @@
-The project will continue to develop after I pass my final exam.👀
-
-# Media Fetch PRO
+**NOTE:The Code is active refactoring, so the code is not stable and might didn't working. If you want to use it, please wait for the first release or use docker to install stable version.
+**# Media Fetch PRO
 <img src="https://github.com/CorrectRoadH/Media-Fetch-Pro/blob/main/images/logo.jpg?raw=true" height="173"/></a>
 
 [Documentation](https://github.com/CorrectRoadH/Media-Fetch-Pro/blob/main/documents/document.md) • Live Demo • Discuss in [Discord](https://discord.gg/2WDm9uXZ)
