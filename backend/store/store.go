@@ -2,14 +2,18 @@ package store
 
 import (
 	"database/sql"
-
-	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
 )
+
+type SystemSettings struct {
+	StoragePath    string
+	MaxDownloadNum int
+	MaxSpeed       int
+}
 
 type Store struct {
 	db *sql.DB
 
-	VideosInfo          map[string]*types.VideoInfo
+	VideosInfo          map[string]*VideoInfo
 	DownloadingVideoNum int // the video num that is downloading
 	SystemSettings      SystemSettings
 }

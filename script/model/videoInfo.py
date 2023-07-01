@@ -133,3 +133,10 @@ class VideoInfo():
     def serialize(self) -> 'Dict':
         return asdict(self)
 
+    def deserialize(self, data: Dict[str, Any]) -> 'VideoInfo':
+        for key, value in data.items():
+            setattr(self, key, value)
+            
+        # set id from url
+        self.set_url(data['url'])
+        return self

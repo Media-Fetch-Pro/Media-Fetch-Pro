@@ -43,12 +43,14 @@ parser.add_argument('--url', type=str,help='video url')
 parser.add_argument('--type', type=str,help='do what') # fetching info, download video, download subtitle, download poster
 parser.add_argument('--storage', type=str,help='storage path')
 parser.add_argument('--website', type=str,help='video website')
+parser.add_argument('--video-info', type=str,help='video info') # it is a json string
 temp_path = os.getcwd()+"/temp"
 if not(os.path.isdir(temp_path)):
     print(temp_path)
     os.mkdir(temp_path)
 
 args = parser.parse_args()
+
 
 if __name__ == "__main__":
     
@@ -57,6 +59,10 @@ if __name__ == "__main__":
     
     if args.type == None:
         exit("type is None")
+        
+    if args.video_info != None:
+        video_info = json.loads(args.video_info)
+        print(video_info)
     
     if args.type == "fetchVideoInfo":
         # 我觉得这里做个责任链模式比较好，一个个传下去，谁能解析就谁来解析

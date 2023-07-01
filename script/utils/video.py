@@ -5,3 +5,6 @@ def generate_uuid_from_url(url):
 
 def renameDir(dir_path, new_name):
     os.rename(dir_path, os.path.join(os.path.dirname(dir_path), new_name))
+    
+def get_clear_video_url(url:str)->str:
+    pass

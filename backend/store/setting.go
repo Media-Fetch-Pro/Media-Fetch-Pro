@@ -7,12 +7,6 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type SystemSettings struct {
-	StoragePath    string
-	MaxDownloadNum int
-	MaxSpeed       int
-}
-
 var SystemSettingCache = &SystemSettings{
 	StoragePath:    "/var/opt/video",
 	MaxDownloadNum: 5,

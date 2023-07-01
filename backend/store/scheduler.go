@@ -1,6 +1,9 @@
 package store
 
-import "github.com/CorrectRoadH/video-tools-for-nas/backend/utils"
+import (
+	"github.com/CorrectRoadH/video-tools-for-nas/backend/server"
+	"github.com/CorrectRoadH/video-tools-for-nas/backend/utils"
+)
 
 // func schedulerDownload() {
 // 	currentDownloadNum := 0
@@ -38,7 +41,7 @@ func (s *Store) DownloadComplete(id string) {
 	s.VideosInfo[id].Status = "complete"
 }
 
-func (s *Store) SchedulerDownload() {
+func (s *Store) SchedulerDownload(server *server.Server) {
 	if s.DownloadingVideoNum < s.SystemSettings.MaxDownloadNum {
 		for _, value := range s.VideosInfo {
 
@@ -47,7 +50,7 @@ func (s *Store) SchedulerDownload() {
 				value.Status = "fetching"
 				s.DownloadingVideoNum++
 				// how to call fetching? sync or async?
-				videoInfo, err := utils.FetchingVideoInfo(value)
+				videoInfo, err := utils.FetchingVideoInfo(server, value)
 				if err != nil {
 					value.Status = "failed"
 				} else {
@@ -56,10 +59,10 @@ func (s *Store) SchedulerDownload() {
 			}
 
 			// to download video
-			if value.Status == "pending" {
-				value.Status = "downloading"
-				go utils.DownloadVideo(value, s.SystemSettings.StoragePath)
-			}
+			// if value.Status == "pending" {
+			// 	value.Status = "downloading"
+			// 	go utils.DownloadVideo(value, s.SystemSettings.StoragePath)
+			// }
 		}
 	}
 }

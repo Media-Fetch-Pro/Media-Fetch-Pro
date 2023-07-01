@@ -1,10 +1,10 @@
 package types
 
 type VideoInfo struct {
-	Id                string
-	Title             string
-	Url               string
-	Status            string // unstart, fetching, pending, downloading, done, failed
+	Id                string `json:"id"`
+	Title             string `json:"title"`
+	Url               string `json:"url"`
+	Status            string `json:"status"` // unstart, fetching, pending, downloading, done, failed
 	Percent           int
 	Size              int
 	Type              string   // video, playlist
