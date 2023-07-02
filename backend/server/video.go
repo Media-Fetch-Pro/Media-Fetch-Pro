@@ -68,7 +68,7 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 			Status: "unstart",
 			Type:   videoType,
 		})
-		go s.Store.SchedulerDownload(s)
+		go s.Store.SchedulerDownload()
 
 		// // 这里要不要用 goroutine 来做呢?
 		// store.GlobalVideoStatusMap.AddVideo(types.VideoStatus{

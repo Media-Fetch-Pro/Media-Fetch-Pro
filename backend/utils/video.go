@@ -7,7 +7,6 @@ import (
 	"os/exec"
 	"regexp"
 
-	"github.com/CorrectRoadH/video-tools-for-nas/backend/server"
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
 )
 
@@ -36,7 +35,7 @@ func GenerateVideoIdFromURL(url string) string {
 	return fmt.Sprintf("%x", md5.Sum(data))
 }
 
-func FetchingVideoInfo(server *server.Server, videoInfo *types.VideoInfo) (*types.VideoInfo, error) {
+func FetchingVideoInfo(videoInfo *types.VideoInfo) (*types.VideoInfo, error) {
 	fmt.Printf("start fetching videoInfo: %v\n", videoInfo)
 	args := []string{"main.py", "--url", videoInfo.Url, "--type", "fetchVideoInfo", "--storage", "/Users/ctrdh/Video", "--website", "bilibili"}
 	out, err := exec.Command("python3", args...).Output()
@@ -52,9 +51,9 @@ func FetchingVideoInfo(server *server.Server, videoInfo *types.VideoInfo) (*type
 	fmt.Println("out:")
 	fmt.Println(videoInfos)
 
-	for _, v := range videoInfos {
-		server.Store.UpdateVideoInfo(v)
-	}
+	// for _, v := range videoInfos {
+	// 	server.Store.UpdateVideoInfo(v)
+	// }
 
 	return videoInfo, err
 }
