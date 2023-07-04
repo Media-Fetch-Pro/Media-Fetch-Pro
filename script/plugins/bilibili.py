@@ -13,7 +13,6 @@ from script.model.videoInfo import VideoInfo
 from script.config.config import Config
 from script.utils.video import generate_uuid_from_url
 
-
 # class BilibiliDownloader():
 #     def __init__(self, url, output_dir,temp_path):
 #         self.temp_path = temp_path
@@ -70,7 +69,7 @@ class Bilibili(BaseDownloader):
         video_info = VideoInfo()
         video_info.set_url(url)
         video_info.set_title("title is fetching")
-        video_info.set_status("fetching")
+        video_info.set_status("pending")
         video_info.set_percent(0)
         video_info.set_source("bilibili")
 
@@ -131,6 +130,8 @@ class Bilibili(BaseDownloader):
         if self.isSupport(url):
             video_info = self._initVideoInfo(url)
             video_info_array = self._fetchVideoInfo(video_info)
+            for video_info in video_info_array:
+                request.updateVideoStatus(video_info)
             return video_info_array
         else:
             return self.next.getVideoInfo(url)

@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
@@ -15,12 +14,12 @@ type DownloadVideoInput struct {
 }
 
 type UpdateVideoStatusInput struct {
-	Id      string `json:"id" binding:"required"`
-	Title   string `json:"title" binding:"required"`
-	Url     string `json:"url" binding:"required"`
-	Status  string `json:"status" binding:"required"`
-	Percent int    `json:"percent" binding:"required"`
-	Size    int    `json:"size" binding:"required"` // 单位是字节
+	Id      string `json:"id"`
+	Title   string `json:"title"`
+	Url     string `json:"url"`
+	Status  string `json:"status"`
+	Percent int    `json:"percent"`
+	Size    int    `json:"size"` // 单位是字节
 }
 
 func composeResponse(data any) gin.H {
@@ -70,16 +69,6 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 		})
 		go s.Store.SchedulerDownload()
 
-		// // 这里要不要用 goroutine 来做呢?
-		// store.GlobalVideoStatusMap.AddVideo(types.VideoStatus{
-		// 	Id:     utils.GenerateVideoIdFromURL(input.Url),
-		// 	Url:    input.Url,
-		// 	Status: "pending",
-		// 	Type:   videoType,
-		// })
-
-		// s.Store.
-		// 	store.GlobalVideoStatusMap.SchedulerDownload()
 		c.JSON(http.StatusOK, composeResponse("start downloading"))
 	})
 
@@ -90,6 +79,7 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 	// this is wait to call by python
 	g.POST("/update", func(c *gin.Context) {
 		var input UpdateVideoStatusInput
+
 		if err := c.ShouldBindJSON(&input); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -105,10 +95,11 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 		})
 
 		if err != nil {
-			fmt.Println(input)
 			c.JSON(http.StatusBadRequest, composeResponse(err.Error()))
 			return
 		}
+
+		go s.Store.SchedulerDownload()
 
 		c.JSON(http.StatusOK, composeResponse("update video status"))
 	})

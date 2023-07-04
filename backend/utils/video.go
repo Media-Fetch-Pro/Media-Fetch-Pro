@@ -35,32 +35,41 @@ func GenerateVideoIdFromURL(url string) string {
 	return fmt.Sprintf("%x", md5.Sum(data))
 }
 
-func FetchingVideoInfo(videoInfo *types.VideoInfo) (*types.VideoInfo, error) {
-	fmt.Printf("start fetching videoInfo: %v\n", videoInfo)
+// only run fetch script. the video info will update in the request by script.
+func FetchingVideoInfo(videoInfo *types.VideoInfo) error {
 	args := []string{"main.py", "--url", videoInfo.Url, "--type", "fetchVideoInfo", "--storage", "/Users/ctrdh/Video", "--website", "bilibili"}
+	// see the command
+	// python3 main.py --url https://www.bilibili.com/video/BV1Y7411t7zZ --type fetchVideoInfo --storage /Users/ctrdh/Video --website bilibili
 	out, err := exec.Command("python3", args...).Output()
-
-	// convert json of out to videoInfo
-	var videoInfos []types.VideoInfo
-	json.Unmarshal(out, &videoInfos)
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
 		fmt.Printf("out: %s\n", out)
 	}
 
-	fmt.Println("out:")
-	fmt.Println(videoInfos)
+	// convert json of out to videoInfo
+	// var videoInfos []types.VideoInfo
+	// json.Unmarshal(out, &videoInfos)
+
+	// fmt.Println("out:")
+	// fmt.Println(videoInfos)
 
 	// for _, v := range videoInfos {
 	// 	server.Store.UpdateVideoInfo(v)
 	// }
 
-	return videoInfo, err
+	// 这里要把信息输出出来吗? 其实也不用，直接通过request给后端不就行了吗?
+
+	return err
 }
 
 func DownloadVideo(videoInfo *types.VideoInfo, storagePath string) error {
 	fmt.Printf("videoInfo: %v\n", videoInfo)
-	args := []string{"main.py", "--url", videoInfo.Url, "--storage", storagePath, "--type", videoInfo.Type}
+	videoJson, err := json.Marshal(videoInfo)
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+	}
+	fmt.Printf("videoJson: %v\n", string(videoJson))
+	args := []string{"main.py", "--type", "downloadVideo", "--video_info", string(videoJson), "--storage", storagePath, "--type", videoInfo.Type}
 	out, err := exec.Command("python3", args...).Output()
 	if err != nil {
 		fmt.Printf("err: %v\n", err)

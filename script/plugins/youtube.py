@@ -84,7 +84,7 @@ class Youtube(BaseDownloader):
         video_info = VideoInfo()
         video_info.set_url(url)
         video_info.set_title("title is fetching")
-        video_info.set_status("fetching")
+        video_info.set_status("pending")
         video_info.set_percent(0)
         video_info.set_source("youtube")
 

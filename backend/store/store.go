@@ -23,6 +23,7 @@ type Store struct {
 func NewStore(db *sql.DB) *Store {
 	return &Store{
 		db:             db,
+		VideosInfo:     make(map[string]*types.VideoInfo),
 		SystemSettings: LoadSystemSetting(),
 	}
 }

@@ -140,3 +140,6 @@ class VideoInfo():
         # set id from url
         self.set_url(data['url'])
         return self
+    
+    def toDict(self) -> 'Dict':
+        return asdict(self)

@@ -4,7 +4,7 @@ type VideoInfo struct {
 	Id                string `json:"id"`
 	Title             string `json:"title"`
 	Url               string `json:"url"`
-	Status            string `json:"status"` // unstart, fetching, pending, downloading, done, failed
+	Status            string `json:"status"` // unstart, fetching, pending, downloading, finished, failed
 	Percent           int
 	Size              int
 	Type              string   // video, playlist

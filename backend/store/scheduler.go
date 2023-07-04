@@ -44,17 +44,25 @@ func (s *Store) SchedulerDownload() {
 	if s.DownloadingVideoNum < s.SystemSettings.MaxDownloadNum {
 		for _, value := range s.VideosInfo {
 
+			if value.Status == "finished" {
+				continue
+			}
+
 			// to fetching info
 			if value.Status == "unstart" {
 				value.Status = "fetching"
 				s.DownloadingVideoNum++
 				// how to call fetching? sync or async?
-				videoInfo, err := utils.FetchingVideoInfo(value)
+				err := utils.FetchingVideoInfo(value)
 				if err != nil {
 					value.Status = "failed"
-				} else {
-					value = videoInfo
 				}
+			}
+
+			if value.Status == "pending" {
+				value.Status = "downloading"
+				s.DownloadingVideoNum++
+				go utils.DownloadVideo(value, s.SystemSettings.StoragePath)
 			}
 
 			// to download video

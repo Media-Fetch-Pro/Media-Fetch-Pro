@@ -42,7 +42,7 @@ parser = argparse.ArgumentParser(description='姓名')
 parser.add_argument('--url', type=str,help='video url')
 parser.add_argument('--type', type=str,help='do what') # fetching info, download video, download subtitle, download poster
 parser.add_argument('--storage', type=str,help='storage path')
-parser.add_argument('--website', type=str,help='video website')
+parser.add_argument('--website', type=str,help='video website') # this option is not necessary. I will delete it in future.
 parser.add_argument('--video-info', type=str,help='video info') # it is a json string
 temp_path = os.getcwd()+"/temp"
 if not(os.path.isdir(temp_path)):
@@ -67,25 +67,25 @@ if __name__ == "__main__":
     if args.type == "fetchVideoInfo":
         # 我觉得这里做个责任链模式比较好，一个个传下去，谁能解析就谁来解析
         websites = Bilibili(Youtube(EndDownloader()))
-        
+        # to print result for debug
         print(json.dumps(list(map(lambda x:x.serialize(),websites.getVideoInfo(args.url))),indent=4, separators=(',', ': ')))
             
     elif args.type == "downloadVideo":
         # 判断下载路径是否是一个目录
-        args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
-        if not(os.path.isdir(args.storage)):
-            os.mkdir(args.storage)
+        # args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
+        # if not(os.path.isdir(args.storage)):
+        #     os.mkdir(args.storage)
             
-        websites = Bilibili(Youtube(EndDownloader()))
+        # websites = Bilibili(Youtube(EndDownloader()))
         
-        video_info = websites.getVideoInfo(args.url)[0]
+        # video_info = websites.getVideoInfo(args.url)[0]
         
-        # the video_info should not is a playlist.
-        websites.downloadVideo(video_info,args.storage)
-        # TODO how to process when  video belong a playlist? 🤔
-        websites.downloadPoster(video_info,args.storage)
+        # # the video_info should not is a playlist.
+        # websites.downloadVideo(video_info,args.storage)
+        # # TODO how to process when  video belong a playlist? 🤔
+        # websites.downloadPoster(video_info,args.storage)
         
-        renameDir(f"{args.storage}",f"{video_info.get_title()}")
-        
+        # renameDir(f"{args.storage}",f"{video_info.get_title()}")
+        print("down")
     elif args.type == "generateNfo":
         pass
