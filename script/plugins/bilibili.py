@@ -100,6 +100,7 @@ class Bilibili(BaseDownloader):
                 new_video_info = self.getVideoInfo(f"{video_info.url}?p={p}")[0]
                 new_video_info.set_episode(p)
                 new_video_info.set_parent(video_info.get_id())
+                new_video_info.set_type("episode")
                 p_video_array.append(new_video_info)
                 
                 # copy info from children to parent

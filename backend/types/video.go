@@ -7,7 +7,7 @@ type VideoInfo struct {
 	Status            string `json:"status"` // unstart, fetching, pending, downloading, finished, failed
 	Percent           int
 	Size              int
-	Type              string   // video, playlist
+	Type              string   // video, playlist, episode
 	Children          []string // videos id of playlist
 	Author            string
 	Source            string // bilibili, youtube

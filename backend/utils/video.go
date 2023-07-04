@@ -45,20 +45,6 @@ func FetchingVideoInfo(videoInfo *types.VideoInfo) error {
 		fmt.Printf("err: %v\n", err)
 		fmt.Printf("out: %s\n", out)
 	}
-
-	// convert json of out to videoInfo
-	// var videoInfos []types.VideoInfo
-	// json.Unmarshal(out, &videoInfos)
-
-	// fmt.Println("out:")
-	// fmt.Println(videoInfos)
-
-	// for _, v := range videoInfos {
-	// 	server.Store.UpdateVideoInfo(v)
-	// }
-
-	// 这里要把信息输出出来吗? 其实也不用，直接通过request给后端不就行了吗?
-
 	return err
 }
 
@@ -69,7 +55,9 @@ func DownloadVideo(videoInfo *types.VideoInfo, storagePath string) error {
 		fmt.Printf("err: %v\n", err)
 	}
 	fmt.Printf("videoJson: %v\n", string(videoJson))
-	args := []string{"main.py", "--type", "downloadVideo", "--video_info", string(videoJson), "--storage", storagePath, "--type", videoInfo.Type}
+	args := []string{"main.py", "--url", videoInfo.Url, "--type", "downloadVideo", "--video-info", fmt.Sprintf("'%s'", string(videoJson)), "--storage", storagePath}
+	// see the command
+
 	out, err := exec.Command("python3", args...).Output()
 	if err != nil {
 		fmt.Printf("err: %v\n", err)

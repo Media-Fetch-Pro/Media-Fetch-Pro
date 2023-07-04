@@ -35,7 +35,7 @@ from script.plugins.youtube import Youtube
 from script.plugins.endDownloader import EndDownloader
 from script.utils.video import generate_uuid_from_url
 from script.utils.video import renameDir
-
+from script.model.videoInfo import VideoInfo
 import json
 
 parser = argparse.ArgumentParser(description='姓名')
@@ -61,8 +61,8 @@ if __name__ == "__main__":
         exit("type is None")
         
     if args.video_info != None:
-        video_info = json.loads(args.video_info)
-        print(video_info)
+        video_info = VideoInfo()
+        video_info.deserialize(json.loads(args.video_info))
     
     if args.type == "fetchVideoInfo":
         # 我觉得这里做个责任链模式比较好，一个个传下去，谁能解析就谁来解析
@@ -72,9 +72,9 @@ if __name__ == "__main__":
             
     elif args.type == "downloadVideo":
         # 判断下载路径是否是一个目录
-        # args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
-        # if not(os.path.isdir(args.storage)):
-        #     os.mkdir(args.storage)
+        args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
+        if not(os.path.isdir(args.storage)):
+            os.mkdir(args.storage)
             
         # websites = Bilibili(Youtube(EndDownloader()))
         
@@ -84,8 +84,20 @@ if __name__ == "__main__":
         # websites.downloadVideo(video_info,args.storage)
         # # TODO how to process when  video belong a playlist? 🤔
         # websites.downloadPoster(video_info,args.storage)
-        
+        websites = Bilibili(Youtube(EndDownloader()))
+
         # renameDir(f"{args.storage}",f"{video_info.get_title()}")
-        print("down")
+        if video_info.get_type() == "playlist":
+            # TODO generate nfo
+            pass
+        elif video_info.type == "video":
+            if video_info.get_type() == "video": # episode didn't generate nfo
+                # TODO generate nfo
+                pass            
+            websites.downloadPoster(video_info,args.storage)
+            websites.downloadVideo(video_info,args.storage)
+            
+            if video_info.get_type() == "video": # TODO how to rename playlist is a problem
+                renameDir(f"{args.storage}",f"{video_info.get_title()}")            
     elif args.type == "generateNfo":
         pass

@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
@@ -14,12 +15,21 @@ type DownloadVideoInput struct {
 }
 
 type UpdateVideoStatusInput struct {
-	Id      string `json:"id"`
-	Title   string `json:"title"`
-	Url     string `json:"url"`
-	Status  string `json:"status"`
-	Percent int    `json:"percent"`
-	Size    int    `json:"size"` // 单位是字节
+	Id                string   `json:"id"`
+	Title             string   `json:"title"`
+	Url               string   `json:"url"`
+	Status            string   `json:"status"` // unstart, fetching, pending, downloading, finished, failed
+	Percent           int      `json:"percent"`
+	Size              int      `json:"size"`
+	Type              string   `json:"type"`     // video, playlist
+	Children          []string `json:"children"` // videos id of playlist
+	Author            string   `json:"author"`
+	Source            string   `json:"source"`            // bilibili, youtube
+	Content           string   `json:"content"`           // the content of the video
+	Episode           string   `json:"episode"`           // only of video of playlist
+	Parent            string   `json:"parent"`            // the playlist id of the video
+	Length            string   `json:"length"`            // the length of the playlist
+	StartDownloadTime int64    `json:"StartDownloadTime"` // unix timestamp
 }
 
 func composeResponse(data any) gin.H {
@@ -84,15 +94,9 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		fmt.Println("update: ", input)
 
-		err := s.Store.UpdateVideoInfo(types.VideoInfo{
-			Id:      input.Id,
-			Title:   input.Title,
-			Url:     input.Url,
-			Status:  input.Status,
-			Percent: input.Percent,
-			Size:    input.Size,
-		})
+		err := s.Store.UpdateVideoInfo(types.VideoInfo(input))
 
 		if err != nil {
 			c.JSON(http.StatusBadRequest, composeResponse(err.Error()))

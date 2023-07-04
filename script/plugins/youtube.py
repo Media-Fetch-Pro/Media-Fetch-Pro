@@ -114,6 +114,7 @@ class Youtube(BaseDownloader):
             for p in (1,video_info.get_length()):
                 new_video_info = self.getVideoInfo(f"{video_info.url}?p={p}")[0]
                 new_video_info.set_episode(p)
+                new_video_info.set_type("episode")
                 new_video_info.set_parent(video_info.get_id())
                 p_video_array.append(new_video_info)
                 

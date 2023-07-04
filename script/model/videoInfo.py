@@ -135,6 +135,8 @@ class VideoInfo():
 
     def deserialize(self, data: Dict[str, Any]) -> 'VideoInfo':
         for key, value in data.items():
+            # key to lower. Because these field in go is upper
+            key = key.lower()
             setattr(self, key, value)
             
         # set id from url
