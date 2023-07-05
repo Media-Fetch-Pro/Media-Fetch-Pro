@@ -22,11 +22,12 @@ class VideoInfo():
     length: str = None
     start_download_time: int = None
     
-    # id should generate from md5 url. So we don't need set_id method
-    # def set_id(self,id:str) -> 'VideoInfo':
-    #     self.id = id
-    #     return self
-    
+    def __init__(self): # how to differentiate between init and init video info in downloader ?🤔
+        self.set_children([])
+        self.set_percent(0)
+        self.set_size(0)
+        self.start_download_time = -1
+        
     def get_id(self) -> Union[str,None]:
         return self.id
     
@@ -139,6 +140,8 @@ class VideoInfo():
             key = key.lower()
             setattr(self, key, value)
             
+        
+        # setattr(self, 'start_download_time', data['StartDownloadTime'])
         # set id from url
         self.set_url(data['url'])
         return self

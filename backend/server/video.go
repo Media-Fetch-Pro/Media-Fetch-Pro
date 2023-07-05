@@ -24,12 +24,12 @@ type UpdateVideoStatusInput struct {
 	Type              string   `json:"type"`     // video, playlist
 	Children          []string `json:"children"` // videos id of playlist
 	Author            string   `json:"author"`
-	Source            string   `json:"source"`            // bilibili, youtube
-	Content           string   `json:"content"`           // the content of the video
-	Episode           string   `json:"episode"`           // only of video of playlist
-	Parent            string   `json:"parent"`            // the playlist id of the video
-	Length            string   `json:"length"`            // the length of the playlist
-	StartDownloadTime int64    `json:"StartDownloadTime"` // unix timestamp
+	Source            string   `json:"source"`              // bilibili, youtube
+	Content           string   `json:"content"`             // the content of the video
+	Episode           string   `json:"episode"`             // only of video of playlist
+	Parent            string   `json:"parent"`              // the playlist id of the video
+	Length            string   `json:"length"`              // the length of the playlist
+	StartDownloadTime int64    `json:"start_download_time"` // unix timestamp
 }
 
 func composeResponse(data any) gin.H {
@@ -91,10 +91,10 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 		var input UpdateVideoStatusInput
 
 		if err := c.ShouldBindJSON(&input); err != nil {
+			fmt.Println("update err: ", err)
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		fmt.Println("update: ", input)
 
 		err := s.Store.UpdateVideoInfo(types.VideoInfo(input))
 

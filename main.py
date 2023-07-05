@@ -91,13 +91,14 @@ if __name__ == "__main__":
             # TODO generate nfo
             pass
         elif video_info.type == "video":
-            if video_info.get_type() == "video": # episode didn't generate nfo
-                # TODO generate nfo
-                pass            
-            websites.downloadPoster(video_info,args.storage)
-            websites.downloadVideo(video_info,args.storage)
+            print(video_info)
+            # if video_info.get_type() == "video": # episode didn't generate nfo
+            #     # TODO generate nfo
+            #     pass            
+            # websites.downloadPoster(video_info,args.storage)
+            # websites.downloadVideo(video_info,args.storage)
             
-            if video_info.get_type() == "video": # TODO how to rename playlist is a problem
-                renameDir(f"{args.storage}",f"{video_info.get_title()}")            
+            # if video_info.get_type() == "video": # TODO how to rename playlist is a problem
+            #     renameDir(f"{args.storage}",f"{video_info.get_title()}")            
     elif args.type == "generateNfo":
         pass
