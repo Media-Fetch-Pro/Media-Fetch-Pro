@@ -51,7 +51,6 @@ if not(os.path.isdir(temp_path)):
 
 args = parser.parse_args()
 
-
 if __name__ == "__main__":
     
     if args.url == None:
@@ -62,8 +61,15 @@ if __name__ == "__main__":
         
     if args.video_info != None:
         video_info = VideoInfo()
-        video_info.deserialize(json.loads(args.video_info))
+        print(args.video_info)
+        try:
+            video_info.deserialize(json.loads(args.video_info))
+        except Exception as e:
+            print(e)
+            exit("video_info is not a json string")
     
+    print("hello 6")
+
     if args.type == "fetchVideoInfo":
         # 我觉得这里做个责任链模式比较好，一个个传下去，谁能解析就谁来解析
         websites = Bilibili(Youtube(EndDownloader()))
@@ -91,14 +97,14 @@ if __name__ == "__main__":
             # TODO generate nfo
             pass
         elif video_info.type == "video":
-            print(video_info)
-            # if video_info.get_type() == "video": # episode didn't generate nfo
-            #     # TODO generate nfo
-            #     pass            
-            # websites.downloadPoster(video_info,args.storage)
-            # websites.downloadVideo(video_info,args.storage)
+            # print(video_info)
+            if video_info.get_type() == "video": # episode didn't generate nfo
+                # TODO generate nfo
+                pass            
+            websites.downloadPoster(video_info,args.storage)
+            websites.downloadVideo(video_info,args.storage)
             
-            # if video_info.get_type() == "video": # TODO how to rename playlist is a problem
-            #     renameDir(f"{args.storage}",f"{video_info.get_title()}")            
+            if video_info.get_type() == "video": # TODO how to rename playlist is a problem
+                renameDir(f"{args.storage}",f"{video_info.get_title()}")            
     elif args.type == "generateNfo":
         pass

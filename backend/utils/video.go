@@ -49,15 +49,11 @@ func FetchingVideoInfo(videoInfo *types.VideoInfo) error {
 }
 
 func DownloadVideo(videoInfo *types.VideoInfo, storagePath string) error {
-	fmt.Printf("videoInfo: %v\n", videoInfo)
 	videoJson, err := json.Marshal(videoInfo)
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
 	}
-	fmt.Printf("videoJson: %v\n", string(videoJson))
-	args := []string{"main.py", "--url", videoInfo.Url, "--type", "downloadVideo", "--video-info", fmt.Sprintf("'%s'", string(videoJson)), "--storage", storagePath}
-	// see the command
-	//
+	args := []string{"main.py", "--url", videoInfo.Url, "--type", "downloadVideo", "--video-info", string(videoJson), "--storage", storagePath}
 	out, err := exec.Command("python3", args...).Output()
 	if err != nil {
 		fmt.Printf("err: %v\n", err)

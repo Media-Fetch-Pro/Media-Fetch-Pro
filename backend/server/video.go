@@ -77,6 +77,9 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 			Status: "unstart",
 			Type:   videoType,
 		})
+
+		// to process storage
+		s.Store.SystemSettings.StoragePath = input.Storage
 		go s.Store.SchedulerDownload()
 
 		c.JSON(http.StatusOK, composeResponse("start downloading"))
