@@ -44,7 +44,7 @@ defineExpose({
 
             <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleTabClick">
                 <el-tab-pane label="Downloading" name="first">Downloading</el-tab-pane>
-                <el-tab-pane label="Done" name="second">Done</el-tab-pane>
+                <el-tab-pane label="Finished" name="second">Finished</el-tab-pane>
                 <el-tab-pane label="Failed" name="third">Failed</el-tab-pane>
             </el-tabs>
             

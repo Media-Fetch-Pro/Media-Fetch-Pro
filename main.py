@@ -61,15 +61,12 @@ if __name__ == "__main__":
         
     if args.video_info != None:
         video_info = VideoInfo()
-        print(args.video_info)
         try:
             video_info.deserialize(json.loads(args.video_info))
         except Exception as e:
             print(e)
             exit("video_info is not a json string")
     
-    print("hello 6")
-
     if args.type == "fetchVideoInfo":
         # 我觉得这里做个责任链模式比较好，一个个传下去，谁能解析就谁来解析
         websites = Bilibili(Youtube(EndDownloader()))
@@ -78,10 +75,16 @@ if __name__ == "__main__":
             
     elif args.type == "downloadVideo":
         # 判断下载路径是否是一个目录
-        args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
-        if not(os.path.isdir(args.storage)):
-            os.mkdir(args.storage)
-            
+        
+        print("download "+args.storage)
+        try:
+            args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
+            if not(os.path.isdir(args.storage)):
+                os.mkdir(args.storage)
+        except Exception as e:
+            print(e)
+        
+        print("storage path is "+args.storage)
         # websites = Bilibili(Youtube(EndDownloader()))
         
         # video_info = websites.getVideoInfo(args.url)[0]
@@ -97,7 +100,8 @@ if __name__ == "__main__":
             # TODO generate nfo
             pass
         elif video_info.type == "video":
-            # print(video_info)
+            print("download video")
+
             if video_info.get_type() == "video": # episode didn't generate nfo
                 # TODO generate nfo
                 pass            
