@@ -42,14 +42,17 @@ defineExpose({
         <div><el-button type="success" @click="handleRefreshBtnClick" :icon="Refresh">Update History</el-button></div>
         <div class="w-full">
 
-            <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleTabClick">
-                <el-tab-pane label="Downloading" name="first">Downloading</el-tab-pane>
-                <el-tab-pane label="Finished" name="second">Finished</el-tab-pane>
-                <el-tab-pane label="Failed" name="third">Failed</el-tab-pane>
+            <el-tabs v-model="historyStore.tab" class="demo-tabs" @tab-click="handleTabClick">
+                <el-tab-pane label="Downloading" name="downloading"></el-tab-pane>
+                <el-tab-pane label="Finished" name="finished"></el-tab-pane>
+                <el-tab-pane label="Failed" name="failed"></el-tab-pane>
             </el-tabs>
             
             <div class="flex w-full gap-2 py-2" v-for="item in historyStore.getVideoHistory" :key="item.id">
                 <DownloadHistory :item="item" />
+            </div>
+            <div v-if="historyStore.getVideoHistory.length==0">
+                this is nothing
             </div>
         </div>
     </main>

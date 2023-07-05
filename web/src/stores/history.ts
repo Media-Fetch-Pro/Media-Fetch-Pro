@@ -25,9 +25,14 @@ export const useHistoryStore = defineStore("history", {
     state: () => ({
         historyData: [] as DownloadHistory[],
         loading: true,
+        tab: "downloading",
     }),
     getters: {
-        getVideoHistory: (state) => state.historyData,
+        getVideoHistory: (state) => {
+            return state.historyData.filter(
+                (item) => item.status === state.tab
+            );
+        }
     },    
     actions:{
         // TODO only update downloading video status
