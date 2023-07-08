@@ -9,6 +9,10 @@ class BaseDownloader():
     def isSupport(self,url):
         pass
     
+    def isSupportWithVideoInfo(self,video_info: VideoInfo) -> bool:
+        return False
+
+    
     def getVideoInfo(self,url)->List[VideoInfo]: # 这是一个责任链模式
         if self.isSupport(url):
             pass
@@ -31,7 +35,7 @@ class BaseDownloader():
 
 
     def downloadNfo(self, video_info: VideoInfo, output_dir: str):
-        if self.isSupport(video_info.url):
+        if self.isSupportWithVideoInfo(video_info):
             self.downloadNfo(video_info, output_dir)
         else:
             return self.next.downloadNfo(video_info, output_dir)

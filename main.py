@@ -49,8 +49,13 @@ if __name__ == "__main__":
         # 判断下载路径是否是一个目录
 
         print("download "+args.storage)
+        print("video_info",video_info)
         try:
-            args.storage = args.storage + "/" + generate_uuid_from_url(args.url)
+            if(video_info.type != "episode"):
+                args.storage = args.storage + "/" + generate_uuid_from_url(args.url) # video and playlist
+            else: # 
+                args.storage = args.storage + "/" + video_info.parent
+            
             if not(os.path.isdir(args.storage)):
                 os.mkdir(args.storage)
         except Exception as e:
@@ -58,14 +63,12 @@ if __name__ == "__main__":
         
         print("storage path is "+args.storage)
 
-        # TODO how to process when  video belong a playlist? 🤔
         websites = Bilibili(Youtube(EndDownloader()))
 
         # renameDir(f"{args.storage}",f"{video_info.get_title()}")
         if video_info.get_type() == "playlist":
-            # TODO generate nfo
             # this is generate a tvshow.nfo🤔 it is very very hard.
-            pass
+            websites.downloadNfo(video_info,args.storage)
         
         elif video_info.type == "video":
 

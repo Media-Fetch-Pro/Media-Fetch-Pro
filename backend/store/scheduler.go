@@ -1,6 +1,8 @@
 package store
 
 import (
+	"fmt"
+
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/utils"
 )
 
@@ -9,6 +11,8 @@ func (s *Store) DownloadComplete(id string) {
 }
 
 func (s *Store) SchedulerDownload() {
+	fmt.Println(s.VideosInfo)
+
 	if s.DownloadingVideoNum < s.SystemSettings.MaxDownloadNum {
 		for _, value := range s.VideosInfo {
 
@@ -27,7 +31,7 @@ func (s *Store) SchedulerDownload() {
 				}
 			}
 
-			if value.Status == "pending" {
+			if value.Status == "pending" && value.Type != "playlist" {
 				value.Status = "downloading"
 				s.DownloadingVideoNum++
 				go utils.DownloadVideo(value, s.SystemSettings.StoragePath)

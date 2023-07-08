@@ -2,6 +2,7 @@ package store
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
 )
@@ -34,6 +35,7 @@ func (s *Store) UpdateVideoInfo(videoInfo types.VideoInfo) error {
 }
 
 func (s *Store) GetAllVideoInfo() map[string]*types.VideoInfo {
+	fmt.Println(s.VideosInfo)
 	return s.VideosInfo
 }
 

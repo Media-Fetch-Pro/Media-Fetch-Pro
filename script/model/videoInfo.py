@@ -17,9 +17,9 @@ class VideoInfo():
     author: str = None
     source: str = None
     content: str = None
-    episode: str = None
+    episode: int = None
     parent: str = None
-    length: str = None
+    length: int = None
     start_download_time: int = None
     
     def __init__(self): # how to differentiate between init and init video info in downloader ?🤔
@@ -103,21 +103,21 @@ class VideoInfo():
     def get_content(self) -> Union[str,None]:
         return self.content
     
-    def set_episode(self,episode:str) -> 'VideoInfo':
+    def set_episode(self,episode:int) -> 'VideoInfo':
         self.episode = episode
         return self
     
-    def get_episode(self) -> Union[str,None]:
+    def get_episode(self) -> Union[int,None]:
         return self.episode
     
     def set_parent(self,parent:str) -> 'VideoInfo':
         self.parent = parent
         return self
     
-    def get_parent(self) -> Union[str,None]:
+    def get_parent(self) -> Union[int,None]:
         return self.parent
     
-    def set_length(self,length:str) -> 'VideoInfo':
+    def set_length(self,length:int) -> 'VideoInfo':
         self.length = length
         return self
     

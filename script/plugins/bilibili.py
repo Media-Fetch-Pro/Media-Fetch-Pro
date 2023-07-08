@@ -25,6 +25,9 @@ class Bilibili(BaseDownloader):
             return True
         else:
             return False
+        
+    def isSupportWithVideoInfo(self,video_info: VideoInfo) -> bool:
+        return self.isSupport(video_info.url) and video_info.type == "video" # string type should to be enum type
 
     def _initVideoInfo(self, url:str)->VideoInfo:
         video_info = VideoInfo()
@@ -55,6 +58,8 @@ class Bilibili(BaseDownloader):
                     )
                 )
             )    
+            video_info.set_type("playlist")
+            
             # fetch every children video info
             for p in (1,video_info.get_length()):
                 new_video_info = self.getVideoInfo(f"{video_info.url}?p={p}")[0]
@@ -142,8 +147,8 @@ class Bilibili(BaseDownloader):
 
 
     def downloadNfo(self, video_info: VideoInfo, output_dir: str):
-        if self.isSupport(video_info.url):
-            self.downloadNfo(video_info, output_dir)
+        if self.isSupportWithVideoInfo(video_info.url):
+            self._downloadNfo(video_info, output_dir)
         else:
             return self.next.downloadNfo(video_info, output_dir)
 

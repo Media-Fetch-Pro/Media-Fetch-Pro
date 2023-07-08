@@ -56,6 +56,8 @@ func DownloadVideo(videoInfo *types.VideoInfo, storagePath string) error {
 	args := []string{"main.py", "--url", videoInfo.Url, "--type", "downloadVideo", "--video-info", string(videoJson), "--storage", storagePath}
 	out, err := exec.Command("python3", args...).Output()
 	if err != nil {
+		fmt.Printf("data struct: %v\n", videoInfo)
+		fmt.Printf("json: %s\n", videoJson)
 		fmt.Printf("err: %v\n", err)
 		fmt.Printf("out: %s\n", out)
 	}

@@ -26,9 +26,9 @@ type UpdateVideoStatusInput struct {
 	Author            string   `json:"author"`
 	Source            string   `json:"source"`              // bilibili, youtube
 	Content           string   `json:"content"`             // the content of the video
-	Episode           string   `json:"episode"`             // only of video of playlist
+	Episode           int      `json:"episode"`             // only of video of playlist
 	Parent            string   `json:"parent"`              // the playlist id of the video
-	Length            string   `json:"length"`              // the length of the playlist
+	Length            int      `json:"length"`              // the length of the playlist
 	StartDownloadTime int64    `json:"start_download_time"` // unix timestamp
 }
 
