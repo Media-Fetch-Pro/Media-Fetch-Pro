@@ -125,8 +125,6 @@ class Bilibili(BaseDownloader):
         if self.isSupport(url):
             video_info = self._initVideoInfo(url)
             video_info_array = self._fetchVideoInfo(video_info)
-            for video_info in video_info_array:
-                request.updateVideoStatus(video_info)
             return video_info_array
         else:
             return self.next.getVideoInfo(url)
@@ -147,7 +145,7 @@ class Bilibili(BaseDownloader):
 
 
     def downloadNfo(self, video_info: VideoInfo, output_dir: str):
-        if self.isSupportWithVideoInfo(video_info.url):
+        if self.isSupportWithVideoInfo(video_info):
             self._downloadNfo(video_info, output_dir)
         else:
             return self.next.downloadNfo(video_info, output_dir)

@@ -1,6 +1,8 @@
 import argparse
 import os
+from script.api import request
 from script.plugins.bilibili import Bilibili
+from script.plugins.bilibili_playlist import BilibiliPlayList
 from script.plugins.youtube import Youtube
 from script.plugins.endDownloader import EndDownloader
 from script.utils.video import generate_uuid_from_url
@@ -41,10 +43,13 @@ if __name__ == "__main__":
     
     if args.type == "fetchVideoInfo":
         # 我觉得这里做个责任链模式比较好，一个个传下去，谁能解析就谁来解析
-        websites = Bilibili(Youtube(EndDownloader()))
+        websites = Bilibili(BilibiliPlayList(Youtube(EndDownloader())))
         # to print result for debug
-        print(json.dumps(list(map(lambda x:x.serialize(),websites.getVideoInfo(args.url))),indent=4, separators=(',', ': ')))
-            
+        video_info_array = websites.getVideoInfo(args.url)
+        print(json.dumps(list(map(lambda x:x.serialize(),video_info_array)),indent=4, separators=(',', ': ')))
+        for video_info in video_info_array:
+            request.updateVideoStatus(video_info)
+
     elif args.type == "downloadVideo":
         # 判断下载路径是否是一个目录
 
@@ -63,24 +68,28 @@ if __name__ == "__main__":
         
         print("storage path is "+args.storage)
 
-        websites = Bilibili(Youtube(EndDownloader()))
+        websites = Bilibili(BilibiliPlayList(Youtube(EndDownloader())))
 
-        # renameDir(f"{args.storage}",f"{video_info.get_title()}")
         if video_info.get_type() == "playlist":
             # this is generate a tvshow.nfo🤔 it is very very hard.
             websites.downloadNfo(video_info,args.storage)
-        
-        elif video_info.type == "video":
+            websites.downloadPoster(video_info,args.storage)
+            
+            # TODO it is a problem how to rename playlist🤔
 
+
+        elif video_info.type == "video":
             if video_info.get_type() == "video": # episode didn't generate nfo
                 websites.downloadNfo(video_info,args.storage)
+                print("下载nfo成功")
 
             websites.downloadPoster(video_info,args.storage)
             websites.downloadVideo(video_info,args.storage)
-            
-            if video_info.get_type() == "video": 
-                # TODO it is a problem how to rename playlist🤔
-                renameDir(f"{args.storage}",f"{video_info.get_title()}")        
+            renameDir(f"{args.storage}",f"{video_info.get_title()}") 
+
+        elif video_info.type == "episode":
+            websites.downloadVideo(video_info,args.storage)
+
 
     elif args.type == "generateNfo":
         pass

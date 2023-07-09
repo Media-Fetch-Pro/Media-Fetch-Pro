@@ -11,8 +11,6 @@ func (s *Store) DownloadComplete(id string) {
 }
 
 func (s *Store) SchedulerDownload() {
-	fmt.Println(s.VideosInfo)
-
 	if s.DownloadingVideoNum < s.SystemSettings.MaxDownloadNum {
 		for _, value := range s.VideosInfo {
 
@@ -31,9 +29,10 @@ func (s *Store) SchedulerDownload() {
 				}
 			}
 
-			if value.Status == "pending" && value.Type != "playlist" {
+			if value.Status == "pending" {
 				value.Status = "downloading"
 				s.DownloadingVideoNum++
+				fmt.Println("value:", value)
 				go utils.DownloadVideo(value, s.SystemSettings.StoragePath)
 			}
 		}

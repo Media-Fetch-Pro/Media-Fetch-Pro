@@ -105,7 +105,6 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 			c.JSON(http.StatusBadRequest, composeResponse(err.Error()))
 			return
 		}
-
 		go s.Store.SchedulerDownload()
 
 		c.JSON(http.StatusOK, composeResponse("update video status"))

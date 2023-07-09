@@ -8,7 +8,7 @@ class BilibiliPlayList(BaseDownloader):
             return True
         else:
             return False
-    
+
     def isSupportWithVideoInfo(self,video_info: VideoInfo) -> bool:
         return self.isSupport(video_info.url) and video_info.type == "playlist" # string type should to be enum type
 
@@ -19,7 +19,7 @@ class BilibiliPlayList(BaseDownloader):
 
 
     def downloadNfo(self, video_info: VideoInfo, output_dir: str):
-        if self.isSupportWithVideoInfo(video_info.url):
+        if self.isSupportWithVideoInfo(video_info):
             self._downloadNfo(video_info, output_dir)
         else:
             return self.next.downloadNfo(video_info, output_dir)
