@@ -49,7 +49,6 @@ func FetchingVideoInfo(videoInfo *types.VideoInfo) error {
 }
 
 func DownloadVideo(videoInfo *types.VideoInfo, storagePath string) error {
-	fmt.Println("开始下载")
 	videoJson, err := json.Marshal(videoInfo)
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
