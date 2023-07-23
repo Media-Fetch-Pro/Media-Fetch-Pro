@@ -57,7 +57,7 @@ if __name__ == "__main__":
         print("video_info",video_info)
         try:
             if(video_info.type != "episode"):
-                args.storage = args.storage + "/" + generate_uuid_from_url(args.url) # video and playlist
+                args.storage = args.storage + "/" + video_info.get_id() # video and playlist
             else: # 
                 args.storage = args.storage + "/" + video_info.parent
             
@@ -77,7 +77,6 @@ if __name__ == "__main__":
             
             # TODO it is a problem how to rename playlist🤔
 
-
         elif video_info.type == "video":
             if video_info.get_type() == "video": # episode didn't generate nfo
                 websites.downloadNfo(video_info,args.storage)
@@ -85,7 +84,6 @@ if __name__ == "__main__":
 
             websites.downloadPoster(video_info,args.storage)
             websites.downloadVideo(video_info,args.storage)
-            renameDir(f"{args.storage}",f"{video_info.get_title()}") 
 
         elif video_info.type == "episode":
             websites.downloadVideo(video_info,args.storage)
@@ -94,3 +92,11 @@ if __name__ == "__main__":
     elif args.type == "generateNfo":
         pass
         # I think i didn't do this. generate nfo when download video.
+
+    elif args.type == "rename":
+        if args.storage == None:
+            exit("storage is None")
+        # does playlist have title?
+        print(video_info)
+        renameDir(f"{args.storage}/{video_info.get_id()}",f"{video_info.get_title()}") 
+

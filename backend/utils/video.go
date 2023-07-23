@@ -57,6 +57,21 @@ func DownloadVideo(videoInfo *types.VideoInfo, storagePath string) error {
 	args := []string{"main.py", "--url", videoInfo.Url, "--type", "downloadVideo", "--video-info", string(videoJson), "--storage", storagePath}
 	out, err := exec.Command("python3", args...).Output()
 	if err != nil {
+		fmt.Printf("json: %s\n", string(videoJson))
+		fmt.Printf("err: %v\n", err)
+		fmt.Printf("out: %s\n", out)
+	}
+	return err
+}
+
+func RenameVideo(videoInfo *types.VideoInfo, storagePath string) error {
+	videoJson, err := json.Marshal(videoInfo)
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+	}
+	args := []string{"main.py", "--url", videoInfo.Url, "--type", "rename", "--video-info", string(videoJson), "--storage", storagePath}
+	out, err := exec.Command("python3", args...).Output()
+	if err != nil {
 		fmt.Printf("err: %v\n", err)
 		fmt.Printf("out: %s\n", out)
 	}
