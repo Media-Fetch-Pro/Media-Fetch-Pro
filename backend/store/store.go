@@ -2,6 +2,7 @@ package store
 
 import (
 	"database/sql"
+	"sync"
 
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
 )
@@ -18,6 +19,7 @@ type Store struct {
 	VideosInfo          map[string]*types.VideoInfo
 	DownloadingVideoNum int // the video num that is downloading
 	SystemSettings      SystemSettings
+	schedulerLock       sync.Mutex
 }
 
 func NewStore(db *sql.DB) *Store {

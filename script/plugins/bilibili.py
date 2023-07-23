@@ -16,7 +16,7 @@ from script.utils.ytdlp import extract_progress
 
 class Bilibili(BaseDownloader):
     def progress_hook(self,d):
-        self.video_info.set_status(d['status'])
+        self.video_info.set_status('downloading')
         self.video_info.set_percent(extract_progress(d['_percent_str']))
         request.updateVideoStatus(self.video_info)
 

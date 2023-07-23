@@ -26,7 +26,7 @@ if not(os.path.isdir(temp_path)):
 args = parser.parse_args()
 
 if __name__ == "__main__":
-    
+
     if args.url == None:
         exit("url is None")
     
@@ -40,7 +40,14 @@ if __name__ == "__main__":
         except Exception as e:
             print(e)
             exit("video_info is not a json string")
-    
+            
+        print(video_info)
+
+            
+    print(args.type)
+    print(args.url)
+    print(args.storage)
+
     if args.type == "fetchVideoInfo":
         # 我觉得这里做个责任链模式比较好，一个个传下去，谁能解析就谁来解析
         websites = Bilibili(BilibiliPlayList(Youtube(EndDownloader())))
@@ -85,8 +92,13 @@ if __name__ == "__main__":
             websites.downloadPoster(video_info,args.storage)
             websites.downloadVideo(video_info,args.storage)
 
+            video_info.set_status("finished")
+            request.updateVideoStatus(video_info)
+            
         elif video_info.type == "episode":
             websites.downloadVideo(video_info,args.storage)
+            video_info.set_status("finished")
+            request.updateVideoStatus(video_info)
 
 
     elif args.type == "generateNfo":
@@ -97,6 +109,7 @@ if __name__ == "__main__":
         if args.storage == None:
             exit("storage is None")
         # does playlist have title?
-        print(video_info)
-        renameDir(f"{args.storage}/{video_info.get_id()}",f"{video_info.get_title()}") 
+        print("rename before")
 
+        renameDir(f"{args.storage}/{video_info.get_id()}",f"{video_info.get_title()}") 
+        print("rename success")
