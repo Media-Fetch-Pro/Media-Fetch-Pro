@@ -27,6 +27,7 @@ func NewServer() (*Server, error) {
 	db := db.NewDB()
 	storeInstance := store.NewStore(db.DBInstance)
 	s.Store = storeInstance
+	s.Store.LoadGlobalVideoInfo()
 
 	apiGroup := httpServer.Group("/api")
 	s.registerVideoRoutes(apiGroup)

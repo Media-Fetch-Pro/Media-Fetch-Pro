@@ -86,5 +86,6 @@ func (s *Store) SchedulerDownload() {
 			}
 		}
 	}
+	s.SaveGlobalVideoInfo()
 	s.schedulerLock.Unlock()
 }

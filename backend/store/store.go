@@ -2,9 +2,13 @@ package store
 
 import (
 	"database/sql"
+	"fmt"
+	"os"
+	"path"
 	"sync"
 
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
+	"gopkg.in/yaml.v3"
 )
 
 type SystemSettings struct {
@@ -32,6 +36,52 @@ func NewStore(db *sql.DB) *Store {
 
 func (s *Store) GetDB() *sql.DB {
 	return s.db
+}
+
+func (s *Store) SaveGlobalVideoInfo() {
+	// handle err
+	cwd, err := os.Getwd()
+	// handle err
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	raw, err := yaml.Marshal(s.VideosInfo)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	err = os.WriteFile(
+		path.Join(cwd, "video.yaml"),
+		raw,
+		0644,
+	)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+}
+
+func (s *Store) LoadGlobalVideoInfo() {
+	cwd, err := os.Getwd()
+	// handle err
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	raw, err := os.ReadFile(
+		path.Join(cwd, "video.yaml"),
+	)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// handle err
+
+	var status map[string]*types.VideoInfo
+	yaml.Unmarshal(raw, &status)
+	s.VideosInfo = status
+
 }
 
 // type GlobalVideoStatus struct {
