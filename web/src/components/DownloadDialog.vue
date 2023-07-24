@@ -47,6 +47,7 @@
                 <div class="mt-2">
                   Save Video to:
                   <el-radio-group v-model="radio1" size="large">
+                    <el-radio-button label="Default" />
                     <el-radio-button label="Auto" />
                     <el-radio-button label="Video Uploader" />
                     <el-radio-button label="Collect" />
@@ -56,13 +57,12 @@
                 </div>
   
                 <div class="flex mt-4 gap-2">
-                  <button
-                    type="button"
-                    class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                  <el-button
+                    type="primary"
                     @click="handleDownloadBtnClick"
                   >
                     Download
-                  </button>
+                  </el-button>
                   <el-button
                     @click="cancelModal"
                   >
@@ -89,11 +89,12 @@
   } from '@headlessui/vue'
   import { useDownloadStore } from '@/stores';
   import { ElMessage }  from 'element-plus'
+import { useSettingStore } from "@/stores/setting";
 
   const isOpen = ref(false)
   const radio1 = ref('Auto')
   const downloadStore = useDownloadStore()
-
+  const settingStore = useSettingStore();
 
   function handleDownloadBtnClick() {
     isOpen.value = false
@@ -101,7 +102,7 @@
       alert("url is empty")
       return
     }else{
-      downloadStore.download()
+      downloadStore.download(settingStore.storagePath)
       ElMessage.success("Start Downloading")
     }
   }

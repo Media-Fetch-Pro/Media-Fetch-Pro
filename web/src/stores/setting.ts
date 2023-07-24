@@ -6,6 +6,7 @@ export const useSettingStore = defineStore("download", {
         paths: ['someState'],
     },
     state: () => ({
+        // these setting will be saved in backend in future
         storagePath: "/var/opt/video",
         maxDownload: 1,
         maxDownloadSpeed: 5,
