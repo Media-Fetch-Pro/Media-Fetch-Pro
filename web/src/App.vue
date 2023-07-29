@@ -2,9 +2,28 @@
 import { RouterView } from 'vue-router'
 import NavTab from './components/NavTab.vue'
 import {Download,Clock,Setting} from "@element-plus/icons-vue";
+import { useHistoryStore } from '@/stores';
+import { ref, watch} from 'vue';
+import { useEventSource } from '@vueuse/core'
 
-import { ref } from 'vue';
+const historyStore = useHistoryStore()
+
+const { status, data, error, close } = useEventSource('api/history')
+
+watch(data, (val) => {
+    historyStore.updateVideoStatus(val)
+})
+
+watch(status, (val) => {
+    console.log(val)
+})
+
+watch(error, (val) => {
+    console.log(val)
+})
+
 const selectTab = ref(1)
+
 defineExpose({
     selectTab
 })

@@ -58,14 +58,17 @@ export const useHistoryStore = defineStore("history", {
             this.loading = false;
             return historyData;
         },
-        async updateVideoStatus(object: any) {
+        updateVideoStatus(object: any) {
             const videoInfo = convertOne(object);
-            this.historyData = this.historyData.map((item) => {
-                if (item.id === videoInfo.id) {
-                    return videoInfo;
-                }
-                return item;
-            });
+            console.log(object)
+            const index = this.historyData.findIndex((item) => {item.id === videoInfo.id});
+            if (index == -1) {
+                console.log("push")
+                this.historyData.push(videoInfo);
+            }else{
+                console.log("update")
+                this.historyData[index] = videoInfo;
+            }
         },
     },
 });
