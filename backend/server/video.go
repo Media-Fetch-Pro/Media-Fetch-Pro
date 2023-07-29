@@ -1,6 +1,7 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -37,6 +38,37 @@ func composeResponse(data any) gin.H {
 }
 
 func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
+	g.GET("/history", func(c *gin.Context) {
+		// the API is a server sent event API
+		c.Writer.Header().Set("Content-Type", "text/event-stream")
+		c.Writer.Header().Set("Cache-Control", "no-cache")
+		c.Writer.Header().Set("Connection", "keep-alive")
+
+		// 在单独的goroutine中发送SSE事件
+		//go func() {
+		//	for {
+		//		eventCh <- "data: This is a SSE event\n\n"
+		//		time.Sleep(1000)
+		//	}
+		//}()
+
+		// 循环读取channel中的事件并发送给客户端
+		for {
+			select {
+			case event := <-s.Store.UpdateChannel:
+				json, err := json.Marshal(event)
+				if err != nil {
+					fmt.Println("json err: ", err)
+				}
+				fmt.Fprintf(c.Writer, "data: "+string(json)+"\n\n")
+				c.Writer.Flush()
+			case <-c.Writer.CloseNotify():
+				// 如果客户端断开连接，则停止发送事件
+				return
+			}
+		}
+	})
+
 	g.GET("/video", func(c *gin.Context) {
 		id := c.Param("id")
 		videoInfo, err := s.Store.GetVideoInfo(id)
@@ -99,7 +131,11 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 			return
 		}
 
-		err := s.Store.UpdateVideoInfo(types.VideoInfo(input))
+		videoInfo := types.VideoInfo(input)
+		err := s.Store.UpdateVideoInfo(videoInfo)
+		// TODO move the update to another place.
+		// Because it didn't only update place
+		s.Store.UpdateChannel <- videoInfo
 
 		if err != nil {
 			c.JSON(http.StatusBadRequest, composeResponse(err.Error()))

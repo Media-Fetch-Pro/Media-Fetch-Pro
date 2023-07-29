@@ -1,30 +1,25 @@
 <script setup lang="ts">
 import DownloadHistory from '@/components/DownloadHistory.vue';
 import { useHistoryStore } from '@/stores';
-import { onMounted,onUnmounted,ref } from 'vue';
+import { onMounted,onUnmounted,ref, watch } from 'vue';
 const historyStore = useHistoryStore()
-import { Refresh } from '@element-plus/icons-vue'
-// import { ElMessage } from 'element-plus'
 import { ElMessage } from 'element-plus'
+import { useEventSource } from '@vueuse/core'
+
+const { status, data, error, close } = useEventSource('api/history')
 
 const activeName = ref('first')
 const timer:any= ref(null)
 
 onMounted(() => {
     historyStore.getVideoStatus()
-    timer.value = setInterval(() => {
-        historyStore.getVideoStatus()
-    }, 1000)
 })
 
-onUnmounted(() => {
-    clearInterval(timer.value)
+watch(data, (val) => {
+    console.log(val)
+    console.log(historyStore.updateVideoStatus)
+    historyStore.updateVideoStatus(val)
 })
-
-const handleRefreshBtnClick = async () => {
-    await historyStore.getVideoStatus()
-    ElMessage.success('update Success!')
-}
 
 const handleTabClick = (tab: any) => {
     // to request network data

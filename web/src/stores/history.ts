@@ -20,6 +20,21 @@ function convert(
     })
 }
 
+function convertOne(
+    data: any
+):DownloadHistory{
+    return {
+        id: data.id,
+        title: data.title,
+        url: data.url,
+        status: data.status,
+        percent: data.percent,
+        size: data.size,
+        type: data.type,
+        // alreadyDownloadSize: data.AlreadyDownloadSize,
+        // collectionId: data.CollectionId,
+    } as DownloadHistory
+}
 
 export const useHistoryStore = defineStore("history", {
     state: () => ({
@@ -35,8 +50,6 @@ export const useHistoryStore = defineStore("history", {
         }
     },    
     actions:{
-        // TODO only update downloading video status
-
         async getVideoStatus() {
             this.loading = true;
             const res = (await axios.get("api/videos")).data;
@@ -44,6 +57,15 @@ export const useHistoryStore = defineStore("history", {
             this.historyData = historyData;
             this.loading = false;
             return historyData;
+        },
+        async updateVideoStatus(object: any) {
+            const videoInfo = convertOne(object);
+            this.historyData = this.historyData.map((item) => {
+                if (item.id === videoInfo.id) {
+                    return videoInfo;
+                }
+                return item;
+            });
         },
     },
 });
