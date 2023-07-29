@@ -39,10 +39,10 @@ defineExpose({
 <template>
     <main v-loading="historyStore.loading" class="flex flex-col w-full p-2 gap-2">
         <h1 class="font-black">Download History</h1>
-        <!-- <div><el-button type="success" @click="handleRefreshBtnClick" :icon="Refresh">Update History</el-button></div> -->
         <div class="w-full">
 
             <el-tabs v-model="historyStore.tab" class="demo-tabs" @tab-click="handleTabClick">
+                <el-tab-pane label="Wait To start" name="pending"></el-tab-pane>
                 <el-tab-pane label="Downloading" name="downloading"></el-tab-pane>
                 <el-tab-pane label="Finished" name="complete"></el-tab-pane>
                 <el-tab-pane label="Failed" name="failed"></el-tab-pane>

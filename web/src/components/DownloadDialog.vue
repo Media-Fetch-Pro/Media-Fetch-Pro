@@ -36,7 +36,7 @@
               leave-to="opacity-0 scale-95"
             >
               <DialogPanel
-                class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                class="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
               >
                 <DialogTitle
                   as="h3"
@@ -47,11 +47,11 @@
                 <div class="mt-2">
                   Save Video to:
                   <el-radio-group v-model="radio1" size="large">
-                    <el-radio-button label="Default" />
+                    <el-radio-button label="Default" disabled />
                     <el-radio-button label="Auto" />
-                    <el-radio-button label="Video Uploader" />
-                    <el-radio-button label="Collect" />
-                    <el-radio-button label="Custom" />
+                    <el-radio-button label="Video Uploader" disabled/>
+                    <el-radio-button label="Collect" disabled/>
+                    <el-radio-button label="Custom" disabled/>
                   </el-radio-group>
               
                 </div>
@@ -99,17 +99,16 @@ const settingStore = useSettingStore();
 function handleDownloadBtnClick() {
   isOpen.value = false
   if(downloadStore.url === "") {
-    alert("url is empty")
+    ElMessage.error("url is empty")
     return
   }else{
-    console.log("downloadStore is",downloadStore.download)
     downloadStore.download(settingStore.storagePath)
     ElMessage.success("Start Downloading")
   }
 }
 function openModal() {
   if(downloadStore.url === "") {
-    alert("url is empty")
+    ElMessage.error("url is empty")
     return
   }else{
     isOpen.value = true

@@ -1,7 +1,13 @@
 <template>
     <router-link class="m-auto" :to="props.to">
-        <div :class="bgColor" >
-            <slot></slot>
+        <div class="flex gap-1" :class="bgColor">
+            <div>
+                <!-- the slot is a icon -->
+                <slot></slot>
+            </div>
+            <div class="m-auto">
+                {{props.title}}
+            </div>
         </div>
     </router-link>
 
@@ -18,12 +24,15 @@ const props = defineProps({
     to: {
         type: String,
         required: true
+    },
+    title: {
+        type: String,
+        required: true
     }
 })
 
 watch(() => router.currentRoute.value, (route) => {
     if (route.path == props.to) {
-        console.log(props.to,"be select")
         beSelect.value = true
     }else{
         beSelect.value = false
@@ -32,7 +41,7 @@ watch(() => router.currentRoute.value, (route) => {
 
 watch(beSelect, (value) => {
     if (value) {
-        bgColor.value = "rounded-full bg-white  p-2 flex drop-shadow-lg"
+        bgColor.value = "rounded-full bg-white p-2 flex drop-shadow-lg"
     }else{
         bgColor.value = "rounded-full hover:bg-white p-2 flex drop-shadow-lg"
     }

@@ -16,23 +16,20 @@ defineExpose({
       <div class="rounded-full overflow-hidden">
           <img src="/logo.jpg" alt="logo" class="h-full w-full" />
       </div>
-      <NavTab to="/" >
+      <NavTab to="/" title="Download">
           <el-icon>
             <Download />
           </el-icon>
-          Download
       </NavTab>
-      <NavTab to="/history">
+      <NavTab to="/history" title="History">
         <el-icon>
           <Clock />
         </el-icon>
-        History
       </NavTab>
-      <NavTab to="/setting">
+      <NavTab to="/setting" title="Settings">
         <el-icon>
           <Setting />
         </el-icon>
-        Setting
       </NavTab>
     </div>
     <RouterView />
