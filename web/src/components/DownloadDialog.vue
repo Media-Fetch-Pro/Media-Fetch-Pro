@@ -77,45 +77,45 @@
     </TransitionRoot>
   </template>
   
-  <script setup lang="ts">
-  import {Download} from "@element-plus/icons-vue";
-  import { ref } from 'vue'
-  import {
-    TransitionRoot,
-    TransitionChild,
-    Dialog,
-    DialogPanel,
-    DialogTitle,
-  } from '@headlessui/vue'
-  import { useDownloadStore } from '@/stores';
-  import { ElMessage }  from 'element-plus'
+<script setup lang="ts">
+import {Download} from "@element-plus/icons-vue";
+import { ref } from 'vue'
+import {
+  TransitionRoot,
+  TransitionChild,
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+} from '@headlessui/vue'
+import { useDownloadStore } from '@/stores';
+import { ElMessage }  from 'element-plus'
 import { useSettingStore } from "@/stores/setting";
 
-  const isOpen = ref(false)
-  const radio1 = ref('Auto')
-  const downloadStore = useDownloadStore()
-  const settingStore = useSettingStore();
+const isOpen = ref(false)
+const radio1 = ref('Auto')
+const downloadStore = useDownloadStore()
+const settingStore = useSettingStore();
 
-  function handleDownloadBtnClick() {
-    isOpen.value = false
-    if(downloadStore.url === "") {
-      alert("url is empty")
-      return
-    }else{
-      downloadStore.download(settingStore.storagePath)
-      ElMessage.success("Start Downloading")
-    }
+function handleDownloadBtnClick() {
+  isOpen.value = false
+  if(downloadStore.url === "") {
+    alert("url is empty")
+    return
+  }else{
+    console.log("downloadStore is",downloadStore.download)
+    downloadStore.download(settingStore.storagePath)
+    ElMessage.success("Start Downloading")
   }
-  function openModal() {
-    if(downloadStore.url === "") {
-      alert("url is empty")
-      return
-    }else{
-      isOpen.value = true
-    }
+}
+function openModal() {
+  if(downloadStore.url === "") {
+    alert("url is empty")
+    return
+  }else{
+    isOpen.value = true
   }
-  function cancelModal() {
-    isOpen.value = false
-  }
-  </script>
-  
+}
+function cancelModal() {
+  isOpen.value = false
+}
+</script>

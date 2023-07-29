@@ -44,7 +44,7 @@ defineExpose({
 
             <el-tabs v-model="historyStore.tab" class="demo-tabs" @tab-click="handleTabClick">
                 <el-tab-pane label="Downloading" name="downloading"></el-tab-pane>
-                <el-tab-pane label="Finished" name="finished"></el-tab-pane>
+                <el-tab-pane label="Finished" name="complete"></el-tab-pane>
                 <el-tab-pane label="Failed" name="failed"></el-tab-pane>
             </el-tabs>
             

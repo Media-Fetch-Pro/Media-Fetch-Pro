@@ -72,16 +72,17 @@ func (s *Store) LoadGlobalVideoInfo() {
 	raw, err := os.ReadFile(
 		path.Join(cwd, "video.yaml"),
 	)
+	var status map[string]*types.VideoInfo
+
 	if err != nil {
-		fmt.Println(err)
+		if os.IsNotExist(err) {
+			status = make(map[string]*types.VideoInfo)
+		}
+	} else {
+		yaml.Unmarshal(raw, &status)
 	}
 
-	// handle err
-
-	var status map[string]*types.VideoInfo
-	yaml.Unmarshal(raw, &status)
 	s.VideosInfo = status
-
 }
 
 // type GlobalVideoStatus struct {
