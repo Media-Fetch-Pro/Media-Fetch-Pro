@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useSettingStore = defineStore("download", {
+export const useSettingStore = defineStore("setting", {
     state: () => ({
         // these setting will be saved in backend in future
         storagePath: "/var/opt/video",

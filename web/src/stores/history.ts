@@ -21,19 +21,20 @@ function convert(
 }
 
 function convertOne(
-    data: any
+    videoInfoString: string
 ):DownloadHistory{
+    const videoInfo = JSON.parse(videoInfoString) 
     return {
-        id: data.id,
-        title: data.title,
-        url: data.url,
-        status: data.status,
-        percent: data.percent,
-        size: data.size,
-        type: data.type,
-        // alreadyDownloadSize: data.AlreadyDownloadSize,
-        // collectionId: data.CollectionId,
-    } as DownloadHistory
+        id: videoInfo.id,
+        title: videoInfo.title,
+        url: videoInfo.url,
+        status: videoInfo.status,
+        percent: videoInfo.percent,
+        size: videoInfo.size,
+        type: videoInfo.type,
+        // alreadyDownloadSize: item.AlreadyDownloadSize,
+        // collectionId: item.CollectionId,
+    } as DownloadHistory;
 }
 
 export const useHistoryStore = defineStore("history", {
@@ -56,19 +57,18 @@ export const useHistoryStore = defineStore("history", {
             const historyData = convert(res.data);
             this.historyData = historyData;
             this.loading = false;
+
             return historyData;
         },
-        updateVideoStatus(object: any) {
-            const videoInfo = convertOne(object);
-            console.log(object)
-            const index = this.historyData.findIndex((item) => {item.id === videoInfo.id});
+        updateVideoStatus(videoData: any) {
+            const videoInfo = convertOne(videoData);
+            const index = this.historyData.findIndex((video) => video.id == videoInfo.id);
             if (index == -1) {
-                console.log("push")
                 this.historyData.push(videoInfo);
             }else{
-                console.log("update")
                 this.historyData[index] = videoInfo;
             }
         },
     },
+    persist: true,
 });

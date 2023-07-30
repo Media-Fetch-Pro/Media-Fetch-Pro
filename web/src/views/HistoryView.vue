@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import DownloadHistory from '@/components/DownloadHistory.vue';
 import { useHistoryStore } from '@/stores';
-import { onMounted,ref } from 'vue';
+import { onMounted,ref, computed, watch } from 'vue';
 const historyStore = useHistoryStore()
 import { ElMessage } from 'element-plus'
+import { useEventSource } from '@vueuse/core'
 
 const activeName = ref('first')
 
@@ -11,18 +12,27 @@ onMounted(() => {
     historyStore.getVideoStatus()
 })
 
+const { status, data, error, close } = useEventSource('api/history')
+
+watch(data, (val) => {
+    historyStore.updateVideoStatus(val)
+})
+
+watch(status, (val) => {
+    console.log("status",val)
+})
+
+watch(error, (val) => {
+    console.log(val)
+})
 
 const handleTabClick = (tab: any) => {
     // to request network data
-    console.log(tab.name)
 }
 
-defineExpose({
-    historyStore,
-    activeName
+const filterHistoryData = computed(() => {
+    return historyStore.historyData
 })
-
-
 
 </script>
 <template>
@@ -37,7 +47,7 @@ defineExpose({
                 <el-tab-pane label="Failed" name="failed"></el-tab-pane>
             </el-tabs>
             
-            <div class="flex w-full gap-2 py-2" v-for="item in historyStore.getVideoHistory" :key="item.id">
+            <div class="flex w-full gap-2 py-2" v-for="item in filterHistoryData" :key="item.id">
                 <DownloadHistory :item="item" />
             </div>
             <div v-if="historyStore.getVideoHistory.length==0">

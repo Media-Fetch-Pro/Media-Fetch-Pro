@@ -21,11 +21,11 @@ dependencies:
     specifier: ^2.3.6
     version: registry.npmmirror.com/element-plus@2.3.6(vue@3.3.4)
   pinia:
-    specifier: ^2.0.36
-    version: registry.npmmirror.com/pinia@2.1.3(typescript@5.0.4)(vue@3.3.4)
+    specifier: ^2.1.6
+    version: 2.1.6(typescript@5.0.4)(vue@3.3.4)
   pinia-plugin-persistedstate:
     specifier: ^3.1.0
-    version: 3.1.0(pinia@2.1.3)
+    version: 3.1.0(pinia@2.1.6)
   vue:
     specifier: ^3.3.2
     version: registry.npmmirror.com/vue@3.3.4
@@ -319,6 +319,10 @@ packages:
     dev: true
     optional: true
 
+  /@vue/devtools-api@6.5.0:
+    resolution: {integrity: sha512-o9KfBeaBmCKl10usN4crU53fYtC1r7jJwdGKjPT24t348rHxgfpZ0xL3Xm/gLUYnc0oTp8LAmrxOeLyu6tbk2Q==}
+    dev: false
+
   /@vue/server-renderer@3.3.4(vue@3.3.4):
     resolution: {integrity: sha512-Q6jDDzR23ViIb67v+vM1Dqntu+HUexQcsWKhhQa4ARVzxOY2HbC7QRW/ggkDBd5BU+uM1sV6XOAP0b216o34JQ==}
     peerDependencies:
@@ -388,12 +392,30 @@ packages:
     dev: true
     optional: true
 
-  /pinia-plugin-persistedstate@3.1.0(pinia@2.1.3):
+  /pinia-plugin-persistedstate@3.1.0(pinia@2.1.6):
     resolution: {integrity: sha512-8UN+vYMEPBdgNLwceY08mi5olI0wkYaEb8b6hD6xW7SnBRuPydWHlEhZvUWgNb/ibuf4PvufpvtS+dmhYjJQOw==}
     peerDependencies:
       pinia: ^2.0.0
     dependencies:
-      pinia: registry.npmmirror.com/pinia@2.1.3(typescript@5.0.4)(vue@3.3.4)
+      pinia: 2.1.6(typescript@5.0.4)(vue@3.3.4)
+    dev: false
+
+  /pinia@2.1.6(typescript@5.0.4)(vue@3.3.4):
+    resolution: {integrity: sha512-bIU6QuE5qZviMmct5XwCesXelb5VavdOWKWaB17ggk++NUwQWWbP5YnsONTk3b752QkW9sACiR81rorpeOMSvQ==}
+    peerDependencies:
+      '@vue/composition-api': ^1.4.0
+      typescript: '>=4.4.4'
+      vue: ^2.6.14 || ^3.3.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/devtools-api': 6.5.0
+      typescript: registry.npmmirror.com/typescript@5.0.4
+      vue: registry.npmmirror.com/vue@3.3.4
+      vue-demi: 0.14.5(vue@3.3.4)
     dev: false
 
   /vue-demi@0.14.5(vue@3.3.4):
@@ -3413,27 +3435,6 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  registry.npmmirror.com/pinia@2.1.3(typescript@5.0.4)(vue@3.3.4):
-    resolution: {integrity: sha512-XNA/z/ye4P5rU1pieVmh0g/hSuDO98/a5UC8oSP0DNdvt6YtetJNHTrXwpwsQuflkGT34qKxAEcp7lSxXNjf/A==, registry: https://registry.npmjs.org/, tarball: https://registry.npmmirror.com/pinia/-/pinia-2.1.3.tgz}
-    id: registry.npmmirror.com/pinia/2.1.3
-    name: pinia
-    version: 2.1.3
-    peerDependencies:
-      '@vue/composition-api': ^1.4.0
-      typescript: '>=4.4.4'
-      vue: ^2.6.14 || ^3.3.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-      typescript:
-        optional: true
-    dependencies:
-      '@vue/devtools-api': registry.npmmirror.com/@vue/devtools-api@6.5.0
-      typescript: registry.npmmirror.com/typescript@5.0.4
-      vue: registry.npmmirror.com/vue@3.3.4
-      vue-demi: registry.npmmirror.com/vue-demi@0.14.5(vue@3.3.4)
-    dev: false
-
   registry.npmmirror.com/pirates@4.0.5:
     resolution: {integrity: sha512-8V9+HQPupnaXMA23c5hvl69zXvTwTzyAYasnkb0Tts4XvO4CliqONMOnvlq26rkhLC3nWDFBJf73LU1e1VZLaQ==, registry: https://registry.npmjs.org/, tarball: https://registry.npmmirror.com/pirates/-/pirates-4.0.5.tgz}
     name: pirates
@@ -4385,24 +4386,6 @@ packages:
       - supports-color
       - terser
     dev: true
-
-  registry.npmmirror.com/vue-demi@0.14.5(vue@3.3.4):
-    resolution: {integrity: sha512-o9NUVpl/YlsGJ7t+xuqJKx8EBGf1quRhCiT6D/J0pfwmk9zUwYkC7yrF4SZCe6fETvSM3UNL2edcbYrSyc4QHA==, registry: https://registry.npmjs.org/, tarball: https://registry.npmmirror.com/vue-demi/-/vue-demi-0.14.5.tgz}
-    id: registry.npmmirror.com/vue-demi/0.14.5
-    name: vue-demi
-    version: 0.14.5
-    engines: {node: '>=12'}
-    hasBin: true
-    requiresBuild: true
-    peerDependencies:
-      '@vue/composition-api': ^1.0.0-rc.1
-      vue: ^3.0.0-0 || ^2.6.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-    dependencies:
-      vue: registry.npmmirror.com/vue@3.3.4
-    dev: false
 
   registry.npmmirror.com/vue-eslint-parser@9.3.0(eslint@8.42.0):
     resolution: {integrity: sha512-48IxT9d0+wArT1+3wNIy0tascRoywqSUe2E1YalIC1L8jsUGe5aJQItWfRok7DVFGz3UYvzEI7n5wiTXsCMAcQ==, registry: https://registry.npmjs.org/, tarball: https://registry.npmmirror.com/vue-eslint-parser/-/vue-eslint-parser-9.3.0.tgz}

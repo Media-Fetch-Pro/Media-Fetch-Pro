@@ -13,6 +13,7 @@ const storagePath = computed({
     }
 })
 
+console.log('settingStore', settingStore.storagePath)
 
 </script>
 <template>

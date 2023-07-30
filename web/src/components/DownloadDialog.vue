@@ -79,7 +79,7 @@
   
 <script setup lang="ts">
 import {Download} from "@element-plus/icons-vue";
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import {
   TransitionRoot,
   TransitionChild,
@@ -87,16 +87,19 @@ import {
   DialogPanel,
   DialogTitle,
 } from '@headlessui/vue'
-import { useDownloadStore } from '@/stores';
+import { useDownloadStore } from '@/stores/download';
+
 import { ElMessage }  from 'element-plus'
 import { useSettingStore } from "@/stores/setting";
 
 const isOpen = ref(false)
 const radio1 = ref('Auto')
-const downloadStore = useDownloadStore()
 const settingStore = useSettingStore();
+const downloadStore = useDownloadStore()
 
-function handleDownloadBtnClick() {
+
+const handleDownloadBtnClick = () => {
+
   isOpen.value = false
   if(downloadStore.url === "") {
     ElMessage.error("url is empty")
@@ -106,6 +109,7 @@ function handleDownloadBtnClick() {
     ElMessage.success("Start Downloading")
   }
 }
+
 function openModal() {
   if(downloadStore.url === "") {
     ElMessage.error("url is empty")
