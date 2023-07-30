@@ -8,11 +8,16 @@ import (
 
 func (s *Store) DownloadComplete(id string) {
 	s.VideosInfo[id].Status = "complete"
+	s.UpdateChannel <- *s.VideosInfo[id]
+
 	if s.VideosInfo[id].Type == "playlist" {
 		for _, child := range s.VideosInfo[id].Children {
 			s.VideosInfo[child].Status = "complete"
+			s.UpdateChannel <- *s.VideosInfo[child]
+
 		}
 	}
+
 	// to sleep 2s
 	// because the file is not ready to rename
 	time.Sleep(2 * time.Second)
@@ -20,9 +25,12 @@ func (s *Store) DownloadComplete(id string) {
 	err := utils.RenameVideo(s.VideosInfo[id], s.SystemSettings.StoragePath)
 	if err != nil {
 		s.VideosInfo[id].Status = "failed"
+		s.UpdateChannel <- *s.VideosInfo[id]
+
 		if s.VideosInfo[id].Type == "playlist" {
 			for _, child := range s.VideosInfo[id].Children {
 				s.VideosInfo[child].Status = "failed"
+				s.UpdateChannel <- *s.VideosInfo[child]
 			}
 		}
 
@@ -86,6 +94,7 @@ func (s *Store) SchedulerDownload() {
 			}
 		}
 	}
+
 	s.SaveGlobalVideoInfo()
 	s.schedulerLock.Unlock()
 }
