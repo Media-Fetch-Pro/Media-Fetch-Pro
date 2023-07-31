@@ -7,7 +7,9 @@ import (
 )
 
 func (s *Store) AddVideoToQueue(videoInfo types.VideoInfo) {
+	s.SchedulerLock.Lock()
 	s.VideosInfo[videoInfo.Id] = &videoInfo
+	s.SchedulerLock.Unlock()
 }
 
 func (s *Store) GetVideoInfoFromQueue(videoId string) *types.VideoInfo {
@@ -15,7 +17,9 @@ func (s *Store) GetVideoInfoFromQueue(videoId string) *types.VideoInfo {
 }
 
 func (s *Store) UpdateVideoInfo(videoInfo types.VideoInfo) error {
+	// s.SchedulerLock.Lock()
 	s.VideosInfo[videoInfo.Id] = &videoInfo
+	// s.SchedulerLock.Unlock()
 	return nil
 }
 

@@ -1,6 +1,7 @@
 <template>
-    <div 
-        class="relative flex flex-col border w-full p-2 rounded-lg bg-slate-300 gap-2 overflow-hidden"
+    <div class="w-full ">
+        <div 
+        class="relative flex  border p-2 rounded-lg bg-slate-300 gap-2 overflow-hidden"
         :class=" item.status == 'downloading' ? 'border border-green-500' : item.status == 'finished' ? 'border border-blue-500' : '' "
     >
         <div
@@ -10,38 +11,83 @@
         >
         </div>
 
-        
-        <div class="flex z-10">
-            <div class="font-bold">Video Title:</div>
-            <div>{{ item.title }}</div>
+        <div class="my-auto" v-if="props.item.type =='playlist'"> 
+            <el-icon 
+                class="cursor-pointer"
+                @click="handleArrowBtnClick"
+            >
+                <ArrowRight v-if="collapsed" />
+                <ArrowDown v-if="!collapsed" />
+            </el-icon>
         </div>
-        <div class="flex z-10">
-            <div class="font-bold">Status:</div>
-            <div>{{ item.status }}</div>
+        <div class=" flex flex-col">
+            <div class="flex z-10">
+                <div class="font-bold">Video Title:</div>
+                <div>{{ item.title }}</div>
+            </div>
+            <div class="flex z-10">
+                <div class="font-bold">Status:</div>
+                <div>{{ item.status }}</div>
+            </div>
+            <div class="flex gap-2 z-10">
+                <div class="font-bold">Progress: {{item.percent}}</div>
+            </div>
+            <div class="flex z-10">
+                <el-button type="primary" v-if="item.percent!==100">cancel download</el-button>
+                <el-button type="primary" v-if="item.percent==100">re download</el-button>
+            </div>
         </div>
-        <div class="flex gap-2 z-10">
-            <div class="font-bold">Progress: {{item.percent}}</div>
         </div>
-        <div class="flex z-10">
-            <el-button type="primary" v-if="item.percent!==100">cancel download</el-button>
-            <el-button type="primary" v-if="item.percent==100">re download</el-button>
+        <!-- to right -->
+        <div 
+            class="w-11/12 ml-auto"
+            v-if="!collapsed">
+            <!-- children video info for childrenItemData -->
+            <div v-for="childItem in childrenItemData" :key="childItem.id">
+                <DownloadHistory :item="childItem" />
+            </div>
         </div>
-
 
     </div>
+    
 </template>
 <script setup lang="ts">
+import { computed, ref } from "vue";
 import type { DownloadHistory } from "src/types";
+import { ArrowRight, ArrowDown } from "@element-plus/icons-vue";
+import { useHistoryStore } from "@/stores/history";
 
+
+const historyStore = useHistoryStore()
 const props = defineProps({
     item: {
         type: Object as () => DownloadHistory,
         required: true
     }
 })
-defineExpose({
-    props
+
+const collapsed = ref(true)
+
+const childrenItemData = computed(() => {
+    if (props.item.type === 'playlist'){
+        const childrenItemData: Array<DownloadHistory> = []
+        console.log(props.item.children)
+        for (const childId of props.item.children){
+            const childItem = historyStore.getVideoInfoById(childId)
+            if (childItem) {
+                childrenItemData.push(childItem)
+            }
+        }
+        return childrenItemData
+    }else{
+        return []
+    }
 })
+
+const handleArrowBtnClick = () => {
+    collapsed.value = !collapsed.value
+}
+
 </script>
 
 <style scoped>

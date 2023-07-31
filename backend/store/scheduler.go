@@ -1,6 +1,7 @@
 package store
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/utils"
@@ -8,12 +9,12 @@ import (
 
 func (s *Store) DownloadComplete(id string) {
 	s.VideosInfo[id].Status = "complete"
-	s.UpdateChannel <- *s.VideosInfo[id]
+	go func() { s.UpdateChannel <- *s.VideosInfo[id] }()
 
 	if s.VideosInfo[id].Type == "playlist" {
 		for _, child := range s.VideosInfo[id].Children {
 			s.VideosInfo[child].Status = "complete"
-			s.UpdateChannel <- *s.VideosInfo[child]
+			go func() { s.UpdateChannel <- *s.VideosInfo[child] }()
 
 		}
 	}
@@ -25,12 +26,12 @@ func (s *Store) DownloadComplete(id string) {
 	err := utils.RenameVideo(s.VideosInfo[id], s.SystemSettings.StoragePath)
 	if err != nil {
 		s.VideosInfo[id].Status = "failed"
-		s.UpdateChannel <- *s.VideosInfo[id]
+		go func() { s.UpdateChannel <- *s.VideosInfo[id] }()
 
 		if s.VideosInfo[id].Type == "playlist" {
 			for _, child := range s.VideosInfo[id].Children {
 				s.VideosInfo[child].Status = "failed"
-				s.UpdateChannel <- *s.VideosInfo[child]
+				go func() { s.UpdateChannel <- *s.VideosInfo[child] }()
 			}
 		}
 
@@ -39,7 +40,7 @@ func (s *Store) DownloadComplete(id string) {
 }
 
 func (s *Store) SchedulerDownload() {
-	s.schedulerLock.Lock()
+	s.SchedulerLock.Lock()
 
 	if s.DownloadingVideoNum < s.SystemSettings.MaxDownloadNum {
 		for _, value := range s.VideosInfo {
@@ -81,10 +82,13 @@ func (s *Store) SchedulerDownload() {
 				value.Status = "fetching"
 				s.DownloadingVideoNum++
 				// how to call fetching? sync or async?
+				fmt.Println("fetch start")
 				err := utils.FetchingVideoInfo(value)
 				if err != nil {
 					value.Status = "failed"
 				}
+				fmt.Println("fetched")
+
 			}
 
 			if value.Status == "pending" {
@@ -96,5 +100,5 @@ func (s *Store) SchedulerDownload() {
 	}
 
 	s.SaveGlobalVideoInfo()
-	s.schedulerLock.Unlock()
+	s.SchedulerLock.Unlock()
 }

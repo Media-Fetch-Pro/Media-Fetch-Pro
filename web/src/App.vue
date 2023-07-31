@@ -5,10 +5,7 @@ import {Download,Clock,Setting} from "@element-plus/icons-vue";
 import { useHistoryStore } from '@/stores';
 import { useSettingStore } from "@/stores/setting";
 
-import { ref, watch} from 'vue';
-
-const historyStore = useHistoryStore()
-const settingStore = useSettingStore();
+import { ref } from 'vue';
 
 
 const selectTab = ref(1)

@@ -135,7 +135,7 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 		err := s.Store.UpdateVideoInfo(videoInfo)
 		// TODO move the update to another place.
 		// Because it didn't only update place
-		s.Store.UpdateChannel <- videoInfo
+		go func() { s.Store.UpdateChannel <- videoInfo }()
 
 		if err != nil {
 			c.JSON(http.StatusBadRequest, composeResponse(err.Error()))

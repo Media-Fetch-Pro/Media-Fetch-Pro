@@ -54,7 +54,9 @@ if __name__ == "__main__":
         # to print result for debug
         video_info_array = websites.getVideoInfo(args.url)
         print(json.dumps(list(map(lambda x:x.serialize(),video_info_array)),indent=4, separators=(',', ': ')))
+        print("fetchVideoInfo success")
         for video_info in video_info_array:
+            print("update video info to web")
             request.updateVideoStatus(video_info)
 
     elif args.type == "downloadVideo":

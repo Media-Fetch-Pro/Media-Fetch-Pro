@@ -30,8 +30,21 @@ const handleTabClick = (tab: any) => {
     // to request network data
 }
 
+const tabMapStatus = new Map<string, Array<string>>(
+    [
+        ['pending', ['unstart','pending','fetching']],
+        ['downloading', ['downloading']],
+        ['complete', ['complete']],
+        ['failed', ['failed']]
+    ]
+);
+
 const filterHistoryData = computed(() => {
-    return historyStore.historyData
+    const tab = historyStore.tab
+
+    return historyStore.historyData.filter((item) => {
+        return tabMapStatus.get(tab)?.includes(item.status) && item.type != 'episode'
+    })
 })
 
 </script>
@@ -50,8 +63,8 @@ const filterHistoryData = computed(() => {
             <div class="flex w-full gap-2 py-2" v-for="item in filterHistoryData" :key="item.id">
                 <DownloadHistory :item="item" />
             </div>
-            <div v-if="historyStore.getVideoHistory.length==0">
-                this is nothing
+            <div v-if="filterHistoryData.length==0">
+                there is nothing
             </div>
         </div>
     </main>

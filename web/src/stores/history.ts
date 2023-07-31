@@ -14,6 +14,14 @@ function convert(
             percent: item.percent,
             size: item.size,
             type: item.type,
+            children: item.children,
+            author: item.author,
+            source: item.source,
+            content: item.content,
+            episode: item.episode,
+            parent: item.parent,
+            length: item.length,
+            start_download_time: item.start_download_time,
             // alreadyDownloadSize: item.AlreadyDownloadSize,
             // collectionId: item.CollectionId,
         } as DownloadHistory
@@ -23,17 +31,23 @@ function convert(
 function convertOne(
     videoInfoString: string
 ):DownloadHistory{
-    const videoInfo = JSON.parse(videoInfoString) 
+    const item = JSON.parse(videoInfoString) 
     return {
-        id: videoInfo.id,
-        title: videoInfo.title,
-        url: videoInfo.url,
-        status: videoInfo.status,
-        percent: videoInfo.percent,
-        size: videoInfo.size,
-        type: videoInfo.type,
-        // alreadyDownloadSize: item.AlreadyDownloadSize,
-        // collectionId: item.CollectionId,
+        id: item.id,
+        title: item.title,
+        url: item.url,
+        status: item.status,
+        percent: item.percent,
+        size: item.size,
+        type: item.type,
+        children: item.children,
+        author: item.author,
+        source: item.source,
+        content: item.content,
+        episode: item.episode,
+        parent: item.parent,
+        length: item.length,
+        start_download_time: item.start_download_time,
     } as DownloadHistory;
 }
 
@@ -51,6 +65,9 @@ export const useHistoryStore = defineStore("history", {
         }
     },    
     actions:{
+        getVideoInfoById(id: string): DownloadHistory | undefined {
+            return this.historyData.find((item) => item.id === id);
+        },
         async getVideoStatus() {
             this.loading = true;
             const res = (await axios.get("api/videos")).data;

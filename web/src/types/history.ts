@@ -6,6 +6,12 @@ export interface DownloadHistory {
     percent: number;
     size: number;
     type: string;
-    alreadyDownloadSize: number;
-    collectionId: string;
+    children: string[];
+    author: string;
+    source: string;
+    content: string;
+    episode: number;
+    parent: string;
+    length: number;
+    start_download_time: number;
 }

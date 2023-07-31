@@ -23,7 +23,7 @@ type Store struct {
 	VideosInfo          map[string]*types.VideoInfo
 	DownloadingVideoNum int // the video num that is downloading
 	SystemSettings      SystemSettings
-	schedulerLock       sync.Mutex
+	SchedulerLock       sync.Mutex
 	UpdateChannel       chan types.VideoInfo
 }
 
@@ -31,7 +31,7 @@ func NewStore(db *sql.DB) *Store {
 	return &Store{
 		db:             db,
 		VideosInfo:     make(map[string]*types.VideoInfo),
-		UpdateChannel:  make(chan types.VideoInfo),
+		UpdateChannel:  make(chan types.VideoInfo, 1000),
 		SystemSettings: LoadSystemSetting(),
 	}
 }
