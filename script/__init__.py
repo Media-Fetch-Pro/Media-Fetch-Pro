@@ -1,1 +1,1 @@
-__all__ = ['model','api','utils','plugins','config']
+__all__ = ['model','api','utils','plugins','config','test']

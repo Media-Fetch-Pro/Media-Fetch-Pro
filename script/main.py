@@ -1,3 +1,4 @@
+from typing import List
 from script.plugins.bilibili import Bilibili
 from script.plugins.bilibili_playlist import BilibiliPlayList
 from script.plugins.youtube import Youtube
@@ -12,12 +13,14 @@ from script.model.videoInfo import VideoInfo
 import json
 import os
 
-def FetchVideoInfo(url: str, storagePath: str):
-    websites = Bilibili(BilibiliPlayList(Youtube(EndDownloader())))
+websites = Bilibili(BilibiliPlayList(Youtube(EndDownloader())))
+
+def FetchVideoInfo(url: str) -> List[VideoInfo]:
     video_info_array = websites.getVideoInfo(url)
     print(json.dumps(list(map(lambda x:x.serialize(),video_info_array)),indent=4, separators=(',', ': ')))
     for video_info in video_info_array:
         request.updateVideoStatus(video_info)
+    return video_info_array
 
 
 def DownloadVideo(video_info: VideoInfo, storagePath: str):
@@ -31,8 +34,6 @@ def DownloadVideo(video_info: VideoInfo, storagePath: str):
             os.mkdir(storagePath)
     except Exception as e:
         print(e)
-
-    websites = Bilibili(BilibiliPlayList(Youtube(EndDownloader())))
 
     if video_info.get_type() == "playlist":
         # this is generate a tvshow.nfo🤔 it is very very hard.

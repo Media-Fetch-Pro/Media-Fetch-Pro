@@ -44,7 +44,7 @@ if __name__ == "__main__":
         print("video info:",video_info)
 
     if args.type == "fetchVideoInfo":        
-        FetchVideoInfo(args.url,args.storage)
+        FetchVideoInfo(args.url)
 
     elif args.type == "downloadVideo":
         DownloadVideo(video_info,args.storage)
