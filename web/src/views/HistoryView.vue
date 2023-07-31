@@ -34,7 +34,7 @@ const tabMapStatus = new Map<string, Array<string>>(
     [
         ['pending', ['unstart','pending','fetching']],
         ['downloading', ['downloading']],
-        ['complete', ['complete']],
+        ['complete', ['complete','finished']],
         ['failed', ['failed']]
     ]
 );

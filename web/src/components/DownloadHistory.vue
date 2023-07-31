@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full ">
+    <div class="w-full">
         <div 
         class="relative flex  border p-2 rounded-lg bg-slate-300 gap-2 overflow-hidden"
         :class=" item.status == 'downloading' ? 'border border-green-500' : item.status == 'finished' ? 'border border-blue-500' : '' "
@@ -39,15 +39,18 @@
         </div>
         </div>
         <!-- to right -->
-        <div 
-            class="w-11/12 ml-auto"
-            v-if="!collapsed">
-            <!-- children video info for childrenItemData -->
-            <div v-for="childItem in childrenItemData" :key="childItem.id">
-                <DownloadHistory :item="childItem" />
+        <Transition name="bounce" >
+            <div 
+                v-if="!collapsed"
+                class="w-11/12 ml-auto"
+            >
+                <!-- children video info for childrenItemData -->
+                <div v-for="childItem in childrenItemData" :key="childItem.id">
+                    <DownloadHistory :item="childItem" />
+                </div>
             </div>
-        </div>
-
+        </Transition>
+        
     </div>
     
 </template>
@@ -94,4 +97,22 @@ const handleArrowBtnClick = () => {
 .progress_transition{
     transition: width 0.5s ease-in-out;
 }
-</style>
+
+.bounce-enter-active {
+    animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+    animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+  </style>
