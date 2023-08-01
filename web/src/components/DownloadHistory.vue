@@ -2,16 +2,19 @@
     <div class="w-full">
         <div 
         class="relative flex  border p-2 rounded-lg bg-slate-300 gap-2 overflow-hidden"
-        :class=" item.status == 'downloading' ? 'border border-green-500' : item.status == 'finished' ? 'border border-blue-500' : '' "
+        :class=" item.status == 'downloading' ? 'border border-green-500' : downloadCompletedStatus.includes(item.status) ? 'border border-blue-500' : '' "
     >
         <div
-            class="progress_transition absolute top-0 left-0 h-full z-1 bg-green-500"
-            :class=" item.status == 'downloading' ? `bg-green-500` : item.status == 'finished' ? 'bg-blue-500 w-full' : '' "
+            class="progress_transition absolute top-0 left-0 h-full z-1"
+            :class="backgroundColor"
             :style="`width: ${item.percent}%;`"
         >
         </div>
 
-        <div class="my-auto" v-if="props.item.type =='playlist'"> 
+        <div 
+            class="my-auto"
+            v-if="props.item.type =='playlist'"
+        > 
             <el-icon 
                 class="cursor-pointer"
                 @click="handleArrowBtnClick"
@@ -20,7 +23,11 @@
                 <ArrowDown v-if="!collapsed" />
             </el-icon>
         </div>
-        <div class=" flex flex-col">
+        
+        <div 
+            class=" flex flex-col"
+            :class="textColor"
+        >
             <div class="flex z-10">
                 <div class="font-bold">Video Title:</div>
                 <div>{{ item.title }}</div>
@@ -60,6 +67,7 @@ import type { DownloadHistory } from "src/types";
 import { ArrowRight, ArrowDown } from "@element-plus/icons-vue";
 import { useHistoryStore } from "@/stores/history";
 
+const downloadCompletedStatus = ['finished','completed']
 
 const historyStore = useHistoryStore()
 const props = defineProps({
@@ -70,6 +78,29 @@ const props = defineProps({
 })
 
 const collapsed = ref(true)
+
+const backgroundColor = computed(() => {
+    if (props.item.status == 'downloading'){
+        return 'bg-green-500 text-black'
+    }else if (props.item.status == 'complete' || props.item.status == 'finished'){
+        return 'bg-blue-500 text-white'
+    }else{
+        return ''
+    }
+})
+
+const textColor = computed(() => {
+    if (props.item.status == 'downloading'){
+        return 'text-black'
+    }else if (props.item.status == 'complete' || props.item.status == 'finished'){
+        return 'text-white'
+    }else{
+        return ''
+    }
+})
+
+
+console.log(backgroundColor)
 
 const childrenItemData = computed(() => {
     if (props.item.type === 'playlist'){

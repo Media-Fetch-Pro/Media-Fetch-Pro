@@ -9,12 +9,13 @@ import (
 
 func (s *Store) DownloadComplete(id string) {
 	s.VideosInfo[id].Status = "complete"
+	s.VideosInfo[id].Percent = 100 // the percent is for playlist
 	go func() { s.UpdateChannel <- *s.VideosInfo[id] }()
 
 	if s.VideosInfo[id].Type == "playlist" {
-		for _, child := range s.VideosInfo[id].Children {
-			s.VideosInfo[child].Status = "complete"
-			go func() { s.UpdateChannel <- *s.VideosInfo[child] }()
+		for _, childId := range s.VideosInfo[id].Children {
+			s.VideosInfo[childId].Status = "complete"
+			go func() { s.UpdateChannel <- *s.VideosInfo[childId] }()
 
 		}
 	}
@@ -29,9 +30,9 @@ func (s *Store) DownloadComplete(id string) {
 		go func() { s.UpdateChannel <- *s.VideosInfo[id] }()
 
 		if s.VideosInfo[id].Type == "playlist" {
-			for _, child := range s.VideosInfo[id].Children {
-				s.VideosInfo[child].Status = "failed"
-				go func() { s.UpdateChannel <- *s.VideosInfo[child] }()
+			for _, childId := range s.VideosInfo[id].Children {
+				s.VideosInfo[childId].Status = "failed"
+				go func() { s.UpdateChannel <- *s.VideosInfo[childId] }()
 			}
 		}
 
@@ -68,12 +69,21 @@ func (s *Store) SchedulerDownload() {
 					// to check all episodes of playlist, if all is finished, then set playlist to finished
 					allFinished := true
 					parentId := value.Parent
+					downloadFinishNum := 0
 					for _, child := range s.VideosInfo[parentId].Children {
 						allFinished = allFinished && (s.VideosInfo[child].Status == "finished")
+						if s.VideosInfo[child].Status == "finished" {
+							downloadFinishNum++
+						}
 					}
+
 					if allFinished {
 						s.VideosInfo[parentId].Status = "finished"
 					}
+
+					// update playlist percent
+					s.VideosInfo[parentId].Percent = int(float64(downloadFinishNum) / float64(len(s.VideosInfo[parentId].Children)) * 100)
+					go func() { s.UpdateChannel <- *s.VideosInfo[parentId] }()
 				}
 			}
 
