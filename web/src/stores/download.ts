@@ -1,10 +1,14 @@
 import { defineStore } from 'pinia'
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import axios, { type AxiosResponse } from "axios";
 
 export const useDownloadStore = defineStore("download",()=> {
     const url = ref("https://www.youtube.com/watch?v=9bZkp7q19f0");
 
+    const website_status = reactive({
+        "bilibili_status": false,
+        "youtube_status": false
+    });
     async function download(storagePath: string): Promise<AxiosResponse<any, any>>{
         const result = await axios.post("api/video", {
             url: url.value,
@@ -14,25 +18,16 @@ export const useDownloadStore = defineStore("download",()=> {
         });
         return result;
     }
-    return { url, download }
+    async function getWebSiteConnectionStatus(){
+        const result = await axios.get("api/status");
+        const data = result.data;
+        website_status.bilibili_status = data.data.bilibili_status;
+        website_status.youtube_status = data.data.youtube_status;
+    }
+
+    return { url, website_status, download, getWebSiteConnectionStatus }
 },{
     persist: true,
 }
 );
 
-// state: () => ({
-//     url: "",
-//     // selectStoragePath: "/var/opt/video",
-//     // selectStoragePath: "/Users/ctrdh/video",
-//     StoragePathOptions: [],
-// }),
-// getters: {
-// },    
-// actions: {
-//     download(storagePath: string) {
-//         axios.post("api/video", {
-//             url: this.url,
-//             storage: storagePath,
-//         })
-//     },
-// },

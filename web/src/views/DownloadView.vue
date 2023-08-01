@@ -1,8 +1,20 @@
 <script setup lang="ts">
 import DownloadDialog from '@/components/DownloadDialog.vue';
 import { useDownloadStore } from '@/stores/download';
+import { onMounted } from 'vue';
+import { ElMessage }  from 'element-plus'
 
 const store = useDownloadStore()
+
+const handleUpdateStatusBtnClick = async () => {
+    ElMessage.success("start updating")
+    await store.getWebSiteConnectionStatus()
+    ElMessage.success("update successfully")
+
+}
+onMounted(() => {
+    store.getWebSiteConnectionStatus()
+});
 
 </script>
 <template>
@@ -14,12 +26,29 @@ const store = useDownloadStore()
         </div>
         <div class="flex gap-2">
             <h1 class="font-bold">Network status</h1>
-            <div>
-                Bilibili: 🟢
+            <div class="flex">
+                Bilibili: 
+                <div v-if="store.website_status.bilibili_status">
+                    🟢
+                </div>
+                <div v-else>
+                    🔴
+                </div>
             </div>
-            <div>
-                Youtube: 🔴
+            <div class="flex">
+                Youtube: 
+                <div v-if="store.website_status.youtube_status">
+                    🟢
+                </div>
+                <div v-else>
+                    🔴
+                </div>
             </div>
+            <el-button
+                @click="handleUpdateStatusBtnClick"
+            >
+                update status
+            </el-button>
         </div>
     </main>
 </template>
