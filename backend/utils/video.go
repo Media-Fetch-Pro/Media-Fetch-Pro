@@ -37,7 +37,7 @@ func GenerateVideoIdFromURL(url string) string {
 
 // only run fetch script. the video info will update in the request by script.
 func FetchingVideoInfo(videoInfo *types.VideoInfo) error {
-	args := []string{"main.py", "--url", videoInfo.Url, "--type", "fetchVideoInfo", "--storage", "/Users/ctrdh/Video", "--website", "bilibili"}
+	args := []string{"main.py", "--url", videoInfo.Url, "--type", "fetchVideoInfo", "--storage", "/Users/ctrdh/Video"}
 	// see the command
 	// python3 main.py --url https://www.bilibili.com/video/BV1SW4y1v7WN --type fetchVideoInfo --storage /Users/ctrdh/Video --website bilibili
 	out, err := exec.Command("python3", args...).Output()

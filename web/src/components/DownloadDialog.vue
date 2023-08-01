@@ -98,15 +98,20 @@ const settingStore = useSettingStore();
 const downloadStore = useDownloadStore()
 
 
-const handleDownloadBtnClick = () => {
+const handleDownloadBtnClick = async () => {
 
   isOpen.value = false
   if(downloadStore.url === "") {
     ElMessage.error("url is empty")
     return
   }else{
-    downloadStore.download(settingStore.storagePath)
-    ElMessage.success("Start Downloading")
+    const result = await downloadStore.download(settingStore.storagePath)
+
+    if (result.status === 200) {
+      ElMessage.success("Start Downloading")
+    }else{
+      ElMessage.error(result.data.error)
+    }
   }
 }
 

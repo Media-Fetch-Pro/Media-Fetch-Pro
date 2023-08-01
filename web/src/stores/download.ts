@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia'
 import { ref } from "vue";
-import axios from "axios";
+import axios, { type AxiosResponse } from "axios";
 
 export const useDownloadStore = defineStore("download",()=> {
     const url = ref("https://www.youtube.com/watch?v=9bZkp7q19f0");
-    const selectStoragePath = ref([]);
 
-    function download(storagePath: string){
-        axios.post("api/video", {
+    async function download(storagePath: string): Promise<AxiosResponse<any, any>>{
+        const result = await axios.post("api/video", {
             url: url.value,
             storage: storagePath,
-        })
+        }).catch((error) => {
+            return error.response;
+        });
+        return result;
     }
     return { url, download }
 },{
