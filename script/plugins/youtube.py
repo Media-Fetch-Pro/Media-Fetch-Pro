@@ -9,13 +9,14 @@ import script.api.request as request
 
 from script.plugins.baseDownloader import BaseDownloader
 from script.model.videoInfo import VideoInfo
+from script.utils.video import generate_uuid_from_url
 from script.config.config import Config
 from script.utils.video import generate_uuid_from_url
 from script.utils.ytdlp import extract_progress
 
 class Youtube(BaseDownloader):
     def progress_hook(self,d):
-        self.video_info.set_status(d['status'])
+        self.video_info.set_status('downloading')
         self.video_info.set_percent(extract_progress(d['_percent_str']))
         request.updateVideoStatus(self.video_info)
 
@@ -60,7 +61,7 @@ class Youtube(BaseDownloader):
             video_info.set_type("playlist")
             
             # fetch every children video info
-            for p in (1,video_info.get_length()):
+            for p in range(1,video_info.get_length()+1):
                 new_video_info = self.getVideoInfo(f"{video_info.url}?p={p}")[0]
                 new_video_info.set_episode(p)
                 new_video_info.set_parent(video_info.get_id())
@@ -71,7 +72,6 @@ class Youtube(BaseDownloader):
                 # TODO: only execute once
                 video_info.set_author(new_video_info.get_author())
                 video_info.set_content(new_video_info.get_content())
-            
             p_video_array.insert(0,video_info)
             return p_video_array
 
@@ -86,6 +86,7 @@ class Youtube(BaseDownloader):
 
     def _fetchVideoInfo(self, video_info: VideoInfo)->List[VideoInfo]:
         common.runShell(f"yt-dlp --skip-download --write-info-json -o {Config.getTempPath()}/{video_info.get_id()} {video_info.get_url()}")
+        print(f"yt-dlp --skip-download --write-info-json -o {Config.getTempPath()}/{video_info.get_id()} {video_info.get_url()}")
         common.waitFile(f"{Config.getTempPath()}/{video_info.get_id()}.info.json")
 
         with open(f"{Config.getTempPath()}/{video_info.get_id()}.info.json", "r") as f:
@@ -93,6 +94,7 @@ class Youtube(BaseDownloader):
 
     def _downloadVideo(self, video_info: VideoInfo, output_dir: str):
         self.video_info = video_info
+        print("download path",output_dir +'/%(title)s.%(ext)s')
         ydl_opts =  {
             'outtmpl': output_dir +'/%(title)s.%(ext)s',
             'progress_hooks': [self.progress_hook]
@@ -108,12 +110,12 @@ class Youtube(BaseDownloader):
         # because this is a history problem, I will fix it in the future
         # in old version. the function is not download nfo. it generate nfo and write in other place.
         
-        request.updateVideoStatus(generate_uuid_from_url(self.url),self.url,"title is fetching","fetching meta",0,1)
-        os.system(f"yt-dlp --skip-download --write-info-json -o {self.temp_path}/{self.id} {self.url}")
-        common.waitFile(f"{self.temp_path}/{self.id}.info.json")
-        os.system(f"ytdl-nfo {self.temp_path}/{self.id}.info.json")
-        common.waitFile(f"{self.temp_path}/{self.id}.nfo")
-        with open(f"{self.temp_path}/{self.id}.nfo", "r") as f:
+        request.updateVideoStatus(video_info)
+        os.system(f"yt-dlp --skip-download --write-info-json -o {Config.getTempPath()}/{video_info.get_id()} {video_info.get_url()}")
+        common.waitFile(f"{Config.getTempPath()}/{video_info.get_id()}.info.json")
+        os.system(f"ytdl-nfo {Config.getTempPath()}/{video_info.get_id()}.info.json")
+        common.waitFile(f"{Config.getTempPath()}/{video_info.get_id()}.nfo")
+        with open(f"{Config.getTempPath()}/{video_info.get_id()}.nfo", "r") as f:
             content = f.read()
             
             with open(f"{output_dir}/movie.nfo", "w") as f:
@@ -148,3 +150,4 @@ class Youtube(BaseDownloader):
             self._downloadNfo(video_info, output_dir)
         else:
             return self.next.downloadNfo(video_info, output_dir)
+
