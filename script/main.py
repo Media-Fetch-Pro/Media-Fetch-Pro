@@ -37,24 +37,24 @@ def DownloadVideo(video_info: VideoInfo, storagePath: str):
 
     if video_info.get_type() == "playlist":
         # this is generate a tvshow.nfo🤔 it is very very hard.
-        websites.downloadNfo(video_info,args.storage)
-        websites.downloadPoster(video_info,args.storage)
+        websites.downloadNfo(video_info,storagePath)
+        websites.downloadPoster(video_info,storagePath)
         
         # TODO it is a problem how to rename playlist🤔
 
     elif video_info.type == "video":
         if video_info.get_type() == "video": # episode didn't generate nfo
-            websites.downloadNfo(video_info,args.storage)
+            websites.downloadNfo(video_info,storagePath)
             print("下载nfo成功")
 
-        websites.downloadPoster(video_info,args.storage)
-        websites.downloadVideo(video_info,args.storage)
+        websites.downloadPoster(video_info,storagePath)
+        websites.downloadVideo(video_info,storagePath)
 
         video_info.set_status("finished")
         request.updateVideoStatus(video_info)
         
     elif video_info.type == "episode":
-        websites.downloadVideo(video_info,args.storage)
+        websites.downloadVideo(video_info,storagePath)
         video_info.set_status("finished")
         request.updateVideoStatus(video_info)
 
