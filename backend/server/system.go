@@ -1,21 +1,28 @@
 package server
 
 import (
+	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
 	"github.com/gin-gonic/gin"
 )
 
-func checkWebsiteConnection(address string) bool {
+func checkWebsiteConnection(url string) bool {
 	// to request address param
 	// if response code is 200, then return true
 	// else return false
-	_, err := http.Get(address)
+	// timeout is 5s
+	client := http.Client{
+		Timeout: 3 * time.Second,
+	}
+	_, err := client.Get(url)
 	if err == nil {
-		return false
-	} else {
 		return true
+	} else {
+		fmt.Println(err)
+		return false
 	}
 }
 
