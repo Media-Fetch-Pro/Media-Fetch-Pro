@@ -61,7 +61,7 @@ class Bilibili(BaseDownloader):
             video_info.set_type("playlist")
             
             # fetch every children video info
-            for p in (1,video_info.get_length()):
+            for p in range(1,video_info.get_length()+1):
                 new_video_info = self.getVideoInfo(f"{video_info.url}?p={p}")[0]
                 new_video_info.set_episode(p)
                 new_video_info.set_parent(video_info.get_id())
@@ -72,7 +72,6 @@ class Bilibili(BaseDownloader):
                 # TODO: only execute once
                 video_info.set_author(new_video_info.get_author())
                 video_info.set_content(new_video_info.get_content())
-            
             p_video_array.insert(0,video_info)
             return p_video_array
 
