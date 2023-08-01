@@ -1,5 +1,3 @@
-**NOTE:The Code is active refactoring, so the code is not stable and might didn't working. If you want to use it, please wait for the first release or use docker to install stable version.
-**
 # Media Fetch PRO
 <img src="https://github.com/CorrectRoadH/Media-Fetch-Pro/blob/main/images/logo.jpg?raw=true" height="173"/></a>
 
@@ -35,10 +33,9 @@ pnpm dev
 ```
 
 python
-
-download video
-```python
-python3 main.py --type downloadVideo --url https://www.youtube.com/watch?v=lyNVPxHiVyE --storage ./video --website youtube
+dependencies
+```shell
+pip install WIP
 ```
 
 fetch video info
@@ -46,6 +43,10 @@ fetch video info
 python main.py --type fetchVideoInfo --url https://www.youtube.com/watch?v=lyNVPxHiVyE --storage ./video --website youtube
 ```
 
+test 
+```shell
+pytest .
+```
 
 # How to use
 `./video` should be replace by your video folder(import in Jellyfin). for example `/home/user/Videos`.
@@ -54,14 +55,11 @@ docker run  -itd --name media-fetch-pro -p 7789:7789 -v ./video:/var/opt/video c
 ```
 
 # Roadmap
- - [ ] Support download Video Collection
+ - [x] Support download Playlist video
  - [ ] Support login by cookie to download hight resolution video
  - [ ] Better Download manager
  - [ ] i18n
  - [ ] Write Documents
-# Architecture
-![](./images/arch.png)
-
 
 # Star history
 [![Star History Chart](https://api.star-history.com/svg?repos=Media-Fetch-Pro/Media-Fetch-Pro&type=Date)](https://star-history.com/#Media-Fetch-Pro/Media-Fetch-Pro&Date)

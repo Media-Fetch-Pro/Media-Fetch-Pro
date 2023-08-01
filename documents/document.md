@@ -3,9 +3,11 @@
 
 ## nas
 
-### install in casaos
+### install in CasaOS
+
 
 ### install in Synology
+
 
 # Jellyfin
 ## create a new folder
