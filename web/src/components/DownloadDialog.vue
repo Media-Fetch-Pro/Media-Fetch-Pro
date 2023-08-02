@@ -84,12 +84,11 @@ import {
   DialogTitle,
 } from '@headlessui/vue'
 import { useDownloadStore } from '@/stores/download';
-import { MFListBox } from "./kit";
+import { MFListBox } from "@/components/kit";
 import { ElMessage }  from 'element-plus'
 import { useSettingStore } from "@/stores/setting";
 
 const isOpen = ref(false)
-const radio1 = ref('Auto')
 const settingStore = useSettingStore();
 const downloadStore = useDownloadStore()
 

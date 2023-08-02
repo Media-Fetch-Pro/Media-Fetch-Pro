@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useSettingStore } from '@/stores/setting';
 import { computed } from 'vue';
+import { MFListBox } from "@/components/kit";
+import { NButton } from 'naive-ui';
 
 const settingStore = useSettingStore();
 
@@ -13,7 +15,6 @@ const storagePath = computed({
     }
 })
 
-console.log('settingStore', settingStore.storagePath)
 
 </script>
 <template>
@@ -22,5 +23,16 @@ console.log('settingStore', settingStore.storagePath)
         <div>
             StoragePath: <el-input type="text" v-model="storagePath" />
         </div>
+        <MFListBox 
+            :items="settingStore.downloadPath"
+        />
+        <div>
+            new Path Name:
+            <input />
+            new Path:
+            <input />
+            <n-button>add</n-button>
+        </div>
+
     </main>
 </template>
