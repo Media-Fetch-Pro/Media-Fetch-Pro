@@ -7,6 +7,10 @@ describe('sum getCleanUrl', () => {
         expect(getCleanUrl("https://www.bilibili.com/video/BV1p14y167fY/?spm_id_from=333.1007.tianma.1-2-2.click&vd_source=5d78b061956227324f710505619f52d7")).toBe("https://www.bilibili.com/video/BV1p14y167fY/");
         expect(getCleanUrl("https://www.bilibili.com/video/BV1pP41167zy/?spm_id_from=333.1007.tianma.1-1-1.click")).toBe("https://www.bilibili.com/video/BV1pP41167zy/")
         expect(getCleanUrl("https://www.bilibili.com/video/BV1Zp4y1G7MP/?spm_id_from=333.788.recommend_more_video.-1")).toBe("https://www.bilibili.com/video/BV1Zp4y1G7MP/")
+    
+        expect(getCleanUrl("https://www.youtube.com/watch?v=IYYUvfSBXD0")).toBe("https://www.youtube.com/watch?v=IYYUvfSBXD0")
+        expect(getCleanUrl("https://www.youtube.com/watch?v=4OygeexwWe0&list=PL-xubgenClPjBv1705B8XWwdTWJUGcFtn")).toBe("https://www.youtube.com/watch?v=4OygeexwWe0&list=PL-xubgenClPjBv1705B8XWwdTWJUGcFtn")
+        
     });
 });
 
