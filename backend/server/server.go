@@ -35,8 +35,10 @@ func NewServer() (*Server, error) {
 	s.registerSystemRoutes(apiGroup)
 
 	go func() {
-		s.Store.SchedulerDownload()
-		time.Sleep(2 * time.Second)
+		for {
+			s.Store.SchedulerDownload()
+			time.Sleep(2 * time.Second)
+		}
 	}()
 	return s, nil
 }

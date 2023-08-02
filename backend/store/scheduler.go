@@ -43,14 +43,12 @@ func (s *Store) DownloadComplete(id string) {
 				})
 			}
 		}
-
-		return
 	}
 }
 
 func (s *Store) SchedulerDownload() {
+	// I think this is not a good way to do this🤔
 	s.SchedulerLock.Lock()
-
 	if s.DownloadingVideoNum < s.SystemSettings.MaxDownloadNum {
 		for _, value := range s.VideosInfo {
 
