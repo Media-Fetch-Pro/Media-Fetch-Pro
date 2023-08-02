@@ -99,22 +99,30 @@ func (s *Store) SchedulerDownload() {
 
 			// to fetching info
 			if value.Status == "unstart" {
-				value.Status = "fetching"
 				s.DownloadingVideoNum++
 				// how to call fetching? sync or async?
 				fmt.Println("fetch start")
 				err := utils.FetchingVideoInfo(value)
 				if err != nil {
-					value.Status = "failed"
+					s.UpdateVideoInfoPartition(types.VideoInfo{
+						Id:     value.Id,
+						Status: "failed",
+					})
 				}
-				fmt.Println("fetched")
-
 			}
 
 			if value.Status == "pending" {
 				value.Status = "downloading"
 				s.DownloadingVideoNum++
-				go utils.DownloadVideo(value, s.SystemSettings.StoragePath)
+				go func(value *types.VideoInfo) {
+					err := utils.DownloadVideo(value, s.SystemSettings.StoragePath)
+					if err != nil {
+						s.UpdateVideoInfoPartition(types.VideoInfo{
+							Id:     value.Id,
+							Status: "failed",
+						})
+					}
+				}(value)
 			}
 		}
 	}
