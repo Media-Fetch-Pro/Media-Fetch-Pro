@@ -17,13 +17,6 @@ func (s *Store) GetVideoInfoFromQueue(videoId string) *types.VideoInfo {
 	return s.VideosInfo[videoId]
 }
 
-func (s *Store) UpdateVideoInfo(videoInfo types.VideoInfo) error {
-	// s.SchedulerLock.Lock()
-	s.VideosInfo[videoInfo.Id] = &videoInfo
-	// s.SchedulerLock.Unlock()
-	return nil
-}
-
 // if to set the value to default. It will didn't have effect.
 // But I think it is not a problem. Because we seem didn't have the case to set the value to default.
 func isFieldEmpty(field reflect.Value) bool {

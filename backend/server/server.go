@@ -2,6 +2,7 @@ package server
 
 import (
 	"net/http"
+	"time"
 
 	store "github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/store"
 	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/store/db"
@@ -33,6 +34,10 @@ func NewServer() (*Server, error) {
 	s.registerVideoRoutes(apiGroup)
 	s.registerSystemRoutes(apiGroup)
 
+	go func() {
+		s.Store.SchedulerDownload()
+		time.Sleep(2 * time.Second)
+	}()
 	return s, nil
 }
 

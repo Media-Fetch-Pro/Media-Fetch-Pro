@@ -1,6 +1,7 @@
 package store
 
 import (
+	"fmt"
 	"os"
 	"path"
 
@@ -24,6 +25,9 @@ func LoadSystemSetting() SystemSettings {
 		path.Join(cwd, "config.yaml"),
 	)
 	// handle err
+	if err != nil {
+		fmt.Println("err", err)
+	}
 
 	var config SystemSettings
 	yaml.Unmarshal(raw, &config)
@@ -40,6 +44,9 @@ func SaveSystemSetting() {
 
 	raw, err := yaml.Marshal(SystemSettingCache)
 	// handle err
+	if err != nil {
+		fmt.Println("err", err)
+	}
 
 	err = os.WriteFile(
 		path.Join(cwd, "config.yaml"),
