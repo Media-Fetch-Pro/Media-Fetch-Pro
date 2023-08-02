@@ -40,8 +40,24 @@
                 <div class="font-bold">Progress: {{item.percent}}</div>
             </div>
             <div class="flex z-10">
-                <el-button type="primary" v-if="item.percent!==100">cancel download</el-button>
-                <n-button type="primary" v-if="item.percent==100" @click.stop="handleRetryBtnClick">retry</n-button>
+                <n-button class="bg-green-500"
+                    type="primary" v-if="item.percent!==100"
+                    @click="handleCancelBtnClick"
+                >
+                    cancel
+                </n-button>
+                <n-button class="bg-red-500"
+                    type="error" v-if="item.percent==100" 
+                    @click="handleDeleteBtnClick"
+                >
+                    delete
+                </n-button>
+                <n-button class="bg-green-500"
+                    type="primary" v-if="item.status=='failed'" 
+                    @click.stop="handleRetryBtnClick"
+                >
+                    retry
+                </n-button>
             </div>
         </div>
         </div>
@@ -66,6 +82,7 @@ import { computed, ref } from "vue";
 import type { DownloadHistory } from "src/types";
 import { ArrowRight, ArrowDown } from "@element-plus/icons-vue";
 import { useHistoryStore } from "@/stores/history";
+import { ElMessage }  from 'element-plus'
 
 import { NButton } from 'naive-ui'
 
@@ -102,7 +119,17 @@ const textColor = computed(() => {
 })
 
 const handleRetryBtnClick = () => {
-    
+    ElMessage.error("Not implemented yet")
+
+}
+
+const handleCancelBtnClick = () =>{
+    ElMessage.error("Not implemented yet")
+}
+
+
+const handleDeleteBtnClick = () =>{
+    ElMessage.error("Not implemented yet")
 }
 
 
