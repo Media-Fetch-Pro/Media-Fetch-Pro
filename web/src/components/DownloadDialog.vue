@@ -44,18 +44,14 @@
                 >
                 Please choose a video directory
               </DialogTitle>
-                <div class="mt-2">
-                  Save Video to:
-                  <el-radio-group v-model="radio1" size="large">
-                    <el-radio-button label="Default" disabled />
-                    <el-radio-button label="Auto" />
-                    <el-radio-button label="Video Uploader" disabled/>
-                    <el-radio-button label="Collect" disabled/>
-                    <el-radio-button label="Custom" disabled/>
-                  </el-radio-group>
-              
+
+                <div class="mt-2 flex flex-col">
+                  <div>Save Video to:</div>
+                  <MFListBox 
+                    :items="settingStore.downloadPath"
+                  />
                 </div>
-  
+
                 <div class="flex mt-4 gap-2">
                   <el-button
                     type="primary"
@@ -78,8 +74,8 @@
   </template>
   
 <script setup lang="ts">
-import {Download} from "@element-plus/icons-vue";
-import { ref, watch } from 'vue'
+import { Download } from "@element-plus/icons-vue";
+import { ref } from 'vue'
 import {
   TransitionRoot,
   TransitionChild,
@@ -88,7 +84,7 @@ import {
   DialogTitle,
 } from '@headlessui/vue'
 import { useDownloadStore } from '@/stores/download';
-
+import { MFListBox } from "./kit";
 import { ElMessage }  from 'element-plus'
 import { useSettingStore } from "@/stores/setting";
 

@@ -41,7 +41,7 @@
             </div>
             <div class="flex z-10">
                 <el-button type="primary" v-if="item.percent!==100">cancel download</el-button>
-                <el-button type="primary" v-if="item.percent==100">re download</el-button>
+                <n-button type="primary" v-if="item.percent==100" @click.stop="handleRetryBtnClick">retry</n-button>
             </div>
         </div>
         </div>
@@ -66,6 +66,8 @@ import { computed, ref } from "vue";
 import type { DownloadHistory } from "src/types";
 import { ArrowRight, ArrowDown } from "@element-plus/icons-vue";
 import { useHistoryStore } from "@/stores/history";
+
+import { NButton } from 'naive-ui'
 
 const downloadCompletedStatus = ['finished','completed']
 
@@ -99,8 +101,10 @@ const textColor = computed(() => {
     }
 })
 
+const handleRetryBtnClick = () => {
+    
+}
 
-console.log(backgroundColor)
 
 const childrenItemData = computed(() => {
     if (props.item.type === 'playlist'){
