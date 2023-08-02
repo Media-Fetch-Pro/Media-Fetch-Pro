@@ -1,6 +1,10 @@
 name: build-and-push
 on:
-  workflow_dispatch
+  push:
+    branches:
+      # Run on pushing branches like `release/1.0.0`
+      - "release/*.*.*"
+
 jobs:
   build-and-push-release-image:
     runs-on: ubuntu-latest
