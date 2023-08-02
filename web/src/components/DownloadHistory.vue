@@ -119,14 +119,24 @@ const textColor = computed(() => {
 })
 
 const handleRetryBtnClick = () => {
-    ElMessage.error("Not implemented yet")
-
+    // ElMessage.error("Not implemented yet")
+    historyStore.updateVideoInfo({
+        id : props.item.id,
+        status: 'unstart',
+        percent: 0
+    } as DownloadHistory)
+    ElMessage.success("retry")
 }
 
 const handleCancelBtnClick = () =>{
-    ElMessage.error("Not implemented yet")
-}
+    historyStore.updateVideoInfo({
+        id : props.item.id,
+        status: 'failed',
+        percent: 0
+    } as DownloadHistory)
+    ElMessage.success("cancel")
 
+}
 
 const handleDeleteBtnClick = () =>{
     ElMessage.error("Not implemented yet")

@@ -13,7 +13,7 @@
             <tr  v-for="item in items" :key="item.name">
                 <td>{{item.name}}</td>
                 <td>{{item.path}}</td>
-                <td>
+                <td class="flex gap-2">
                     <n-button 
                         @click="()=>settingStore.setStoragePath(item.path)"
                         v-if="settingStore.storagePath != item.path" 
@@ -24,6 +24,13 @@
                         v-else
                     >
                         selected
+                    </n-button>
+                    <n-button 
+                        class="bg-red-500"
+                        type="error"
+                        @click="()=>settingStore.removeDownloadPath(item.name)" 
+                    >
+                        delete
                     </n-button>
                 </td>
             </tr>

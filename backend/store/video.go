@@ -2,7 +2,6 @@ package store
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 
 	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/types"
@@ -57,7 +56,6 @@ func (s *Store) UpdateVideoInfoPartition(videoInfo types.VideoInfo) error {
 				srcField.Set(destField)
 			}
 		}
-		fmt.Println("updated video info:", src)
 		s.VideosInfo[videoInfo.Id] = &src
 	}
 	s.UpdateChannel <- *s.VideosInfo[videoInfo.Id]

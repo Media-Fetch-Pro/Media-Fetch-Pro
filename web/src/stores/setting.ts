@@ -30,20 +30,28 @@ export const useSettingStore = defineStore("setting", {
         setStoragePath(path: string) {
             this.storagePath = path;
         },
-        newDownloadPath(path: string, name: string) {
+        newDownloadPath(name: string,path: string): boolean {
+            name = name.trim();
+            path = path.trim();
             // to check if the name is already exist
             for (let i = 0; i < this.downloadPath.length; i++) {
                 if (this.downloadPath[i].name == name) {
-                    return; // TODO how to return error?
+                    return false; // TODO how to return error?
                 }
             }
             this.downloadPath.push({
                 path: path,
                 name: name,
             });
+            return true;
         },
-        removeDownloadPath(index: number) {
-            this.downloadPath.splice(index, 1);
+        removeDownloadPath(name: string) {
+            for (let i = 0; i < this.downloadPath.length; i++) {
+                if (this.downloadPath[i].name == name) {
+                    this.downloadPath.splice(i, 1);
+                    return;
+                }
+            }
         }
     },
     persist: true,

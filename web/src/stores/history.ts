@@ -27,6 +27,7 @@ function convert(
         } as DownloadHistory
     })
 }
+type Option<T> = T | undefined;
 
 function convertOne(
     videoInfoString: string
@@ -65,6 +66,10 @@ export const useHistoryStore = defineStore("history", {
         }
     },    
     actions:{
+        async updateVideoInfo(videoInfo: Option<DownloadHistory>) {
+            const res = (await axios.post("api/update",videoInfo)).data;
+            return res;
+        },
         getVideoInfoById(id: string): DownloadHistory | undefined {
             return this.historyData.find((item) => item.id === id);
         },
