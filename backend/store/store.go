@@ -7,7 +7,7 @@ import (
 	"path"
 	"sync"
 
-	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
+	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/types"
 	"gopkg.in/yaml.v3"
 )
 

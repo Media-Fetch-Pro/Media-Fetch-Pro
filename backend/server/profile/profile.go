@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/CorrectRoadH/video-tools-for-nas/backend/server/version"
+	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/server/version"
 	"github.com/spf13/viper"
 )
 

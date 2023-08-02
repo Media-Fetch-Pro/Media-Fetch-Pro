@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
+	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/types"
 	"github.com/gin-gonic/gin"
 )
 

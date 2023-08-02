@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
-	"github.com/CorrectRoadH/video-tools-for-nas/backend/utils"
+	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/types"
+	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -44,15 +44,6 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 		c.Writer.Header().Set("Cache-Control", "no-cache")
 		c.Writer.Header().Set("Connection", "keep-alive")
 
-		// 在单独的goroutine中发送SSE事件
-		//go func() {
-		//	for {
-		//		eventCh <- "data: This is a SSE event\n\n"
-		//		time.Sleep(1000)
-		//	}
-		//}()
-
-		// 循环读取channel中的事件并发送给客户端
 		for {
 			select {
 			case event := <-s.Store.UpdateChannel:
@@ -63,7 +54,6 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 				fmt.Fprintf(c.Writer, "data: "+string(json)+"\n\n")
 				c.Writer.Flush()
 			case <-c.Writer.CloseNotify():
-				// 如果客户端断开连接，则停止发送事件
 				return
 			}
 		}

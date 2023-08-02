@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/CorrectRoadH/video-tools-for-nas/backend/server"
+	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/server"
 )
 
 func main() {

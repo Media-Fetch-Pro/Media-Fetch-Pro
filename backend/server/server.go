@@ -3,8 +3,8 @@ package server
 import (
 	"net/http"
 
-	store "github.com/CorrectRoadH/video-tools-for-nas/backend/store"
-	"github.com/CorrectRoadH/video-tools-for-nas/backend/store/db"
+	store "github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/store"
+	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/store/db"
 	"github.com/gin-gonic/gin"
 )
 

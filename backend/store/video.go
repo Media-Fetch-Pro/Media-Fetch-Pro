@@ -2,8 +2,10 @@ package store
 
 import (
 	"errors"
+	"fmt"
+	"reflect"
 
-	"github.com/CorrectRoadH/video-tools-for-nas/backend/types"
+	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/types"
 )
 
 func (s *Store) AddVideoToQueue(videoInfo types.VideoInfo) {
@@ -20,6 +22,26 @@ func (s *Store) UpdateVideoInfo(videoInfo types.VideoInfo) error {
 	// s.SchedulerLock.Lock()
 	s.VideosInfo[videoInfo.Id] = &videoInfo
 	// s.SchedulerLock.Unlock()
+	return nil
+}
+
+func (s *Store) UpdateVideoInfoPartition(videoInfo types.VideoInfo) error {
+	if _, ok := s.VideosInfo[videoInfo.Id]; !ok {
+		fmt.Println("new video info:", videoInfo)
+		s.VideosInfo[videoInfo.Id] = &videoInfo
+	} else {
+		willUpdateValue := reflect.ValueOf(videoInfo).Elem()
+		beUpdateValue := reflect.ValueOf(s.VideosInfo[videoInfo.Id]).Elem()
+
+		for i := 0; i < willUpdateValue.NumField(); i++ {
+			destField := beUpdateValue.Field(i)
+			srcField := willUpdateValue.Field(i)
+
+			destField.Set(srcField)
+		}
+		fmt.Println("new video info:", beUpdateValue)
+	}
+	s.UpdateChannel <- *s.VideosInfo[videoInfo.Id]
 	return nil
 }
 
