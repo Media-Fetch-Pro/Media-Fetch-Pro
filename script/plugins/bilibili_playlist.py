@@ -1,6 +1,6 @@
 from script.plugins.baseDownloader import BaseDownloader
 from script.model.videoInfo import VideoInfo
-
+import datetime
 # this downloader is for download bilibili playlist nfo. not for video🤔
 class BilibiliPlayList(BaseDownloader):
     def isSupport(self,url):
@@ -19,17 +19,12 @@ class BilibiliPlayList(BaseDownloader):
 <plot>{self._handleMultiLine(video_info.get_content())}</plot>
 <outline>{self._handleMultiLine(video_info.get_content())}</outline>
 <lockdata>false</lockdata>
-<dateadded>2023-02-04 22:27:18</dateadded>
+<dateadded>{str(datetime.datetime.fromtimestamp(video_info.get_start_download_time()))}</dateadded>
 <title>{video_info.get_title()}</title>
 <originaltitle>{video_info.get_title()}</originaltitle>
 <director>{video_info.get_author()}</director>
-<rating>6.6</rating>
-<year>2022</year>
-<premiered>2016-07-09</premiered>
-<releasedate>2016-07-09</releasedate>
-<genre>剧情</genre>
-<season>-1</season>
-<episode>-1</episode>
+<season>1</season>
+<episode>{video_info.get_length()}</episode>
 </tvshow>"""
         return content
 
