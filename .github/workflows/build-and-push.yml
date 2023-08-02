@@ -48,7 +48,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            correctroad/video-tools
+            correctroad/media-fetch-pro
           tags: |
             type=raw,value=latest
             type=semver,pattern={{version}},value=${{ env.VERSION }}

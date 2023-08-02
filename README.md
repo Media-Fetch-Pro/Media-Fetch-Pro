@@ -35,7 +35,7 @@ pnpm dev
 python
 dependencies
 ```shell
-pip install WIP
+pip install -r requirements.txt
 ```
 
 fetch video info
@@ -51,7 +51,7 @@ pytest .
 # How to use
 `./video` should be replace by your video folder(import in Jellyfin). for example `/home/user/Videos`.
 ```
-docker run  -itd --name media-fetch-pro -p 7789:7789 -v ./video:/var/opt/video correctroad/video-tools:latest
+docker run  -itd --name media-fetch-pro -p 7789:7789 -v ./video:/var/opt/video correctroad/media-fetch-pro:latest
 ```
 
 # Roadmap
