@@ -1,7 +1,6 @@
 package store_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/store"
@@ -19,8 +18,11 @@ func TestUpdateVideoInfoPartition(t *testing.T) {
 		Url:    "test",
 		Status: "test",
 		Type:   "test",
+		Children: []string{
+			"1234",
+			"234",
+		},
 	})
-	fmt.Println("url:", s.GetVideoInfoFromQueue("test").Url)
 
 	s.UpdateVideoInfoPartition(types.VideoInfo{
 		Id:     "test",
@@ -28,10 +30,13 @@ func TestUpdateVideoInfoPartition(t *testing.T) {
 	})
 
 	assert.Equal(t, s.GetVideoInfoFromQueue("test").Status, "test2")
-	fmt.Println("url:", s.GetVideoInfoFromQueue("test").Url)
 	assert.Equal(t, s.GetVideoInfoFromQueue("test").Url, "test")
 	assert.Equal(t, s.GetVideoInfoFromQueue("test").Type, "test")
-	assert.Equal(t, s.GetVideoInfoFromQueue("test").Length, nil)
+	assert.Equal(t, s.GetVideoInfoFromQueue("test").Length, 0)
+	assert.Equal(t, s.GetVideoInfoFromQueue("test").Children, []string{
+		"1234",
+		"234",
+	})
 
 	s.UpdateVideoInfoPartition(types.VideoInfo{
 		Id:     "test2",
@@ -40,6 +45,27 @@ func TestUpdateVideoInfoPartition(t *testing.T) {
 
 	assert.Equal(t, s.GetVideoInfoFromQueue("test2").Status, "test2")
 	assert.Equal(t, s.GetVideoInfoFromQueue("test2").Status, "test2")
-	assert.Equal(t, s.GetVideoInfoFromQueue("test2").Url, nil)
+	assert.Equal(t, s.GetVideoInfoFromQueue("test2").Url, "")
 
+	s.AddVideoToQueue(types.VideoInfo{
+		Id:     "test3",
+		Url:    "test",
+		Status: "test",
+		Type:   "test",
+		Length: 5,
+		Children: []string{
+			"1234",
+			"234",
+		},
+	})
+
+	// s.UpdateVideoInfoPartition(types.VideoInfo{
+	// 	Id:       "test3",
+	// 	Children: []string{},
+	// 	Url:      "",
+	// 	Length:   0,
+	// })
+	// assert.Equal(t, s.GetVideoInfoFromQueue("test3").Children, []string{})
+	// assert.Equal(t, s.GetVideoInfoFromQueue("test3").Url, "")
+	// assert.Equal(t, s.GetVideoInfoFromQueue("test3").Length, 0)
 }

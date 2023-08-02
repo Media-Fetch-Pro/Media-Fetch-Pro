@@ -25,21 +25,40 @@ func (s *Store) UpdateVideoInfo(videoInfo types.VideoInfo) error {
 	return nil
 }
 
+// if to set the value to default. It will didn't have effect.
+// But I think it is not a problem. Because we seem didn't have the case to set the value to default.
+func isFieldEmpty(field reflect.Value) bool {
+	switch field.Kind() {
+	case reflect.String:
+		return field.Len() == 0
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		return field.Int() == 0
+	case reflect.Array, reflect.Slice:
+		return field.Len() == 0
+	default:
+		return false // Add more cases as needed for other data types
+	}
+}
+
 func (s *Store) UpdateVideoInfoPartition(videoInfo types.VideoInfo) error {
 	if _, ok := s.VideosInfo[videoInfo.Id]; !ok {
-		fmt.Println("new video info:", videoInfo)
 		s.VideosInfo[videoInfo.Id] = &videoInfo
 	} else {
-		willUpdateValue := reflect.ValueOf(videoInfo).Elem()
-		beUpdateValue := reflect.ValueOf(s.VideosInfo[videoInfo.Id]).Elem()
+		dest := videoInfo
+		src := *(s.VideosInfo[videoInfo.Id])
+		destValue := reflect.ValueOf(&dest).Elem()
+		srcValue := reflect.ValueOf(&src).Elem()
 
-		for i := 0; i < willUpdateValue.NumField(); i++ {
-			destField := beUpdateValue.Field(i)
-			srcField := willUpdateValue.Field(i)
+		for i := 0; i < destValue.NumField(); i++ {
+			destField := destValue.Field(i)
+			srcField := srcValue.Field(i)
 
-			destField.Set(srcField)
+			if !isFieldEmpty(destField) {
+				srcField.Set(destField)
+			}
 		}
-		fmt.Println("new video info:", beUpdateValue)
+		fmt.Println("updated video info:", src)
+		s.VideosInfo[videoInfo.Id] = &src
 	}
 	s.UpdateChannel <- *s.VideosInfo[videoInfo.Id]
 	return nil

@@ -122,10 +122,7 @@ func (s *Server) registerVideoRoutes(g *gin.RouterGroup) {
 		}
 
 		videoInfo := types.VideoInfo(input)
-		err := s.Store.UpdateVideoInfo(videoInfo)
-		// TODO move the update to another place.
-		// Because it didn't only update place
-		go func() { s.Store.UpdateChannel <- videoInfo }()
+		err := s.Store.UpdateVideoInfoPartition(videoInfo)
 
 		if err != nil {
 			c.JSON(http.StatusBadRequest, composeResponse(err.Error()))

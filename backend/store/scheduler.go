@@ -4,19 +4,23 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/types"
 	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/utils"
 )
 
 func (s *Store) DownloadComplete(id string) {
-	s.VideosInfo[id].Status = "complete"
-	s.VideosInfo[id].Percent = 100 // the percent is for playlist
-	go func() { s.UpdateChannel <- *s.VideosInfo[id] }()
+	s.UpdateVideoInfoPartition(types.VideoInfo{
+		Id:      id,
+		Status:  "complete",
+		Percent: 100,
+	})
 
 	if s.VideosInfo[id].Type == "playlist" {
 		for _, childId := range s.VideosInfo[id].Children {
-			s.VideosInfo[childId].Status = "complete"
-			go func() { s.UpdateChannel <- *s.VideosInfo[childId] }()
-
+			s.UpdateVideoInfoPartition(types.VideoInfo{
+				Id:     childId,
+				Status: "complete",
+			})
 		}
 	}
 
@@ -26,13 +30,17 @@ func (s *Store) DownloadComplete(id string) {
 
 	err := utils.RenameVideo(s.VideosInfo[id], s.SystemSettings.StoragePath)
 	if err != nil {
-		s.VideosInfo[id].Status = "failed"
-		go func() { s.UpdateChannel <- *s.VideosInfo[id] }()
+		s.UpdateVideoInfoPartition(types.VideoInfo{
+			Id:     id,
+			Status: "failed",
+		})
 
 		if s.VideosInfo[id].Type == "playlist" {
 			for _, childId := range s.VideosInfo[id].Children {
-				s.VideosInfo[childId].Status = "failed"
-				go func() { s.UpdateChannel <- *s.VideosInfo[childId] }()
+				s.UpdateVideoInfoPartition(types.VideoInfo{
+					Id:     childId,
+					Status: "failed",
+				})
 			}
 		}
 
@@ -82,8 +90,10 @@ func (s *Store) SchedulerDownload() {
 					}
 
 					// update playlist percent
-					s.VideosInfo[parentId].Percent = int(float64(downloadFinishNum) / float64(len(s.VideosInfo[parentId].Children)) * 100)
-					go func() { s.UpdateChannel <- *s.VideosInfo[parentId] }()
+					s.UpdateVideoInfoPartition(types.VideoInfo{
+						Id:      parentId,
+						Percent: int(float64(downloadFinishNum) / float64(len(s.VideosInfo[parentId].Children)) * 100),
+					})
 				}
 			}
 
