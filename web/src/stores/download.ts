@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { reactive, ref } from "vue";
+import { getCleanUrl } from '@/utils/bilibili';
 import axios, { type AxiosResponse } from "axios";
 
 export const useDownloadStore = defineStore("download",()=> {
@@ -11,7 +12,7 @@ export const useDownloadStore = defineStore("download",()=> {
     });
     async function download(storagePath: string): Promise<AxiosResponse<any, any>>{
         const result = await axios.post("api/video", {
-            url: url.value,
+            url: getCleanUrl(url.value),
             storage: storagePath,
         }).catch((error) => {
             return error.response;

@@ -4,6 +4,6 @@
   "compilerOptions": {
     "composite": true,
     "lib": [],
-    "types": ["node", "jsdom","naive-ui/volar"]
+    "types": ["node", "jsdom","naive-ui/volar", "jest"]
   }
 }
