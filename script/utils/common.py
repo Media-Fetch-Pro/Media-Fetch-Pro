@@ -3,7 +3,7 @@ import os
 import subprocess
 
 
-def waitFile(filePath, timeout=2):
+def waitFile(filePath, timeout=60):
     '''
     Wait for file to appear
     '''
@@ -14,5 +14,6 @@ def waitFile(filePath, timeout=2):
             raise Exception('Timeout waiting for file %s' % filePath)
         
 def runShell(shell_text):
-    proc = subprocess.Popen(shell_text, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=-1)
-    proc.wait()
+    # proc = subprocess.Popen(shell_text, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=-1)
+    # proc.wait()
+    os.system(shell_text)

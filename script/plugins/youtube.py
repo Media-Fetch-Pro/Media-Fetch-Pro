@@ -48,33 +48,14 @@ class Youtube(BaseDownloader):
         video_info.set_title(video_json["title"])
         p_video_array = []
         if video_json['_type'] == 'playlist':
-            # if the url is playlist
+            print(video_json)
+            video_info.set_author(video_json["uploader"])
+            video_info.set_content(video_json["description"])
+            video_info.set_type("video")
             video_info.set_length(int(video_json["playlist_count"]))
-            video_info.set_children(
-                list(
-                    map(
-                        lambda p:generate_uuid_from_url(f"{video_info.url}?p={p}"),
-                        range(1,video_info.get_length()+1)
-                    )
-                )
-            )    
-            video_info.set_type("playlist")
-            
-            # fetch every children video info
-            for p in range(1,video_info.get_length()+1):
-                new_video_info = self.getVideoInfo(f"{video_info.url}?p={p}")[0]
-                new_video_info.set_episode(p)
-                new_video_info.set_parent(video_info.get_id())
-                new_video_info.set_type("episode")
-                p_video_array.append(new_video_info)
-                
-                # copy info from children to parent
-                # TODO: only execute once
-                video_info.set_author(new_video_info.get_author())
-                video_info.set_content(new_video_info.get_content())
-            p_video_array.insert(0,video_info)
-            return p_video_array
 
+            # TODO How to fetch playlist video info in Youtube
+            return [video_info]
         else:
             # if the url is video
             video_info.set_author(video_json["uploader"])
@@ -122,7 +103,7 @@ class Youtube(BaseDownloader):
                 f.write(content)
 
 
-    def getVideoInfo(self,url)->List[VideoInfo]: # 这是一个责任链模式
+    def getVideoInfo(self,url)->List[VideoInfo]: 
         if self.isSupport(url):
             video_info = self._initVideoInfo(url)
             video_info_array = self._fetchVideoInfo(video_info)
