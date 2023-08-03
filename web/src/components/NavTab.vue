@@ -1,11 +1,11 @@
 <template>
-    <router-link class="m-auto" :to="props.to">
+    <router-link class="" :to="props.to">
         <div class="flex gap-1" :class="bgColor">
-            <div>
+            <div class="m-auto">
                 <!-- the slot is a icon -->
                 <slot></slot>
             </div>
-            <div class="m-auto">
+            <div class="m-auto font-medium">
                 {{props.title}}
             </div>
         </div>
@@ -17,7 +17,7 @@ import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const beSelect = ref(false)
-const bgColor = ref("rounded-full hover:bg-white p-2 flex")
+const bgColor = ref("hover:bg-white flex h-20 p-2 w-full ml-3 rounded-l-full")
 
 // props is a link
 const props = defineProps({
@@ -41,9 +41,9 @@ watch(() => router.currentRoute.value, (route) => {
 
 watch(beSelect, (value) => {
     if (value) {
-        bgColor.value = "rounded-full bg-white p-2 flex drop-shadow-lg"
+        bgColor.value = "flex h-20 p-2 w-full bg-white ml-3 rounded-l-full drop-shadow-md"
     }else{
-        bgColor.value = "rounded-full hover:bg-white p-2 flex drop-shadow-lg"
+        bgColor.value = "hover:bg-white flex h-20 p-2 w-full ml-3 rounded-l-full"
     }
 })
 defineExpose({
