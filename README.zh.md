@@ -3,23 +3,40 @@
 
 [Documentation](https://github.com/CorrectRoadH/Media-Fetch-Pro/blob/main/documents/document.md) • Live Demo • Discuss in [Discord](https://discord.gg/2WDm9uXZ)
 
+[English](./README.md) | 简体中文
+
 ![](https://img.shields.io/github/stars/Media-Fetch-Pro/Media-Fetch-Pro?style=for-the-badge)
 ![](https://img.shields.io/bitbucket/issues/Media-Fetch-Pro/Media-Fetch-Pro?style=for-the-badge)
 
-# What is Media Fetch PRO
-`Media Fetch PRO` is an application to download video of youtube, bilibili and more websites in future  with metadata to jellyfin, emby, plex and more softwares in future.
+# Media Fetch PRO 是什么
+`Media Fetch PRO` 是一个用于下载youtube，bilibili和更多网站的视频的应用程序，将刮削一起下载到jellyfin，emby，plex和更多软件中。
 
 ![](./images/screen.png)
 
-# Documentation
+# 文档
 
-[Jellyfin]()
+[Jellyfin](https://github.com/Media-Fetch-Pro/Media-Fetch-Pro/blob/main/documents/document.md#jellyfin)
 
-Emby
+[Emby](https://github.com/Media-Fetch-Pro/Media-Fetch-Pro/blob/main/documents/document.md#emby)
 
-Plex
+[Plex](https://github.com/Media-Fetch-Pro/Media-Fetch-Pro/blob/main/documents/document.md#plex)
 
-# How to Develop
+
+# 如何去使用
+`./video` 应该替换成你的视频文件夹(在 Jellyfin 中的媒体库). 比如 `/home/user/Videos`.
+```
+docker run  -itd --name media-fetch-pro -p 7789:7789 -v ./video:/var/opt/video correctroad/media-fetch-pro:latest
+```
+
+# Roadmap
+ - [x] Support download Youtube Playlist video
+ - [ ] Support login by cookie to download hight resolution video
+ - [ ] Better Download manager
+ - [ ] i18n
+ - [ ] Write Documents
+
+
+# 如何参与开发
 backend:
 ```
 air -c air/.air.toml
@@ -35,7 +52,7 @@ pnpm dev
 python
 dependencies
 ```shell
-pip install WIP
+pip install -r requirements.txt
 ```
 
 fetch video info
@@ -47,19 +64,6 @@ test
 ```shell
 pytest .
 ```
-
-# How to use
-`./video` should be replace by your video folder(import in Jellyfin). for example `/home/user/Videos`.
-```
-docker run  -itd --name media-fetch-pro -p 7789:7789 -v ./video:/var/opt/video correctroad/media-fetch-pro:latest
-```
-
-# Roadmap
- - [x] Support download Playlist video
- - [ ] Support login by cookie to download hight resolution video
- - [ ] Better Download manager
- - [ ] i18n
- - [ ] Write Documents
 
 # Star history
 [![Star History Chart](https://api.star-history.com/svg?repos=Media-Fetch-Pro/Media-Fetch-Pro&type=Date)](https://star-history.com/#Media-Fetch-Pro/Media-Fetch-Pro&Date)
