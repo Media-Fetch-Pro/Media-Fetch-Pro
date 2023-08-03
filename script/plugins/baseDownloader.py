@@ -90,6 +90,7 @@ class BaseDownloader():
         # add cookies if cookie is not None
 
         ydl_opts =  {
+            'noplaylist': False,
             'cookiefile': cookies_file_path,
             'outtmpl': output_dir +'/%(title)s.%(ext)s',
             'progress_hooks': [self.progress_hook]
