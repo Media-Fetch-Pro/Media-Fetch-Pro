@@ -13,7 +13,7 @@
 
 # Documentation
 
-Jellyfin
+[Jellyfin]()
 
 Emby
 
