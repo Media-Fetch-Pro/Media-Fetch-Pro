@@ -47,8 +47,11 @@ func (s *Store) DownloadComplete(id string) {
 
 func (s *Store) SchedulerDownload() {
 	// I think this is not a good way to do this🤔
+	// fmt.Println("scheduler")
 	s.SchedulerLock.Lock()
-	if s.DownloadingVideoNum < s.SystemSettings.MaxDownloadNum {
+
+	// s.DownloadingVideoNum < s.SystemSettings.MaxDownloadNum
+	if true {
 		for _, value := range s.VideosInfo {
 
 			if value.Status == "complete" {
@@ -98,6 +101,7 @@ func (s *Store) SchedulerDownload() {
 			if value.Status == "unstart" {
 				s.DownloadingVideoNum++
 				// how to call fetching? sync or async?
+				// fmt.Println("fetching info")
 				err := utils.FetchingVideoInfo(value)
 				if err != nil {
 					s.UpdateVideoInfoPartition(types.VideoInfo{
