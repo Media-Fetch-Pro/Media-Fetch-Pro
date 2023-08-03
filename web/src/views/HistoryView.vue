@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import DownloadHistory from '@/components/DownloadHistory.vue';
+import DownloadHistoryItem from '@/components/DownloadHistoryItem.vue';
 import { useHistoryStore } from '@/stores';
-import { onMounted,ref, computed, watch } from 'vue';
+import { onMounted, computed, watch } from 'vue';
 const historyStore = useHistoryStore()
-import { ElMessage } from 'element-plus'
 import { useEventSource } from '@vueuse/core'
 
-const activeName = ref('first')
 
 onMounted(() => {
     historyStore.getVideoStatus()
@@ -61,7 +59,7 @@ const filterHistoryData = computed(() => {
             </el-tabs>
             
             <div class="flex w-full gap-2 py-2" v-for="item in filterHistoryData" :key="item.id">
-                <DownloadHistory :item="item" />
+                <DownloadHistoryItem :item="item" />
             </div>
             <div v-if="filterHistoryData.length==0">
                 there is nothing

@@ -11,19 +11,28 @@
         >
         </div>
 
-        <div 
-            class="my-auto"
-            v-if="props.item.type =='playlist'"
-        > 
-            <el-icon 
-                class="cursor-pointer"
-                @click="handleArrowBtnClick"
-            >
-                <ArrowRight v-if="collapsed" />
-                <ArrowDown v-if="!collapsed" />
-            </el-icon>
+        <div class="flex flex-col my-auto">
+            <div 
+                class="my-auto"
+                v-if="props.item.type =='playlist'"
+            > 
+                <el-icon 
+                    class="cursor-pointer"
+                    @click="handleArrowBtnClick"
+                >
+                    <ArrowRight v-if="collapsed" />
+                    <ArrowDown v-if="!collapsed" />
+                </el-icon>
+            </div>
+            <div>
+                <n-button class="bg-green-500"
+                        type="primary"
+                        @click="handleOpenOriginBtnClick"
+                    >
+                        Open origin
+                    </n-button>
+            </div>
         </div>
-        
         <div 
             class=" flex flex-col"
             :class="textColor"
@@ -39,7 +48,7 @@
             <div class="flex gap-2 z-10">
                 <div class="font-bold">Progress: {{item.percent}}</div>
             </div>
-            <div class="flex z-10">
+            <div class="flex z-10 gap-2">
                 <n-button class="bg-green-500"
                     type="primary" v-if="item.percent!==100"
                     @click="handleCancelBtnClick"
@@ -140,6 +149,10 @@ const handleCancelBtnClick = () =>{
 
 const handleDeleteBtnClick = () =>{
     ElMessage.error("Not implemented yet")
+}
+
+const handleOpenOriginBtnClick = () =>{
+    window.open(props.item.url, '_blank');
 }
 
 
