@@ -1,7 +1,6 @@
 package store
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/types"
@@ -99,7 +98,6 @@ func (s *Store) SchedulerDownload() {
 			if value.Status == "unstart" {
 				s.DownloadingVideoNum++
 				// how to call fetching? sync or async?
-				fmt.Println("fetch start")
 				err := utils.FetchingVideoInfo(value)
 				if err != nil {
 					s.UpdateVideoInfoPartition(types.VideoInfo{
