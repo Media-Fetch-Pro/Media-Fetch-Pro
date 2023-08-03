@@ -23,7 +23,7 @@ def FetchVideoInfo(url: str) -> List[VideoInfo]:
     return video_info_array
 
 
-def DownloadVideo(video_info: VideoInfo, storagePath: str):
+def DownloadVideo(video_info: VideoInfo, storagePath: str, cookies_file_path: str = None):
     try:
         if(video_info.type != "episode"):
             storagePath = storagePath + "/" + video_info.get_id() # video and playlist
@@ -40,15 +40,13 @@ def DownloadVideo(video_info: VideoInfo, storagePath: str):
         websites.downloadNfo(video_info,storagePath)
         websites.downloadPoster(video_info,storagePath)
         
-        # TODO it is a problem how to rename playlist🤔
-
     elif video_info.type == "video":
         if video_info.get_type() == "video": # episode didn't generate nfo
             websites.downloadNfo(video_info,storagePath)
-            print("下载nfo成功")
+            print("download nfo success")
 
         websites.downloadPoster(video_info,storagePath)
-        websites.downloadVideo(video_info,storagePath)
+        websites.downloadVideo(video_info,storagePath,cookies_file_path)
 
         video_info.set_status("finished")
         request.updateVideoStatus(video_info)

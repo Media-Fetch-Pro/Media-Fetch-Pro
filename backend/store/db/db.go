@@ -3,22 +3,171 @@ package db
 import (
 	"context"
 	"database/sql"
+	"embed"
+	"errors"
+	"fmt"
+	"io/fs"
+	"os"
+	"regexp"
+	"sort"
+
+	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/server/profile"
+	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/server/version"
 )
+
+//go:embed migration
+var migrationFS embed.FS
+
+//go:embed seed
+var seedFS embed.FS
 
 type DB struct {
 	// sqlite db connection instance
 	DBInstance *sql.DB
+	profile    *profile.Profile
 }
 
-func NewDB() *DB {
-	db := &DB{}
+func NewDB(profile *profile.Profile) *DB {
+	db := &DB{
+		profile: profile,
+	}
 	return db
 }
 
 func (db *DB) Open(ctx context.Context) (err error) {
-	// db.DBInstance, err = sql.Open("sqlite3", "./foo.db")
-	// if err != nil {
-	// 	return err
-	// }
+	// Ensure a DSN is set before attempting to open the database.
+	if db.profile.DSN == "" {
+		return fmt.Errorf("dsn required")
+	}
+
+	// Connect to the database with some sane settings:
+	// - No shared-cache: it's obsolete; WAL journal mode is a better solution.
+	// - No foreign key constraints: it's currently disabled by default, but it's a
+	// good practice to be explicit and prevent future surprises on SQLite upgrades.
+	// - Journal mode set to WAL: it's the recommended journal mode for most applications
+	// as it prevents locking issues.
+	//
+	// Notes:
+	// - When using the `modernc.org/sqlite` driver, each pragma must be prefixed with `_pragma=`.
+	//
+	// References:
+	// - https://pkg.go.dev/modernc.org/sqlite#Driver.Open
+	// - https://www.sqlite.org/sharedcache.html
+	// - https://www.sqlite.org/pragma.html
+	sqliteDB, err := sql.Open("sqlite", db.profile.DSN+"?_pragma=foreign_keys(0)&_pragma=busy_timeout(10000)&_pragma=journal_mode(WAL)")
+	if err != nil {
+		return fmt.Errorf("failed to open db with dsn: %s, err: %w", db.profile.DSN, err)
+	}
+	db.DBInstance = sqliteDB
+
+	if db.profile.Mode == "prod" {
+		_, err := os.Stat(db.profile.DSN)
+		if err != nil {
+			// If db file not exists, we should create a new one with latest schema.
+			if errors.Is(err, os.ErrNotExist) {
+				if err := db.applyLatestSchema(ctx); err != nil {
+					return fmt.Errorf("failed to apply latest schema, err: %w", err)
+				}
+			} else {
+				return fmt.Errorf("failed to get db file stat, err: %w", err)
+			}
+		}
+	} else {
+		// In non-prod mode, we should always migrate the database.
+		if _, err := os.Stat(db.profile.DSN); errors.Is(err, os.ErrNotExist) {
+			if err := db.applyLatestSchema(ctx); err != nil {
+				return fmt.Errorf("failed to apply latest schema: %w", err)
+			}
+			// In demo mode, we should seed the database.
+			if db.profile.Mode == "demo" {
+				if err := db.seed(ctx); err != nil {
+					return fmt.Errorf("failed to seed: %w", err)
+				}
+			}
+		}
+	}
+
 	return nil
+}
+
+const (
+	latestSchemaFileName = "LATEST__SCHEMA.sql"
+)
+
+func (db *DB) applyLatestSchema(ctx context.Context) error {
+	schemaMode := "dev"
+	if db.profile.Mode == "prod" {
+		schemaMode = "prod"
+	}
+	latestSchemaPath := fmt.Sprintf("%s/%s/%s", "migration", schemaMode, latestSchemaFileName)
+	buf, err := migrationFS.ReadFile(latestSchemaPath)
+	if err != nil {
+		return fmt.Errorf("failed to read latest schema %q, error %w", latestSchemaPath, err)
+	}
+	stmt := string(buf)
+	if err := db.execute(ctx, stmt); err != nil {
+		return fmt.Errorf("migrate error: statement:%s err=%w", stmt, err)
+	}
+	return nil
+}
+
+func (db *DB) seed(ctx context.Context) error {
+	filenames, err := fs.Glob(seedFS, fmt.Sprintf("%s/*.sql", "seed"))
+	if err != nil {
+		return fmt.Errorf("failed to read seed files, err: %w", err)
+	}
+
+	sort.Strings(filenames)
+
+	// Loop over all seed files and execute them in order.
+	for _, filename := range filenames {
+		buf, err := seedFS.ReadFile(filename)
+		if err != nil {
+			return fmt.Errorf("failed to read seed file, filename=%s err=%w", filename, err)
+		}
+		stmt := string(buf)
+		if err := db.execute(ctx, stmt); err != nil {
+			return fmt.Errorf("seed error: statement:%s err=%w", stmt, err)
+		}
+	}
+	return nil
+}
+
+// execute runs a single SQL statement within a transaction.
+func (db *DB) execute(ctx context.Context, stmt string) error {
+	tx, err := db.DBInstance.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Rollback()
+
+	if _, err := tx.ExecContext(ctx, stmt); err != nil {
+		return fmt.Errorf("failed to execute statement, err: %w", err)
+	}
+
+	return tx.Commit()
+}
+
+// minorDirRegexp is a regular expression for minor version directory.
+var minorDirRegexp = regexp.MustCompile(`^migration/prod/[0-9]+\.[0-9]+$`)
+
+func getMinorVersionList() []string {
+	minorVersionList := []string{}
+
+	if err := fs.WalkDir(migrationFS, "migration", func(path string, file fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if file.IsDir() && minorDirRegexp.MatchString(path) {
+			minorVersionList = append(minorVersionList, file.Name())
+		}
+
+		return nil
+	}); err != nil {
+		panic(err)
+	}
+
+	sort.Sort(version.SortVersion(minorVersionList))
+
+	return minorVersionList
 }

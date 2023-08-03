@@ -9,9 +9,6 @@ import script.api.request as request
 
 from script.plugins.baseDownloader import BaseDownloader
 from script.model.videoInfo import VideoInfo
-from script.utils.video import generate_uuid_from_url
-from script.config.config import Config
-from script.utils.video import generate_uuid_from_url
 from script.utils.ytdlp import extract_progress
 
 class Bilibili(BaseDownloader):

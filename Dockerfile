@@ -27,6 +27,7 @@ ENV PROFILE="PRODUCTION"
 COPY --from=backend /backend-build/tools /usr/local/tools/
 COPY --from=backend /backend-build/script /usr/local/tools/script
 COPY --from=backend /backend-build/main.py /usr/local/tools/main.py
+COPY --from=backend /backend-build/config.yaml /usr/local/tools/config.yaml
 
 EXPOSE 7789
 RUN apk add python3 py3-pip ffmpeg

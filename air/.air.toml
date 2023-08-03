@@ -2,8 +2,8 @@ root = "."
 tmp_dir = ".air"
 
 [build]
-bin = "./.air/memos --mode dev"
-cmd = "go build -o ./.air/memos ./main.go"
+bin = "./.air/media-fetch --mode dev"
+cmd = "go build -o ./.air/media-fetch ./main.go"
 delay = 1000
 exclude_dir = [".air", "web", "build","script"]
 exclude_file = []

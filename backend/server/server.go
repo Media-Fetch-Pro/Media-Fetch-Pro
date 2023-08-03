@@ -4,30 +4,28 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/server/profile"
 	store "github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/store"
-	"github.com/Media-Fetch-Pro/Media-Fetch-Pro/backend/store/db"
 	"github.com/gin-gonic/gin"
 )
 
 type Server struct {
 	httpServer *gin.Engine
-
-	Store *store.Store
+	Profile    *profile.Profile
+	Store      *store.Store
 }
 
-func NewServer() (*Server, error) {
+func NewServer(profile *profile.Profile, store *store.Store) (*Server, error) {
 	httpServer := gin.Default()
 
 	s := &Server{
 		httpServer: httpServer,
-		// store:      store,
+		Profile:    profile,
+		Store:      store,
 	}
 
 	httpServer.NoRoute(gin.WrapH(http.FileServer(GetFileSystem("dist"))))
 
-	db := db.NewDB()
-	storeInstance := store.NewStore(db.DBInstance)
-	s.Store = storeInstance
 	s.Store.LoadGlobalVideoInfo()
 
 	apiGroup := httpServer.Group("/api")

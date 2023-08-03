@@ -84,10 +84,13 @@ class BaseDownloader():
         with open(f"{Config.getTempPath()}/{video_info.get_id()}.info.json", "r") as f:
             return self._parseVideoInfo(video_info, f.read())
     
-    def _downloadVideo(self, video_info: VideoInfo, output_dir: str):
+    def _downloadVideo(self, video_info: VideoInfo, output_dir: str,cookies_file_path: str = None):
         self.video_info = video_info
-        print("download path",output_dir +'/%(title)s.%(ext)s')
+        print("download path:",output_dir +'/%(title)s.%(ext)s')
+        # add cookies if cookie is not None
+
         ydl_opts =  {
+            'cookiefile': cookies_file_path,
             'outtmpl': output_dir +'/%(title)s.%(ext)s',
             'progress_hooks': [self.progress_hook]
         }
@@ -120,11 +123,11 @@ class BaseDownloader():
         else:
             return self.next.getVideoInfo(url)
 
-    def downloadVideo(self, video_info: VideoInfo, output_dir: str):
+    def downloadVideo(self, video_info: VideoInfo, output_dir: str, cookies_file_path: str = None):
         if self.isSupport(video_info.url):
-            self._downloadVideo(video_info, output_dir)
+            self._downloadVideo(video_info, output_dir, cookies_file_path)
         else:
-            return self.next.downloadVideo(video_info, output_dir)
+            return self.next.downloadVideo(video_info, output_dir, cookies_file_path)
 
 
     def downloadPoster(self, video_info: VideoInfo, output_dir: str):

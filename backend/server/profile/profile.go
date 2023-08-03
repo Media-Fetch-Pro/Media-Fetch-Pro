@@ -64,7 +64,7 @@ func GetProfile() (*Profile, error) {
 
 	if profile.Mode == "prod" && profile.Data == "" {
 		if runtime.GOOS == "windows" {
-			profile.Data = filepath.Join(os.Getenv("ProgramData"), "memos")
+			profile.Data = filepath.Join(os.Getenv("ProgramData"), "media")
 
 			if _, err := os.Stat(profile.Data); os.IsNotExist(err) {
 				if err := os.MkdirAll(profile.Data, 0770); err != nil {
@@ -73,7 +73,7 @@ func GetProfile() (*Profile, error) {
 				}
 			}
 		} else {
-			profile.Data = "/var/opt/memos"
+			profile.Data = "/var/opt/media"
 		}
 	}
 
@@ -84,7 +84,7 @@ func GetProfile() (*Profile, error) {
 	}
 
 	profile.Data = dataDir
-	dbFile := fmt.Sprintf("memos_%s.db", profile.Mode)
+	dbFile := fmt.Sprintf("media_%s.db", profile.Mode)
 	profile.DSN = filepath.Join(dataDir, dbFile)
 	profile.Version = version.GetCurrentVersion(profile.Mode)
 

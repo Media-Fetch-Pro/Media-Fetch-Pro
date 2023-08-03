@@ -73,7 +73,7 @@ class Youtube(BaseDownloader):
         with open(f"{Config.getTempPath()}/{video_info.get_id()}.info.json", "r") as f:
             return self._parseVideoInfo(video_info, f.read())
 
-    def _downloadVideo(self, video_info: VideoInfo, output_dir: str):
+    def _downloadVideo(self, video_info: VideoInfo, output_dir: str, cookies_file_path: str = None):
         self.video_info = video_info
         print("download path",output_dir +'/%(title)s.%(ext)s')
         ydl_opts =  {
