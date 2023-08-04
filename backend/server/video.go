@@ -17,11 +17,14 @@ type DownloadVideoInput struct {
 
 type UpdateVideoStatusInput struct {
 	// video basic info
-	Id      string `json:"id"`
-	Title   string `json:"title"`
-	Author  string `json:"author"`
-	Url     string `json:"url"`
-	Content string `json:"content"` // the content(description) of the video
+	Id          string `json:"id"`
+	Title       string `json:"title"`
+	Author      string `json:"author"`
+	Url         string `json:"url"`
+	Content     string `json:"content"`      // the content(description) of the video
+	PublishTime int64  `json:"publish_time"` // unix timestamp
+	Thumbnail   string `json:"thumbnail"`    // the thumbnail of the video
+	Tags        string `json:"tags"`         // the tag of the video
 
 	// for user
 	Status  string `json:"status"` // unstart, fetching, pending, downloading ,finished(download finished), complete, failed

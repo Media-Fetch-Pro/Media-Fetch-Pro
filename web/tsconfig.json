@@ -47,7 +47,6 @@
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
     "types": [
-      "unplugin-icons/types/vue",
       "vite/client"
     ] /* Type declaration files to be included in compilation. */,
     "lib": ["WebWorker", "ES2022"],

@@ -30,10 +30,6 @@ watch(close, (val) => {
     console.log(val)
 })
 
-const handleTabClick = (tab: any) => {
-    // to request network data
-}
-
 const tabMapStatus = new Map<string, Array<string>>(
     [
         ['pending', ['unstart','pending','fetching']],
@@ -57,7 +53,7 @@ const filterHistoryData = computed(() => {
         <h1 class="font-black">{{t("history.title")}}</h1>
         <div class="w-full">
 
-            <el-tabs v-model="historyStore.tab" class="demo-tabs" @tab-click="handleTabClick">
+            <el-tabs v-model="historyStore.tab" class="demo-tabs">
                 <el-tab-pane :label="t('history.wait-to-start')" name="pending"></el-tab-pane>
                 <el-tab-pane :label="t('history.downloading')" name="downloading"></el-tab-pane>
                 <el-tab-pane :label="t('history.finished')" name="complete"></el-tab-pane>

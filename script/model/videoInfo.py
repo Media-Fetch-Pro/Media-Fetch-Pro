@@ -8,19 +8,31 @@ from script.utils.video import generate_uuid_from_url
 class VideoInfo():
     id: str = None
     title: str = None
-    url: str = None
-    status: str = None
-    percent: int = None
-    size: int = None
-    type: str = None
-    children: List[str] = None
     author: str = None
-    source: str = None
+    url: str = None
     content: str = None
-    episode: int = None
+    publish_time: int = None
+    thumbnail: str = None # the field may didn't used
+    tags: str = None
+    
+    status: str = None
+    reason: str = None
+    percent: int = None
+    
+    size: int = None
+    already_download_size: int = None
+    
+    type: str = None
+    source: str = None
+
     parent: str = None
     length: int = None
+    episode: int = None
+    children: List[str] = None
+    
     start_download_time: int = None
+    download_speed: int = None
+    end_download_time: int = None
     
     def __init__(self): # how to differentiate between init and init video info in downloader ?🤔
         self.set_children([])

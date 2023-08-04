@@ -88,7 +88,7 @@
 </template>
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import type { DownloadHistory } from "src/types";
+import type { VideoInfo } from "src/types";
 import { ArrowRight, ArrowDown } from "@element-plus/icons-vue";
 import { useHistoryStore } from "@/stores/history";
 import { ElMessage }  from 'element-plus'
@@ -102,7 +102,7 @@ const downloadCompletedStatus = ['finished','completed']
 const historyStore = useHistoryStore()
 const props = defineProps({
     item: {
-        type: Object as () => DownloadHistory,
+        type: Object as () => VideoInfo,
         required: true
     }
 })
@@ -134,7 +134,7 @@ const handleRetryBtnClick = () => {
         id : props.item.id,
         status: 'unstart',
         percent: 0
-    } as DownloadHistory)
+    } as VideoInfo)
     ElMessage.success(t("history.retry"))
 }
 
@@ -143,7 +143,7 @@ const handleCancelBtnClick = () =>{
         id : props.item.id,
         status: 'failed',
         percent: 0
-    } as DownloadHistory)
+    } as VideoInfo)
     ElMessage.success(t("history.cancel"))
 
 }
@@ -159,7 +159,7 @@ const handleOpenOriginBtnClick = () =>{
 
 const childrenItemData = computed(() => {
     if (props.item.type === 'playlist'){
-        const childrenItemData: Array<DownloadHistory> = []
+        const childrenItemData: Array<VideoInfo> = []
         console.log(props.item.children)
         for (const childId of props.item.children){
             const childItem = historyStore.getVideoInfoById(childId)
