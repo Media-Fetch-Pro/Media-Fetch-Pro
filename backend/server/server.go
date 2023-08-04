@@ -31,6 +31,7 @@ func NewServer(profile *profile.Profile, store *store.Store) (*Server, error) {
 	apiGroup := httpServer.Group("/api")
 	s.registerVideoRoutes(apiGroup)
 	s.registerSystemRoutes(apiGroup)
+	s.registerSettingsRoutes(apiGroup)
 
 	go func() {
 		for {

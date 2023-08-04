@@ -10,14 +10,6 @@ export const useSettingStore = defineStore("setting", {
                 path: "/var/opt/video",
                 name: "default",
             } as downloadPath,
-            {
-                path: "/var/opt/video2",
-                name: "Auto",
-            } as downloadPath,
-            {
-                path: "/Users/ctrdh/video",
-                name: "DIY",
-            } as downloadPath,
         ],
         maxDownload: 1,
         maxDownloadSpeed: 5,
