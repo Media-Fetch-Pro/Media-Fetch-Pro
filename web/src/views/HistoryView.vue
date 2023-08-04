@@ -26,6 +26,10 @@ watch(error, (val) => {
     console.log(val)
 })
 
+watch(close, (val) => {
+    console.log(val)
+})
+
 const handleTabClick = (tab: any) => {
     // to request network data
 }

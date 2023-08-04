@@ -32,7 +32,7 @@ docker run  -itd --name media-fetch-pro -p 7789:7789 -v ./video:/var/opt/video c
  - [x] Support download Youtube Playlist video
  - [ ] Support login by cookie to download hight resolution video
  - [ ] Better Download manager
- - [ ] i18n
+ - [x] i18n
  - [ ] Write Documents
 
 
