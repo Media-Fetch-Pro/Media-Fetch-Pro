@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import NavTab from './components/NavTab.vue'
-import {Download,Clock,Setting} from "@element-plus/icons-vue";
+import { CloudDownload, Albums, Settings } from '@vicons/ionicons5'
 
+import { NIcon } from 'naive-ui';
 import { ref } from 'vue';
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
@@ -25,20 +26,20 @@ defineExpose({
         </div>
       </a>
       <NavTab to="/" :title="t('download.title')">
-          <el-icon>
-            <Download />
-          </el-icon>
+          <n-icon size="20">
+            <CloudDownload />
+          </n-icon>
       </NavTab>
       <NavTab to="/history" :title="t('history.title')">
-        <el-icon>
-          <Clock />
-        </el-icon>
-      </NavTab>
+        <n-icon size="20">
+          <Albums />
+        </n-icon>
+    </NavTab>
       <NavTab to="/setting" :title="t('setting.title')">
-        <el-icon>
-          <Setting />
-        </el-icon>
-      </NavTab>
+        <n-icon size="20">
+          <Settings />
+        </n-icon>
+    </NavTab>
     </div>
     <RouterView />
 

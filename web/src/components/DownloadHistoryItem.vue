@@ -49,23 +49,38 @@
                 <div class="font-bold">{{ t("history.progress") }} : {{item.percent}}</div>
             </div>
             <div class="flex z-10 gap-2">
-                <n-button class="bg-green-500"
-                    type="primary" v-if="item.percent!==100"
+                <n-button class="bg-blue-500"
+                    type="info" v-if="item.percent!==100"
                     @click="handleCancelBtnClick"
                 >
-                    {{ t("history.cancel") }}
+                    <n-icon size="20">
+                        <CloseOutline />
+                    </n-icon>
+                    <div>
+                        {{ t("history.cancel") }}
+                    </div>
                 </n-button>
                 <n-button class="bg-red-500"
                     type="error" v-if="item.percent==100" 
                     @click="handleDeleteBtnClick"
                 >
-                    {{ t("history.delete") }}
+                    <n-icon size="20">
+                        <TrashBin />
+                    </n-icon>
+                    <div>
+                        {{ t("history.delete") }}
+                    </div>
                 </n-button>
                 <n-button class="bg-green-500"
                     type="primary" v-if="item.status=='failed'" 
                     @click.stop="handleRetryBtnClick"
                 >
-                    {{ t("history.retry") }}
+                    <n-icon size="20">
+                        <Refresh />
+                    </n-icon>
+                    <div>
+                        {{ t("history.retry") }}
+                    </div>
                 </n-button>
             </div>
         </div>
@@ -92,8 +107,11 @@ import type { VideoInfo } from "src/types";
 import { ArrowRight, ArrowDown } from "@element-plus/icons-vue";
 import { useHistoryStore } from "@/stores/history";
 import { ElMessage }  from 'element-plus'
-import { NButton } from 'naive-ui'
+import { NButton, NIcon } from 'naive-ui'
+import { Refresh, TrashBin, CloseOutline } from '@vicons/ionicons5'
+
 import { useI18n } from "vue-i18n";
+
 const { t } = useI18n();
 
 
