@@ -25,6 +25,46 @@ const store = useDownloadStore()
             </div>
             <DownloadDialog />
         </div>
+        <div class="m-2">
+            FAQ:
+            <div class="flex gap-2 flex-wrap">
+                <HelpModel 
+                    label="How to Feedback"
+                    :title="t('help.download-help.title')"
+                    :content="t('help.download-help.content')"
+                />
+                <HelpModel 
+                    label="What website is supported"
+                    :title="t('help.download-help.title')"
+                    :content="t('help.download-help.content')"
+                />
+                <HelpModel 
+                    label="How to upgrade the Version"
+                    :title="t('help.download-help.title')"
+                    :content="t('help.download-help.content')"
+                />
+                <HelpModel 
+                    label="How to develop this project"
+                    :title="t('help.download-help.title')"
+                    :content="t('help.download-help.content')"
+                />
+                <HelpModel 
+                    label="How to require new website support"
+                    :title="t('help.download-help.title')"
+                    :content="t('help.download-help.content')"
+                />
+                <HelpModel 
+                    label="How to require new language support"
+                    :title="t('help.download-help.title')"
+                    :content="t('help.download-help.content')"
+                />
+                <HelpModel 
+                    label="How to download high quality video"
+                    :title="t('help.download-help.title')"
+                    :content="t('help.download-help.content')"
+                />
+            </div>
+        </div>
         <NetworkStatus />
     </main>
 </template>
