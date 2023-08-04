@@ -41,5 +41,16 @@
             "path-name-is-empty":"路径名为空",
             "path-value-is-empty":"路径为空"
         }
-    }   
+    },
+    "help":{
+        "download-help":{
+            "title":"How to get Video URL",
+            "content":"Please copy the URL of the video you want to download from the browser address bar"
+        },
+        "what-is-video-storage-path":{
+            "label":"什么是存储路径",
+            "title":"什么是存储路径",
+            "content":"存储路径是指下载的视频文件存储的位置。如果你是在通过 Docker 来使用 Media Fetch Pro 那么请不要修改这里，而是通过修改 Docker 的文件夹映射来修改存储路径。"
+        }
+    }
 }

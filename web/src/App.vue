@@ -41,8 +41,21 @@ defineExpose({
         </n-icon>
     </NavTab>
     </div>
-    <RouterView />
-
+    <Transition>
+      <RouterView />
+    </Transition>
   </div>
 </template>
 
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.6s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>

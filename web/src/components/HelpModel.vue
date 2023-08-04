@@ -42,7 +42,7 @@ const props = defineProps({
     },
     content: {
         type: String,
-        default: '内容'
+        default: 'Content'
     },
 })
 const showModal = ref(false)

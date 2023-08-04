@@ -5,9 +5,9 @@
         </h1>
 
         <HelpModel 
-            label="What is Video Storage Path"
-            title="What is Video Storage Path"
-            content="Video Storage Path is the video storage path of the video you downloaded. If you use Media Fetch Pro in a Docker. you shouldn't to change this setting. You should to change the map to move the video to the outside of the container."
+            :label="t('help.what-is-video-storage-path.label')"
+            :title="t('help.what-is-video-storage-path.title')"
+            :content="t('help.what-is-video-storage-path.content')"
         />
     </div>
 

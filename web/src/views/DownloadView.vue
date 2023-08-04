@@ -19,8 +19,8 @@ const store = useDownloadStore()
             <div class="flex gap-2">
                 <n-input class="w-full" v-model:value="store.url" type="text"  placeholder="Please input Video URL" />
                 <HelpModel 
-                    title="How to get Video URL"
-                    content="Please copy the URL of the video you want to download from the browser address bar"
+                    :title="t('help.download-help.title')"
+                    :content="t('help.download-help.content')"
                 />
             </div>
             <DownloadDialog />

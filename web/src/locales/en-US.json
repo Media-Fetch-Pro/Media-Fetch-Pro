@@ -40,7 +40,17 @@
             "the-name-is-already-exist":"the name is already exist",
             "path-name-is-empty":"path name is empty",
             "path-value-is-empty":"path value is empty"
-
         }
-    }   
+    },
+    "help":{
+        "download-help":{
+            "title":"What is Video URL",
+            "content":"Please copy the URL of the video you want to download from the browser address bar"
+        },
+        "what-is-video-storage-path":{
+            "label":"What is Video Storage Path",
+            "title":"What is Video Storage Path",
+            "content":"Video Storage Path is the video storage path of the video you downloaded. If you use Media Fetch Pro in a Docker. you shouldn't to change this setting. You should to change the map to move the video to the outside of the container."
+        }
+    }
 }
