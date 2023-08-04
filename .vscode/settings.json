@@ -3,8 +3,12 @@
         "gonic",
         "headlessui",
         "Jellyfin",
+        "listbox",
         "outtmpl",
         "unstart",
         "ytdl"
+    ],
+    "i18n-ally.localesPaths": [
+        "web/src/locales"
     ]
 }

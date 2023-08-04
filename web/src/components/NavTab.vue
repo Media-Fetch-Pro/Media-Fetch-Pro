@@ -41,7 +41,7 @@ watch(() => router.currentRoute.value, (route) => {
 
 watch(beSelect, (value) => {
     if (value) {
-        bgColor.value = "flex h-20 p-2 w-full bg-white ml-3 rounded-l-full drop-shadow-md"
+        bgColor.value = "flex h-20 p-2 w-full bg-white ml-3 rounded-l-full"
     }else{
         bgColor.value = "hover:bg-white flex h-20 p-2 w-full ml-3 rounded-l-full"
     }

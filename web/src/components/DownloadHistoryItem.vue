@@ -29,7 +29,7 @@
                         type="primary"
                         @click="handleOpenOriginBtnClick"
                     >
-                        Open origin
+                        {{ t("history.open-origin") }}
                     </n-button>
             </div>
         </div>
@@ -46,26 +46,26 @@
                 <div>{{ item.status }}</div>
             </div>
             <div class="flex gap-2 z-10">
-                <div class="font-bold">Progress: {{item.percent}}</div>
+                <div class="font-bold">{{ t("history.progress") }} : {{item.percent}}</div>
             </div>
             <div class="flex z-10 gap-2">
                 <n-button class="bg-green-500"
                     type="primary" v-if="item.percent!==100"
                     @click="handleCancelBtnClick"
                 >
-                    cancel
+                    {{ t("history.cancel") }}
                 </n-button>
                 <n-button class="bg-red-500"
                     type="error" v-if="item.percent==100" 
                     @click="handleDeleteBtnClick"
                 >
-                    delete
+                    {{ t("history.delete") }}
                 </n-button>
                 <n-button class="bg-green-500"
                     type="primary" v-if="item.status=='failed'" 
                     @click.stop="handleRetryBtnClick"
                 >
-                    retry
+                    {{ t("history.retry") }}
                 </n-button>
             </div>
         </div>
@@ -92,8 +92,10 @@ import type { DownloadHistory } from "src/types";
 import { ArrowRight, ArrowDown } from "@element-plus/icons-vue";
 import { useHistoryStore } from "@/stores/history";
 import { ElMessage }  from 'element-plus'
-
 import { NButton } from 'naive-ui'
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+
 
 const downloadCompletedStatus = ['finished','completed']
 
@@ -128,13 +130,12 @@ const textColor = computed(() => {
 })
 
 const handleRetryBtnClick = () => {
-    // ElMessage.error("Not implemented yet")
     historyStore.updateVideoInfo({
         id : props.item.id,
         status: 'unstart',
         percent: 0
     } as DownloadHistory)
-    ElMessage.success("retry")
+    ElMessage.success(t("history.retry"))
 }
 
 const handleCancelBtnClick = () =>{
@@ -143,7 +144,7 @@ const handleCancelBtnClick = () =>{
         status: 'failed',
         percent: 0
     } as DownloadHistory)
-    ElMessage.success("cancel")
+    ElMessage.success(t("history.cancel"))
 
 }
 

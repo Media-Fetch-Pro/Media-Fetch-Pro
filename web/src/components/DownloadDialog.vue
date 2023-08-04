@@ -5,7 +5,7 @@
         :icon="Download"
         @click="openModal"
       >
-        Download
+        {{ t("download.download") }}
       </el-button>
     </div>
     <TransitionRoot appear :show="isOpen" as="template">
@@ -42,7 +42,7 @@
                   as="h3"
                   class="text-lg font-medium leading-6 text-gray-900"
                 >
-                Please choose a video directory
+                {{ t("download.please-choose-a-video-directory") }}
               </DialogTitle>
 
                 <div class="mt-2 flex flex-col">
@@ -57,12 +57,12 @@
                     type="primary"
                     @click="handleDownloadBtnClick"
                   >
-                    Download
+                    {{ t("download.download") }}
                   </el-button>
                   <el-button
                     @click="cancelModal"
                   >
-                    Cancel Download
+                  {{ t("download.cancel-download") }}
                   </el-button>
                 </div>
               </DialogPanel>
@@ -87,6 +87,8 @@ import { useDownloadStore } from '@/stores/download';
 import { MFListBox } from "@/components/kit";
 import { ElMessage }  from 'element-plus'
 import { useSettingStore } from "@/stores/setting";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 
 const isOpen = ref(false)
 const settingStore = useSettingStore();

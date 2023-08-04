@@ -1,0 +1,46 @@
+{
+    "download": {
+        "title": "Download",
+        "download": "download",
+        "network-status": "Network status",
+        "update-status": "update status",
+        "start-updating": "start updating",
+        "update-successfully": "update successfully",
+        "please-choose-a-video-directory": "Please choose a video directory",
+        "cancel-download": "Cancel Download",
+        "start-downloading": "Start Downloading",
+        "url-is-empty": "url is empty"
+    },
+    "history": {
+        "title": "History",
+        "wait-to-start": "Wait To start",
+        "downloading":"Downloading",
+        "finished": "Finished",
+        "failed": "Failed",
+        "open-origin":"Open origin",
+        "cancel":"cancel",
+        "delete":"delete",
+        "retry":"retry",
+        "progress":"Progress",
+        "there-is-nothing":"there is nothing"
+    },
+    "setting":{
+        "title":"Settings",
+        "listbox":{
+            "name":"Name",
+            "path":"Path",
+            "action":"Action",
+            "select":"select",
+            "selected":"selected",
+            "delete":"delete",
+            "new-path-name":"new Path Name",
+            "new-path":"new Path",
+            "add":"add",
+            "add-success":"add success",
+            "the-name-is-already-exist":"the name is already exist",
+            "path-name-is-empty":"path name is empty",
+            "path-value-is-empty":"path value is empty"
+
+        }
+    }   
+}

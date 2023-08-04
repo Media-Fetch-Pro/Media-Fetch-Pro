@@ -3,9 +3,9 @@
     <n-table>
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Path</th>
-                <th>Action</th>
+                <th>{{t("setting.listbox.name")}}</th>
+                <th>{{t("setting.listbox.path")}}</th>
+                <th>{{t("setting.listbox.action")}}</th>
             </tr>
         </thead>
     
@@ -18,19 +18,19 @@
                         @click="()=>settingStore.setStoragePath(item.path)"
                         v-if="settingStore.storagePath != item.path" 
                     >
-                        select
+                        {{t("setting.listbox.select")}}
                     </n-button>
                     <n-button 
                         v-else
                     >
-                        selected
+                        {{t("setting.listbox.selected")}}
                     </n-button>
                     <n-button 
                         class="bg-red-500"
                         type="error"
                         @click="()=>settingStore.removeDownloadPath(item.name)" 
                     >
-                        delete
+                        {{t("setting.listbox.delete")}}
                     </n-button>
                 </td>
             </tr>
@@ -44,6 +44,9 @@ import type { downloadPath } from "src/types/setting";
 import { NTable, NButton } from "naive-ui";
 
 import { useSettingStore } from "@/stores";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+
 
 const settingStore = useSettingStore()
 
