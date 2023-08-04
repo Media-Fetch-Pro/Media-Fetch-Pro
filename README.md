@@ -38,31 +38,4 @@ docker run  -itd --name media-fetch-pro -p 7789:7789 -v ./video:/var/opt/video c
 [![Star History Chart](https://api.star-history.com/svg?repos=Media-Fetch-Pro/Media-Fetch-Pro&type=Date)](https://star-history.com/#Media-Fetch-Pro/Media-Fetch-Pro&Date)
 
 # How to Develop
-backend:
-```
-air -c air/.air.toml
-```
-
-frontend
-```
-cd web
-pnpm i
-pnpm dev
-```
-
-python
-dependencies
-```shell
-pip install -r requirements.txt
-```
-
-fetch video info
-```python
-python main.py --type fetchVideoInfo --url https://www.youtube.com/watch?v=lyNVPxHiVyE --storage ./video --website youtube
-```
-
-test 
-```shell
-pytest .
-```
-
+[Development Guide](./documents/development.md)
