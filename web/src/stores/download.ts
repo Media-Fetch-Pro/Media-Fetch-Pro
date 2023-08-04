@@ -4,7 +4,7 @@ import { getCleanUrl } from '@/utils/bilibili';
 import axios, { type AxiosResponse } from "axios";
 
 export const useDownloadStore = defineStore("download",()=> {
-    const url = ref("https://www.youtube.com/watch?v=9bZkp7q19f0");
+    const url = ref("https://www.bilibili.com/video/BV1ah4y117G3/?spm_id_from=333.999.0.0");
 
     const website_status = reactive({
         "bilibili_status": false,
