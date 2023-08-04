@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import DownloadDialog from '@/components/DownloadDialog.vue';
+import HelpModel from '@/components/HelpModel.vue';
+
+
 import { useDownloadStore } from '@/stores/download';
 import { onMounted } from 'vue';
 import { ElMessage }  from 'element-plus'
@@ -23,7 +26,13 @@ onMounted(() => {
     <main class="flex flex-col w-full h-screen p-2">
         <h1 class="font-black">{{ t('download.title') }}</h1>
         <div class="flex flex-col w-full m-auto gap-2 p-20">
-            <el-input class="w-full" v-model="store.url" placeholder="Please input Video URL" />
+            <div class="flex">
+                <el-input class="w-full" v-model="store.url" placeholder="Please input Video URL" />
+                <HelpModel 
+                    title="How to get Video URL"
+                    content="Please copy the URL of the video you want to download from the browser address bar"
+                />
+            </div>
             <DownloadDialog />
         </div>
         <div class="flex gap-2">

@@ -20,6 +20,9 @@ dependencies:
   '@headlessui/vue':
     specifier: ^1.7.14
     version: registry.npmmirror.com/@headlessui/vue@1.7.14(vue@3.3.4)
+  '@vicons/ionicons5':
+    specifier: ^0.12.0
+    version: 0.12.0
   '@vue/vue3-jest':
     specifier: ^29.2.4
     version: 29.2.4(@babel/core@7.22.9)(babel-jest@29.6.2)(jest@29.6.2)(typescript@5.0.4)(vue@3.3.4)
@@ -2059,6 +2062,10 @@ packages:
     resolution: {integrity: sha512-6i0aC7jV6QzQB8ne1joVZ0eSFIstHsCrobmOtghM11yGlH0j43FKL2UhWdELkyps0zuf7qVTUVCCR+tgSlyLLw==}
     dependencies:
       '@types/yargs-parser': 21.0.0
+
+  /@vicons/ionicons5@0.12.0:
+    resolution: {integrity: sha512-Iy1EUVRpX0WWxeu1VIReR1zsZLMc4fqpt223czR+Rpnrwu7pt46nbnC2ycO7ItI/uqDLJxnbcMC7FujKs9IfFA==}
+    dev: false
 
   /@vue/compiler-dom@3.3.4:
     resolution: {integrity: sha512-wyM+OjOVpuUukIq6p5+nwHYtj9cFroz9cwkfmP9O1nzH68BenTTv0u7/ndggT8cIQlnBeOo6sUT/gvHcIkLA5w==}
