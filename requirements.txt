@@ -5,7 +5,7 @@ blinker==1.6.2
 bottle==0.12.25
 Brotli==1.0.9
 cachetools==5.3.1
-certifi==2023.5.7
+certifi==2023.7.22
 chardet==5.1.0
 charset-normalizer==3.1.0
 cheroot==9.0.0
