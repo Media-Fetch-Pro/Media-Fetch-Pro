@@ -30,9 +30,15 @@ pytest .
 # Program Explanation
 ## Video Status
 Unstart: a video to add the download queue
+
 Fetching: the video is fetching the video information
+
 Pending: the video is waiting for the download
+
 Downloading: the video is downloading video、poster、nfo
+
 Finished: the video is downloaded. waiting for the rename folder
+
 Completed: the video folder is renamed.
+
 Failed: the video is failed in above any step.

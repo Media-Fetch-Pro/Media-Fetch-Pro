@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="flex rounded-full border hover:border-black h-8 cursor-pointer"
+        class="flex rounded-full border hover:border-lime-500	 h-8 cursor-pointer"
         @click="showModal = true"
     >
         <n-icon

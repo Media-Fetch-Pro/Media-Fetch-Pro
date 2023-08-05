@@ -29,39 +29,29 @@ const store = useDownloadStore()
             FAQ:
             <div class="flex gap-2 flex-wrap">
                 <HelpModel 
-                    label="How to Feedback"
-                    :title="t('help.download-help.title')"
-                    :content="t('help.download-help.content')"
+                    :label="t('help.how-to-feedback.label')"
+                    :title="t('help.how-to-feedback.title')"
+                    :content="t('help.how-to-feedback.content')"
                 />
                 <HelpModel 
-                    label="What website is supported"
-                    :title="t('help.download-help.title')"
-                    :content="t('help.download-help.content')"
+                    :label="t('help.what-website-is-supported.label')"
+                    :title="t('help.what-website-is-supported.title')"
+                    :content="t('help.what-website-is-supported.content')"
                 />
                 <HelpModel 
-                    label="How to upgrade the Version"
-                    :title="t('help.download-help.title')"
-                    :content="t('help.download-help.content')"
+                    :label="t('help.how-to-develop-this-project.label')"
+                    :title="t('help.how-to-develop-this-project.title')"
+                    :content="t('help.how-to-develop-this-project.content')"
                 />
                 <HelpModel 
-                    label="How to develop this project"
-                    :title="t('help.download-help.title')"
-                    :content="t('help.download-help.content')"
+                    :label="t('help.how-to-require-new-website-support.label')"
+                    :title="t('help.how-to-require-new-website-support.title')"
+                    :content="t('help.how-to-require-new-website-support.content')"
                 />
                 <HelpModel 
-                    label="How to require new website support"
-                    :title="t('help.download-help.title')"
-                    :content="t('help.download-help.content')"
-                />
-                <HelpModel 
-                    label="How to require new language support"
-                    :title="t('help.download-help.title')"
-                    :content="t('help.download-help.content')"
-                />
-                <HelpModel 
-                    label="How to download high quality video"
-                    :title="t('help.download-help.title')"
-                    :content="t('help.download-help.content')"
+                    :label="t('help.how-to-download-high-quality-video.label')"
+                    :title="t('help.how-to-download-high-quality-video.title')"
+                    :content="t('help.how-to-download-high-quality-video.content')"
                 />
             </div>
         </div>

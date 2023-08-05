@@ -51,6 +51,31 @@
             "label":"什么是存储路径",
             "title":"什么是存储路径",
             "content":"存储路径是指下载的视频文件存储的位置。如果你是在通过 Docker 来使用 Media Fetch Pro 那么请不要修改这里，而是通过修改 Docker 的文件夹映射来修改存储路径。"
+        },
+        "how-to-feedback": {
+            "label": "如何反馈问题",
+            "title": "如何反馈问题",
+            "content": "你可以在 Github Issue 上反馈你的问题与建议. https://github.com/Media-Fetch-Pro/Media-Fetch-Pro"
+        },
+        "what-website-is-supported":{
+            "label":"哪些网站是支持的",
+            "title":"哪些网站是支持的",
+            "content":"现在目前只支持在 Youtube 上下载视频和 Bilibili上下载视频和多P视频(playlist). 我们将在未来支持更多网站."
+        },
+        "how-to-develop-this-project":{
+            "label":"我可以如何参与开发",
+            "title":"我可以如何参与开发",
+            "content":"你可以在 Github fork和提交一个新 PR 来参与开发. https://github.com/Media-Fetch-Pro/Media-Fetch-Pro ."
+        },
+        "how-to-require-new-website-support":{
+            "label":"如何去请求新的网站支持",
+            "title":"如何去请求新的网站支持",
+            "content":"你可以在 Github 上提一个 Issue. https://github.com/Media-Fetch-Pro/Media-Fetch-Pro ."
+        },
+        "how-to-download-high-quality-video": {
+            "label": "如何去下载高清视频",
+            "title": "如何去下载高清视频",
+            "content": "如果视频是从 Youtube 上下载的，这将默认下载最高清的视频。 如果视频是从 Bilibili 上下载的，高清视频会要求登录，所以在未来版本可以在设置中填写你的Cookie来下载高清的bilibili视频。"
         }
     }
 }

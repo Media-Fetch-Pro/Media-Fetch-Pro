@@ -51,6 +51,31 @@
             "label":"What is Video Storage Path",
             "title":"What is Video Storage Path",
             "content":"Video Storage Path is the video storage path of the video you downloaded. If you use Media Fetch Pro in a Docker. you shouldn't to change this setting. You should to change the map to move the video to the outside of the container."
+        },
+        "how-to-feedback": {
+            "label": "How to feedback",
+            "title": "How to feedback",
+            "content": "You can feedback your problem and suggest in Github Issue. https://github.com/Media-Fetch-Pro/Media-Fetch-Pro"
+        },
+        "what-website-is-supported":{
+            "label":"What website is supported",
+            "title":"What website is supported",
+            "content":"Now the program only can download the video from Youtube and Bilibili. We will support more website in the future."
+        },
+        "how-to-develop-this-project":{
+            "label":"How to develop this project",
+            "title":"How to develop this project",
+            "content":"You can fork this project and submit a PR in Github. https://github.com/Media-Fetch-Pro/Media-Fetch-Pro . Please feel free to submit a PR."
+        },
+        "how-to-require-new-website-support":{
+            "label":"How to require new website",
+            "title":"How to require new website",
+            "content":"You can submit a issue in Github. https://github.com/Media-Fetch-Pro/Media-Fetch-Pro"
+        },
+        "how-to-download-high-quality-video": {
+            "label": "How to download high quality video",
+            "title": "How to download high quality video",
+            "content": "If the video is downloaded from Youtube. It will download the highest quality video. If the video is downloaded from Bilibili. It will require to login. the program will support to download the video with your cookie to support to download high quality video."
         }
     }
 }
