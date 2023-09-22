@@ -32,6 +32,7 @@ func (s *Store) DownloadComplete(id string) {
 		s.UpdateVideoInfoPartition(types.VideoInfo{
 			Id:     id,
 			Status: "failed",
+			Reason: err.Error(),
 		})
 
 		if s.VideosInfo[id].Type == "playlist" {
@@ -39,6 +40,7 @@ func (s *Store) DownloadComplete(id string) {
 				s.UpdateVideoInfoPartition(types.VideoInfo{
 					Id:     childId,
 					Status: "failed",
+					Reason: err.Error(),
 				})
 			}
 		}
@@ -107,6 +109,7 @@ func (s *Store) SchedulerDownload() {
 					s.UpdateVideoInfoPartition(types.VideoInfo{
 						Id:     value.Id,
 						Status: "failed",
+						Reason: err.Error(),
 					})
 				}
 			}
@@ -120,6 +123,7 @@ func (s *Store) SchedulerDownload() {
 						s.UpdateVideoInfoPartition(types.VideoInfo{
 							Id:     value.Id,
 							Status: "failed",
+							Reason: err.Error(),
 						})
 					}
 				}(value)

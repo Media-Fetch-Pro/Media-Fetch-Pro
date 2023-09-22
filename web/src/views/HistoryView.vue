@@ -19,7 +19,7 @@ watch(data, (val) => {
 })
 
 watch(status, (val) => {
-    console.log("status",val)
+    console.log("status",val,"error",error.value,"data",data.value)
 })
 
 watch(error, (val) => {
@@ -27,7 +27,7 @@ watch(error, (val) => {
 })
 
 watch(close, (val) => {
-    console.log(val)
+    console.log("close",val)
 })
 
 const tabMapStatus = new Map<string, Array<string>>(

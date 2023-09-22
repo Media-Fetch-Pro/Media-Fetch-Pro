@@ -95,6 +95,7 @@ export const useHistoryStore = defineStore("history", {
             return historyData;
         },
         updateVideoStatus(videoData: any) {
+            console.log("update ")
             const videoInfo = convertOne(videoData);
             const index = this.historyData.findIndex((video) => video.id == videoInfo.id);
             if (index == -1) {

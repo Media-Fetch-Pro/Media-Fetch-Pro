@@ -30,6 +30,8 @@
                 {{ t('download.update-status') }}
             </div>
         </n-button>
+
+        <h1 class="my-auto">v0.3.2</h1>
     </div>
 </template>
 

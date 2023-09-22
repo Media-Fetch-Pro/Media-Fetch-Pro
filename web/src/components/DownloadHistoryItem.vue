@@ -45,6 +45,12 @@
                 <div class="font-bold">Status:</div>
                 <div>{{ item.status }}</div>
             </div>
+
+            <div class="flex z-10">
+                <div class="font-bold">Reason:</div>
+                <div>{{ item.reason }}</div>
+            </div>
+
             <div class="flex gap-2 z-10">
                 <div class="font-bold">{{ t("history.progress") }} : {{item.percent}}</div>
             </div>

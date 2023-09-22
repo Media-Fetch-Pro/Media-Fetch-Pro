@@ -112,11 +112,11 @@ class Youtube(BaseDownloader):
             return self.next.getVideoInfo(url)
 
 
-    def downloadVideo(self, video_info: VideoInfo, output_dir: str):
+    def downloadVideo(self, video_info: VideoInfo, output_dir: str, cookies_file_path: str = None):
         if self.isSupport(video_info.url):
             self._downloadVideo(video_info, output_dir)
         else:
-            return self.next.downloadVideo(video_info, output_dir)
+            return self.next.downloadVideo(video_info, output_dir,cookies_file_path)
 
 
     def downloadPoster(self, video_info: VideoInfo, output_dir: str):
