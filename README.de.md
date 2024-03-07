@@ -1,5 +1,5 @@
 ## Media Fetch PRO
-![Media Fetch PRO Logo](https://github.com/CorrectRoadH/Media-Fetch-Pro/blob/main/images/logo.jpg?raw=true)
+<img src="https://github.com/CorrectRoadH/Media-Fetch-Pro/blob/main/images/logo.jpg?raw=true" height="173"/></a>
 
 [Documentation](https://github.com/CorrectRoadH/Media-Fetch-Pro/blob/main/documents/document.md) • Live-Demo • Diskussion auf [Discord](https://discord.gg/wDB2u4y2uR)
 
