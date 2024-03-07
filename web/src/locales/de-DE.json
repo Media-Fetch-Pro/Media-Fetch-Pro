@@ -1,0 +1,81 @@
+{
+    "download": {
+        "title": "Herunterladen",
+        "download": "herunterladen",
+        "network-status": "Netzwerkstatus",
+        "update-status": "Update-Status",
+        "start-updating": "Update starten",
+        "update-successfully": "Update erfolgreich",
+        "please-choose-a-video-directory": "Bitte wählen Sie ein Videoverzeichnis",
+        "cancel-download": "Download abbrechen",
+        "start-downloading": "Download starten",
+        "url-is-empty": "URL ist leer"
+    },
+    "history": {
+        "title": "Verlauf",
+        "wait-to-start": "Warten, um zu starten",
+        "downloading":"Herunterladen",
+        "finished": "Fertig",
+        "failed": "Fehlgeschlagen",
+        "open-origin":"Ursprung öffnen",
+        "cancel":"abbrechen",
+        "delete":"löschen",
+        "retry":"erneut versuchen",
+        "progress":"Fortschritt",
+        "there-is-nothing":"es gibt nichts"
+    },
+    "setting":{
+        "title":"Einstellungen",
+        "listbox":{
+            "name":"Name",
+            "path":"Pfad",
+            "action":"Aktion",
+            "select":"auswählen",
+            "selected":"ausgewählt",
+            "delete":"löschen",
+            "new-path-name":"neuer Pfadname",
+            "new-path":"neuer Pfad",
+            "add":"hinzufügen",
+            "add-success":"erfolgreich hinzugefügt",
+            "the-name-is-already-exist":"der Name existiert bereits",
+            "path-name-is-empty":"Pfadname ist leer",
+            "path-value-is-empty":"Pfadwert ist leer"
+        }
+    },
+    "help":{
+        "download-help":{
+            "title":"Was ist eine Video-URL",
+            "content":"Bitte kopieren Sie die URL des Videos, das Sie herunterladen möchten, aus der Adressleiste des Browsers"
+        },
+        "what-is-video-storage-path":{
+            "label":"Was ist ein Videospeicherpfad",
+            "title":"Was ist ein Videospeicherpfad",
+            "content":"Videospeicherpfad ist der Speicherpfad des heruntergeladenen Videos. Wenn Sie Media Fetch Pro in einem Docker verwenden, sollten Sie diese Einstellung nicht ändern. Sie sollten die Zuordnung ändern, um das Video außerhalb des Containers zu verschieben."
+        },
+        "how-to-feedback": {
+            "label": "Wie man Feedback gibt",
+            "title": "Wie man Feedback gibt",
+            "content": "Sie können Ihr Problem und Vorschläge in Github Issue melden. https://github.com/Media-Fetch-Pro/Media-Fetch-Pro"
+        },
+        "what-website-is-supported":{
+            "label":"Welche Website wird unterstützt",
+            "title":"Welche Website wird unterstützt",
+            "content":"Derzeit kann das Programm nur Videos von Youtube und Bilibili herunterladen. Wir werden in Zukunft mehr Websites unterstützen."
+        },
+        "how-to-develop-this-project":{
+            "label":"Wie man dieses Projekt entwickelt",
+            "title":"Wie man dieses Projekt entwickelt",
+            "content":"Sie können dieses Projekt forken und einen PR in Github einreichen. https://github.com/Media-Fetch-Pro/Media-Fetch-Pro . Bitte zögern Sie nicht, einen PR einzureichen."
+        },
+        "how-to-require-new-website-support":{
+            "label":"Wie man Unterstützung für neue Websites anfordert",
+            "title":"Wie man Unterstützung für neue Websites anfordert",
+            "content":"Sie können ein Issue in Github einreichen. https://github.com/Media-Fetch-Pro/Media-Fetch-Pro"
+        },
+        "how-to-download-high-quality-video": {
+            "label": "Wie man hochwertige Videos herunterlädt",
+            "title": "Wie man hochwertige Videos herunterlädt",
+            "content": "Wenn das Video von Youtube heruntergeladen wird, wird das Video in höchster Qualität heruntergeladen. Wenn das Video von Bilibili heruntergeladen wird, ist eine Anmeldung erforderlich. Das Programm wird unterstützen, das Video mit Ihrem Cookie herunterzuladen, um das Herunterladen von hochwertigen Videos zu unterstützen."
+        }
+    }
+}
