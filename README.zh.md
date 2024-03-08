@@ -3,7 +3,7 @@
 
 [Documentation](https://github.com/CorrectRoadH/Media-Fetch-Pro/blob/main/documents/document.md) • Live Demo • Discuss in [Discord](https://discord.gg/wDB2u4y2uR)
 
-[English](./README.md) | 简体中文
+[English](./README.md) | 简体中文 | [German](./README.de.md)
 
 ![](https://img.shields.io/github/stars/Media-Fetch-Pro/Media-Fetch-Pro?style=for-the-badge)
 ![](https://img.shields.io/bitbucket/issues/Media-Fetch-Pro/Media-Fetch-Pro?style=for-the-badge)
